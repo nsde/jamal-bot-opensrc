@@ -35,10 +35,10 @@ const myTable = new HashTable();
 const AlleRollen = new HashTable();
 
 var con = mysql.createConnection({
-       host: "localhost",
-       user: "root",
-       password: "dca1800g",
-       database: "nummer1"
+       host: "sql11.freemysqlhosting.net",
+       user: "sql11403881",
+       password: "ey9GCcKuAT",
+       database: "sql11403881"
 });
 
 con.connect(err => {
@@ -53,10 +53,10 @@ let sql;
 
 
 var con2 = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "dca1800g",
-    database: "sadb"
+    host: "sql11.freemysqlhosting.net",
+    user: "sql11403881",
+    password: "ey9GCcKuAT",
+    database: "sql11403881"
 });
 
 con2.connect(err => {
