@@ -73,12 +73,12 @@ let sql2;
 bot.on("ready", () => {
     console.log('Der Bot ist nun aktiv')
 
-    con.query(`SELECT * FROM nummer2 WHERE server = 'Kaan'`, (err, rows) => {
+    con.query(`SELECT * FROM Counting WHERE server = 'Kaan'`, (err, rows) => {
       if(err) throw err;
       var add = rows[0].nummer2;
 console.log(add);
        f = ''+add;
-       //f = ''+4069; 
+       f = ''+4079; 
        console.log(f);
 
     });
@@ -282,7 +282,7 @@ bot.on('message', message =>{
                                             
                                 
                                 
-                                con.query(`SELECT * FROM nummer2 WHERE server = 'Kaan'`, (err, rows) => {
+                                con.query(`SELECT * FROM Counting WHERE server = 'Kaan'`, (err, rows) => {
                                         if(err) throw err;
                                         
                                 
@@ -638,7 +638,7 @@ bot.on('message', message =>{
                               
                   
                   
-                  con.query(`SELECT * FROM nummer2 WHERE server = 'Kaan'`, (err, rows) => {
+                  con.query(`SELECT * FROM Counting WHERE server = 'Kaan'`, (err, rows) => {
                           if(err) throw err;
                           
                   
