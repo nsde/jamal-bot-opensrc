@@ -83,6 +83,7 @@ console.log(add);
 
     });
     
+    console.log("code 6");
     console.log("Code 5");
     
     bot.user.setActivity('Rainbow 6 Siege', {type: 'STREAMING'}).catch(console.error)
@@ -315,7 +316,7 @@ bot.on('message', message =>{
 }
                                             g = parseInt(f, 10)+1;
                                             f = ''+g;
-                                            sql = `UPDATE nummer2 SET nummer2 = `+f+` WHERE server = 'Kaan'`;
+                                            sql = `UPDATE Counting SET nummer2 = `+f+` WHERE server = 'Kaan'`;
                                              lastUser = message.author;
                                              lastUser = message.author;
                                              con.query(sql, console.log);
@@ -673,7 +674,7 @@ bot.on('message', message =>{
 }
                               g = parseInt(f, 10)+1;
                               f = ''+g;
-                              sql = `UPDATE nummer2 SET nummer2 = `+f+` WHERE server = 'Kaan'`;
+                              sql = `UPDATE Counting SET nummer2 = `+f+` WHERE server = 'Kaan'`;
                                lastUser = message.author;
                                lastUser = message.author;
                                con.query(sql, console.log);
