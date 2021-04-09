@@ -288,7 +288,15 @@ bot.on('message', message =>{
                                         
                                 
                                 
-                                        
+                                        con.query(`SELECT * FROM Couning WHERE server = 'Kaan'`, (err, rows) => {
+                                          if(err) throw err;
+                                          if(rows[0].nummer2 != null){
+                                          let nummer = rows[0].nummer2;
+                    
+                                          console.log('BUG FIXING 3');
+                                          }
+                                          console.log('BUG FIXING 4');
+                                        });
                                             
                                     console.log('Code 5');
                                             
@@ -643,7 +651,15 @@ bot.on('message', message =>{
                           if(err) throw err;
                           
                   
-                  
+                  con.query(`SELECT * FROM Couning WHERE server = 'Kaan'`, (err, rows) => {
+                      if(err) throw err;
+                      if(rows[0].nummer2 != null){
+                      let nummer = rows[0].nummer2;
+
+                      console.log('BUG FIXING');
+                      }
+                      console.log('BUG FIXING 2');
+                    });
                           
                               
                       console.log('Code 5');
@@ -651,7 +667,7 @@ bot.on('message', message =>{
                       
                           
       
-                          let nummer = rows[0].nummer2;
+                          
                           console.log('Code 6');
                               
                           if(f == "4000" || f == "5000" || f == "6000"|| f == "7000"|| f == "8000"|| f == "9000"
