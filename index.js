@@ -1075,7 +1075,7 @@ bot.on('message', message =>{
             LogNR = rows[0].lognr;
             LogNRNR = parseInt(LogNR);
             
-            sql = `Update maxlognr set lognr = '`+(LogNRNR+1)+`' WHERE server = 'Kaan'`;
+            sql = `Update maxLogNR set lognr = '`+(LogNRNR+1)+`' WHERE server = 'Kaan'`;
             con.query(sql, console.log);
           });
           const time = Date.now()+Zeit;
