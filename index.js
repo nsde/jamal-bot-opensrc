@@ -1108,7 +1108,7 @@ bot.on('message', message =>{
             console.log(""+LogNRNR);
             
                 sql = `INSERT INTO logswarnungen(log_id, id_player, dauer, grund, id_mod, datum, uhrzeit)
-                VALUES ('`+LogNR+`','`+taggedUser2.id+`','`+penim+` `+BanSuffix+`','`+message5+`','`+message.author.id+`','`+cur. getDate()+"."+(cur. getMonth() + 1)+"."+cur. getFullYear()`','`+cur. getHours()+":"+cur. getMinutes()+`');`;
+                VALUES ('`+LogNR+`','`+taggedUser2.id+`','`+penim+` `+BanSuffix+`','`+message5+`','`+message.author.id+`','`+cur. getDate()+"."+(cur. getMonth() + 1)+"."+cur.getFullYear()`','`+cur. getHours()+":"+cur. getMinutes()+`');`;
                 myTable.setItem(taggedUser2.tag, 0);
                 con.query(sql, console.log);
             con2.query(sql2, console.log);
