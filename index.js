@@ -11,6 +11,7 @@ var f;
 var verwarnungen2;
 var verwarnungen;
 var vb;
+var deleteTime = 10000;
 var vb2;
 var Prefix = "#";
 function isInt(value) {
@@ -82,9 +83,140 @@ console.log(add);
        console.log(f);
 
     });
-    
-    console.log("code 6");
-    console.log("Code 5");
+    if(1 < 70){
+      //let deepthroater =  message.guild.roles.cache.find((r) => r.id == "811308167312310384");
+      AlleRollen.setItem("1", "811308167312310384");
+    //     let deepthroat =  message.guild.roles.cache.find((r) => r.id == "810867968669122592");
+         AlleRollen.setItem("2", "810867968669122592");
+    //     let saftig =  message.guild.roles.cache.find((r) => r.id == "810867745138147339");
+         AlleRollen.setItem("3", "810867745138147339");
+    //     let Konsument =  message.guild.roles.cache.find((r) => r.id == "806249624477892628");
+         AlleRollen.setItem("4", "806249624477892628");
+    //     let DJ =  message.guild.roles.cache.find((r) => r.id == "805468116376879105");
+         AlleRollen.setItem("5", "805468116376879105");
+    //     let godzillaarmy =  message.guild.roles.cache.find((r) => r.id == "804687585389576255");
+         AlleRollen.setItem("6", "804687585389576255");
+    //     let monkearmy =  message.guild.roles.cache.find((r) => r.id == "804687429273255936");
+         AlleRollen.setItem("7", "804687429273255936");
+    //     let Zivilist =  message.guild.roles.cache.find((r) => r.id == "738166654579769398");
+         AlleRollen.setItem("8", "738166654579769398");
+    //     let influencer =  message.guild.roles.cache.find((r) => r.id == "808747963005927453");
+         AlleRollen.setItem("9", "808747963005927453");
+    //     let Streamer =  message.guild.roles.cache.find((r) => r.id == "738166085756518472");
+         AlleRollen.setItem("10", "738166085756518472");
+    //     let Zitatrat =  message.guild.roles.cache.find((r) => r.id == "772866877520609330");
+         AlleRollen.setItem("11", "772866877520609330");
+    //     let Julian =  message.guild.roles.cache.find((r) => r.id == "796783125802778635");
+         AlleRollen.setItem("12", "796783125802778635");
+    //     let monke =  message.guild.roles.cache.find((r) => r.id == "803938408924840026");
+         AlleRollen.setItem("13", "803938408924840026");
+    //     let nosiris1  =  message.guild.roles.cache.find((r) => r.id == "738166493891788870");
+         AlleRollen.setItem("14", "738166493891788870");
+    //     let osiris2 =  message.guild.roles.cache.find((r) => r.id == "738166576100016158");
+         AlleRollen.setItem("15", "738166576100016158");
+    //     let penner =  message.guild.roles.cache.find((r) => r.id == "772796199270744094");
+         AlleRollen.setItem("16", "772796199270744094");
+    //     let junkie =  message.guild.roles.cache.find((r) => r.id == "803939687881900042");
+         AlleRollen.setItem("17", "803939687881900042");
+    //     let geierr =  message.guild.roles.cache.find((r) => r.id == "738165766750339118");
+         AlleRollen.setItem("18", "738165766750339118");
+    //     let bruhplayer =  message.guild.roles.cache.find((r) => r.id == "738168309450801214");
+         AlleRollen.setItem("19", "738168309450801214");
+    //     let advancedplayer =  message.guild.roles.cache.find((r) => r.id == "738167850820304947");
+         AlleRollen.setItem("20", "738167850820304947");
+     //  let schwitzer =  message.guild.roles.cache.find((r) => r.id == "738165647904735253");
+         AlleRollen.setItem("21", "738165647904735253");
+   //      let versuchkanin =  message.guild.roles.cache.find((r) => r.id == "738165457600643102");
+         AlleRollen.setItem("22", "738165457600643102");
+   //      let goodplayer =  message.guild.roles.cache.find((r) => r.id == "738167848450654311");
+         AlleRollen.setItem("23", "738167848450654311");
+   //      let simp =  message.guild.roles.cache.find((r) => r.id == "807347397545295893");
+         AlleRollen.setItem("24", "807347397545295893");
+   //      let egoist =  message.guild.roles.cache.find((r) => r.id == "809844245916811315");
+         AlleRollen.setItem("25", "809844245916811315");
+   //      let krasserdude =  message.guild.roles.cache.find((r) => r.id == "725644608817594369");
+         AlleRollen.setItem("26", "725644608817594369");
+   //      let proplayer =  message.guild.roles.cache.find((r) => r.id == "738167647845220373");
+         AlleRollen.setItem("27", "738167647845220373");
+   //      let epic =  message.guild.roles.cache.find((r) => r.id == "738167478969958540");
+         AlleRollen.setItem("28", "738167478969958540");
+   //      let ccreator =  message.guild.roles.cache.find((r) => r.id == "738167207250493512");
+         AlleRollen.setItem("29", "738167207250493512");
+   //      let jamal =  message.guild.roles.cache.find((r) => r.id == "738165327208382526");
+         AlleRollen.setItem("30", "738165327208382526");
+   //      let zitatneuling =  message.guild.roles.cache.find((r) => r.id == "771746486534144001");
+         AlleRollen.setItem("31", "771746486534144001");
+   //      let milchmann =  message.guild.roles.cache.find((r) => r.id == "810644243272958032");
+         AlleRollen.setItem("32", "810644243272958032");
+   //      let häschen =  message.guild.roles.cache.find((r) => r.id == "810898112176455750");
+         AlleRollen.setItem("33", "810898112176455750");
+// 
+ //        let skilledcreat =  message.guild.roles.cache.find((r) => r.id == "738167382236987393");
+         AlleRollen.setItem("34", "738167382236987393");
+ //        let zitatlehr =  message.guild.roles.cache.find((r) => r.id == "771747194481934358");
+         AlleRollen.setItem("35", "771747194481934358");
+ //        let entertainer =  message.guild.roles.cache.find((r) => r.id == "772469144876220417");
+         AlleRollen.setItem("36", "772469144876220417");
+ //        let schwarzk =  message.guild.roles.cache.find((r) => r.id == "780444449455996988");
+         AlleRollen.setItem("37", "780444449455996988");
+ //        let vortex =  message.guild.roles.cache.find((r) => r.id == "807323291760197652");
+         AlleRollen.setItem("38", "807323291760197652");
+ //        let ultIrgend =  message.guild.roles.cache.find((r) => r.id == "738164668975153202");
+         AlleRollen.setItem("39", "738164668975153202");
+         
+//         let hacker =  message.guild.roles.cache.find((r) => r.id == "810462641541742593");
+         AlleRollen.setItem("40", "810462641541742593");
+//         let zitatmeist =  message.guild.roles.cache.find((r) => r.id == "771747967375114260");
+         AlleRollen.setItem("41", "771747967375114260");
+//         let zodiac =  message.guild.roles.cache.find((r) => r.id == "738165238926671882");
+         AlleRollen.setItem("42", "738165238926671882");
+//         let lost =  message.guild.roles.cache.find((r) => r.id == "807322175589318708");
+         AlleRollen.setItem("43", "807322175589318708");
+//         let banane =  message.guild.roles.cache.find((r) => r.id == "809844601505972264");
+         AlleRollen.setItem("44", "809844601505972264");
+//         let unsym =  message.guild.roles.cache.find((r) => r.id == "807322604439732244");
+         AlleRollen.setItem("45", "807322604439732244");
+//         let cringe =  message.guild.roles.cache.find((r) => r.id == "803940379509391410");
+         AlleRollen.setItem("46", "803940379509391410");
+//         let gestLeg =  message.guild.roles.cache.find((r) => r.id == "803938930906365962");
+         AlleRollen.setItem("47", "803938930906365962");
+//         let lebenLeg =  message.guild.roles.cache.find((r) => r.id == "725644917417967627");
+         AlleRollen.setItem("48", "725644917417967627");
+//         let zuhälter =  message.guild.roles.cache.find((r) => r.id == "772469685940649996");
+         AlleRollen.setItem("49", "772469685940649996");
+//         let dealer =  message.guild.roles.cache.find((r) => r.id == "807324385404387338");
+         AlleRollen.setItem("50", "807324385404387338");
+//         let psycho =  message.guild.roles.cache.find((r) => r.id == "772468900327063572");
+         AlleRollen.setItem("51", "772468900327063572");
+//         let soziopath =  message.guild.roles.cache.find((r) => r.id == "807323676869525535");
+         AlleRollen.setItem("52", "807323676869525535");
+//         let verified =  message.guild.roles.cache.find((r) => r.id == "803941502237671434");
+         AlleRollen.setItem("53", "803941502237671434");
+         
+ //        let stripper =  message.guild.roles.cache.find((r) => r.id == "809843408025157632");
+         AlleRollen.setItem("54", "809843408025157632");
+ //        let zitatlegende =  message.guild.roles.cache.find((r) => r.id == "771748685154353193");
+         AlleRollen.setItem("55", "771748685154353193");
+ //        let judge =  message.guild.roles.cache.find((r) => r.id == "807618754665381918");
+         AlleRollen.setItem("56", "807618754665381918");
+        AlleRollen.setItem("57", "771623021025689610");
+ //        let manager =  message.guild.roles.cache.find((r) => r.id == "807323649434452041");
+         AlleRollen.setItem("58", "807323649434452041");
+ //        let sup =  message.guild.roles.cache.find((r) => r.id == "807323015481524275");
+         AlleRollen.setItem("59", "807323015481524275");
+ //        let elite =  message.guild.roles.cache.find((r) => r.id == "803940877130399785");
+         AlleRollen.setItem("60", "803940877130399785");
+ //        let veteran =  message.guild.roles.cache.find((r) => r.id == "808689728764510269");
+         AlleRollen.setItem("61", "808689728764510269");
+ //        let contentcreat =  message.guild.roles.cache.find((r) => r.id == "808690081778106368");
+         AlleRollen.setItem("62", "808690081778106368");
+ //        let respectedMemb =  message.guild.roles.cache.find((r) => r.id == "808694261062303754");
+         AlleRollen.setItem("63", "808694261062303754");
+ //        let bl =  message.guild.roles.cache.find((r) => r.id == "808694672636903434");
+         AlleRollen.setItem("64", "808694672636903434");
+          AlleRollen.setItem("65", "808694870491136051");
+         AlleRollen.setItem("66", "808695151081685063");
+  }
     
     bot.user.setActivity('Rainbow 6 Siege', {type: 'STREAMING'}).catch(console.error)
 
@@ -117,77 +249,7 @@ bot.on('message', message =>{
     
 
   var SET = "";
-    if(1 < 70){
-        let deepthroater =  message.guild.roles.cache.find((r) => r.id == "811308167312310384");AlleRollen.setItem("1", "811308167312310384");
-           let deepthroat =  message.guild.roles.cache.find((r) => r.id == "810867968669122592");AlleRollen.setItem("2", "810867968669122592");
-           let saftig =  message.guild.roles.cache.find((r) => r.id == "810867745138147339");AlleRollen.setItem("3", "810867745138147339");
-           let Konsument =  message.guild.roles.cache.find((r) => r.id == "806249624477892628");AlleRollen.setItem("4", "806249624477892628");
-           let DJ =  message.guild.roles.cache.find((r) => r.id == "805468116376879105");AlleRollen.setItem("5", "805468116376879105");
-           let godzillaarmy =  message.guild.roles.cache.find((r) => r.id == "804687585389576255");AlleRollen.setItem("6", "804687585389576255");
-           let monkearmy =  message.guild.roles.cache.find((r) => r.id == "804687429273255936");AlleRollen.setItem("7", "804687429273255936");
-           let Zivilist =  message.guild.roles.cache.find((r) => r.id == "738166654579769398");AlleRollen.setItem("8", "738166654579769398");
-           let influencer =  message.guild.roles.cache.find((r) => r.id == "808747963005927453");AlleRollen.setItem("9", "808747963005927453");
-           let Streamer =  message.guild.roles.cache.find((r) => r.id == "738166085756518472");AlleRollen.setItem("10", "738166085756518472");
-           let Zitatrat =  message.guild.roles.cache.find((r) => r.id == "772866877520609330");AlleRollen.setItem("11", "772866877520609330");
-           let Julian =  message.guild.roles.cache.find((r) => r.id == "796783125802778635");AlleRollen.setItem("12", "796783125802778635");
-           let monke =  message.guild.roles.cache.find((r) => r.id == "803938408924840026");AlleRollen.setItem("13", "803938408924840026");
-           let nosiris1  =  message.guild.roles.cache.find((r) => r.id == "738166493891788870");AlleRollen.setItem("14", "738166493891788870");
-           let osiris2 =  message.guild.roles.cache.find((r) => r.id == "738166576100016158");AlleRollen.setItem("15", "738166576100016158");
-           let penner =  message.guild.roles.cache.find((r) => r.id == "772796199270744094");AlleRollen.setItem("16", "772796199270744094");
-           let junkie =  message.guild.roles.cache.find((r) => r.id == "803939687881900042");AlleRollen.setItem("17", "803939687881900042");
-           let geierr =  message.guild.roles.cache.find((r) => r.id == "738165766750339118");AlleRollen.setItem("18", "738165766750339118");
-           let bruhplayer =  message.guild.roles.cache.find((r) => r.id == "738168309450801214");AlleRollen.setItem("19", "738168309450801214");
-           let advancedplayer =  message.guild.roles.cache.find((r) => r.id == "738167850820304947");AlleRollen.setItem("20", "738167850820304947");
-           let schwitzer =  message.guild.roles.cache.find((r) => r.id == "738165647904735253");AlleRollen.setItem("21", "738165647904735253");
-           let versuchkanin =  message.guild.roles.cache.find((r) => r.id == "738165457600643102");AlleRollen.setItem("22", "738165457600643102");
-           let goodplayer =  message.guild.roles.cache.find((r) => r.id == "738167848450654311");AlleRollen.setItem("23", "738167848450654311");
-           let simp =  message.guild.roles.cache.find((r) => r.id == "807347397545295893");AlleRollen.setItem("24", "807347397545295893");
-           let egoist =  message.guild.roles.cache.find((r) => r.id == "809844245916811315");AlleRollen.setItem("25", "809844245916811315");
-           let krasserdude =  message.guild.roles.cache.find((r) => r.id == "725644608817594369");AlleRollen.setItem("26", "725644608817594369");
-           let proplayer =  message.guild.roles.cache.find((r) => r.id == "738167647845220373");AlleRollen.setItem("27", "738167647845220373");
-           let epic =  message.guild.roles.cache.find((r) => r.id == "738167478969958540");AlleRollen.setItem("28", "738167478969958540");
-           let ccreator =  message.guild.roles.cache.find((r) => r.id == "738167207250493512");AlleRollen.setItem("29", "738167207250493512");
-           let jamal =  message.guild.roles.cache.find((r) => r.id == "738165327208382526");AlleRollen.setItem("30", "738165327208382526");
-           let zitatneuling =  message.guild.roles.cache.find((r) => r.id == "771746486534144001");AlleRollen.setItem("31", "771746486534144001");
-           let milchmann =  message.guild.roles.cache.find((r) => r.id == "810644243272958032");AlleRollen.setItem("32", "810644243272958032");
-           let häschen =  message.guild.roles.cache.find((r) => r.id == "810898112176455750");AlleRollen.setItem("33", "810898112176455750");
-   
-           let skilledcreat =  message.guild.roles.cache.find((r) => r.id == "738167382236987393");AlleRollen.setItem("34", "738167382236987393");
-           let zitatlehr =  message.guild.roles.cache.find((r) => r.id == "771747194481934358");AlleRollen.setItem("35", "771747194481934358");
-           let entertainer =  message.guild.roles.cache.find((r) => r.id == "772469144876220417");AlleRollen.setItem("36", "772469144876220417");
-           let schwarzk =  message.guild.roles.cache.find((r) => r.id == "780444449455996988");AlleRollen.setItem("37", "780444449455996988");
-           let vortex =  message.guild.roles.cache.find((r) => r.id == "807323291760197652");AlleRollen.setItem("38", "807323291760197652");
-           let ultIrgend =  message.guild.roles.cache.find((r) => r.id == "738164668975153202");AlleRollen.setItem("39", "738164668975153202");
-           
-           let hacker =  message.guild.roles.cache.find((r) => r.id == "810462641541742593");AlleRollen.setItem("40", "810462641541742593");
-           let zitatmeist =  message.guild.roles.cache.find((r) => r.id == "771747967375114260");AlleRollen.setItem("41", "771747967375114260");
-           let zodiac =  message.guild.roles.cache.find((r) => r.id == "738165238926671882");AlleRollen.setItem("42", "738165238926671882");
-           let lost =  message.guild.roles.cache.find((r) => r.id == "807322175589318708");AlleRollen.setItem("43", "807322175589318708");
-           let banane =  message.guild.roles.cache.find((r) => r.id == "809844601505972264");AlleRollen.setItem("44", "809844601505972264");
-           let unsym =  message.guild.roles.cache.find((r) => r.id == "807322604439732244");AlleRollen.setItem("45", "807322604439732244");
-           let cringe =  message.guild.roles.cache.find((r) => r.id == "803940379509391410");AlleRollen.setItem("46", "803940379509391410");
-           let gestLeg =  message.guild.roles.cache.find((r) => r.id == "803938930906365962");AlleRollen.setItem("47", "803938930906365962");
-           let lebenLeg =  message.guild.roles.cache.find((r) => r.id == "725644917417967627");AlleRollen.setItem("48", "725644917417967627");
-           let zuhälter =  message.guild.roles.cache.find((r) => r.id == "772469685940649996");AlleRollen.setItem("49", "772469685940649996");
-           let dealer =  message.guild.roles.cache.find((r) => r.id == "807324385404387338");AlleRollen.setItem("50", "807324385404387338");
-           let psycho =  message.guild.roles.cache.find((r) => r.id == "772468900327063572");AlleRollen.setItem("51", "772468900327063572");
-           let soziopath =  message.guild.roles.cache.find((r) => r.id == "807323676869525535");AlleRollen.setItem("52", "807323676869525535");
-           let verified =  message.guild.roles.cache.find((r) => r.id == "803941502237671434");AlleRollen.setItem("53", "803941502237671434");
-           
-           let stripper =  message.guild.roles.cache.find((r) => r.id == "809843408025157632");AlleRollen.setItem("54", "809843408025157632");
-           let zitatlegende =  message.guild.roles.cache.find((r) => r.id == "771748685154353193");AlleRollen.setItem("55", "771748685154353193");
-           let judge =  message.guild.roles.cache.find((r) => r.id == "807618754665381918");AlleRollen.setItem("56", "807618754665381918");
-           let rollenverteiler =  message.guild.roles.cache.find((r) => r.id == "771623021025689610");AlleRollen.setItem("57", "771623021025689610");
-           let manager =  message.guild.roles.cache.find((r) => r.id == "807323649434452041");AlleRollen.setItem("58", "807323649434452041");
-           let sup =  message.guild.roles.cache.find((r) => r.id == "807323015481524275");AlleRollen.setItem("59", "807323015481524275");
-           let elite =  message.guild.roles.cache.find((r) => r.id == "803940877130399785");AlleRollen.setItem("60", "803940877130399785");
-           let veteran =  message.guild.roles.cache.find((r) => r.id == "808689728764510269");AlleRollen.setItem("61", "808689728764510269");
-           let contentcreat =  message.guild.roles.cache.find((r) => r.id == "808690081778106368");AlleRollen.setItem("62", "808690081778106368");
-           let respectedMemb =  message.guild.roles.cache.find((r) => r.id == "808694261062303754");AlleRollen.setItem("63", "808694261062303754");
-           let bl =  message.guild.roles.cache.find((r) => r.id == "808694672636903434");AlleRollen.setItem("64", "808694672636903434");
-           let prem =  message.guild.roles.cache.find((r) => r.id == "808694870491136051");AlleRollen.setItem("65", "808694870491136051");
-           let playboy =  message.guild.roles.cache.find((r) => r.id == "808695151081685063");AlleRollen.setItem("66", "808695151081685063");
-    }
+    
     let args = message.content.split(" ");
     if(message.channel.id === '827514965996339222'){
       switch(args[0]){
@@ -649,25 +711,6 @@ bot.on('message', message =>{
                   con.query(`SELECT * FROM Counting WHERE server = 'Kaan'`, (err, rows) => {
                           if(err) throw err;
                           
-                  
-                  con.query(`SELECT * FROM Couning WHERE server = 'Kaan'`, (err, rows) => {
-                      if(err) throw err;
-                      if(rows[0].nummer2 != null){
-                      let nummer = rows[0].nummer2;
-
-                      console.log('BUG FIXING');
-                      }
-                      console.log('BUG FIXING 2');
-                    });
-                          
-                              
-                      console.log('Code 5');
-                              
-                      
-                          
-      
-                          
-                          console.log('Code 6');
                               
                           if(f == "4000" || f == "5000" || f == "6000"|| f == "7000"|| f == "8000"|| f == "9000"
                           || f == "10000"|| f == "11000"|| f == "12000"|| f == "13000"|| f == "14000"|| f == "15000"
@@ -1586,7 +1629,7 @@ default:
                             });
                         sql = `DELETE FROM verwarntimes WHERE id = '`+ message.author.id+`'`;
                         
-                        message.channel.send("ok, bist entwarnt.");
+                        message.channel.send("ok, bist entwarnt.").then(m => m.delete(deleteTime));
                         con.query(sql, console.log)
                         sql = `DELETE FROM playerrolle WHERE id = '`+ message.author.id+`'`;
                         con.query(sql, console.log)
@@ -1604,19 +1647,19 @@ default:
                           if(sec > 24){
                             sec = sec / 24;
                             secs = parseInt(sec);
-                          message.channel.send("Du bist noch für etwa "+ secs + " Tage verwarnt!");
+                          message.channel.send("Du bist noch für etwa "+ secs + " Tage verwarnt!").then(m => m.delete(deleteTime));
 
                           
                           }else{
                             secs = parseInt(sec);
-                            message.channel.send("Du bist noch für etwa "+ secs + " Stunden verwarnt!");}
+                            message.channel.send("Du bist noch für etwa "+ secs + " Stunden verwarnt!").then(m => m.delete(deleteTime));}
                         }else{
                           secs = parseInt(sec);
-                          message.channel.send("Du bist noch für etwa "+ secs + " Minuten verwarnt!");}
+                          message.channel.send("Du bist noch für etwa "+ secs + " Minuten verwarnt!").then(m => m.delete(deleteTime));}
                         }else{
 
                           secs = parseInt(sec);
-                          message.channel.send("Du bist noch für "+ secs + " Sekunden verwarnt!");}
+                          message.channel.send("Du bist noch für "+ secs + " Sekunden verwarnt!").then(m => m.delete(deleteTime));}
                           
 
                     }
@@ -1627,12 +1670,11 @@ default:
             }
         });
       }else{
-      message.channel.send("Du bist garnicht gewarnt. Die Rolle als bot beherrschst du besser als ich");}
+      message.channel.send("Du bist garnicht gewarnt. Die Rolle als bot beherrschst du besser als ich").then(m => m.delete(deleteTime));}
 
             break;
             case "!sündenbock":
                 console.log("sünde");
-                if (message.member.roles.cache.has(sunde.id)) {
         con.query(`SELECT * FROM verwarntimes WHERE id = '`+ message.author.id+`'`, (err, rows1) => {
             if(err) throw err;
 
@@ -1652,7 +1694,7 @@ default:
                                 if(err) throw err; 
                                 
                             let gasd2 = rows[0].a;
-                                if(rows[0].id == message.author.id){
+                                
                                 for (var i = 1; i <= 70; i++) {
                                     
                                     
@@ -1746,12 +1788,12 @@ default:
                             
                             
                             
-                    }
+                    
                             
                             
                             });
                         sql = `DELETE FROM verwarntimes WHERE id = '`+ message.author.id+`'`;
-                        message.channel.send("ok, bist entwarnt.");
+                        message.channel.send("ok, bist entwarnt.").then(m => m.delete(deleteTime));
                         con.query(sql, console.log)
                         sql = `DELETE FROM playerrolle WHERE id = '`+ message.author.id+`'`;
                         con.query(sql, console.log)
@@ -1774,14 +1816,17 @@ default:
                       
                       }else{
                         secs = parseInt(sec);
-                        message.channel.send("Du bist noch für etwa "+ secs + " Stunden verwarnt!");}
+                        message.channel.send("Du bist noch für etwa "+ secs + " Stunden verwarnt!");
+                        }
                     }else{
                       secs = parseInt(sec);
-                      message.channel.send("Du bist noch für etwa "+ secs + " Minuten verwarnt!");}
+                      message.channel.send("Du bist noch für etwa "+ secs + " Minuten verwarnt!");
+                      }
                     }else{
 
                       secs = parseInt(sec);
-                      message.channel.send("Du bist noch für "+ secs + " Sekunden verwarnt!");}
+                      message.channel.send("Du bist noch für "+ secs + " Sekunden verwarnt!");
+                      }
 
                     }
                     
@@ -1789,8 +1834,7 @@ default:
                  
             }
         });
-      }else{
-      message.channel.send("Du bist garnicht gewarnt. Die Rolle als bot beherrschst du besser als ich");}
+      
 
             break;
             
@@ -2013,28 +2057,13 @@ if(xvv==1){
 
 
 
-    }else {switch(args[0]){
-            
-        case "-ichliebehaschich":
-            
-                
-                message.member.kick();
-                message.author.send("DU wurdest gekickt du Idiot! Hier der Link:");
-                message.author.send("Yout got kicked you Idiot! Here the link to join again: https://discord.gg/U4pc33JQNP");
-             
-        
-
-        break;
-            
-       
-        default:
-            break;
-
-    }}
+    }else {
+      
+      }
     switch(args[0]){
             
       case "§lang":
-        if (message.member.hasPermission("ADMINISTRATOR")){}
+        if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz"){
         if(args[1] == "de"){
 
         }else if(args[1] == "en"){
@@ -2042,18 +2071,57 @@ if(xvv==1){
         }else{
           message.channel.send("This Language is not supported! \nSupported Languages until now are: \n -");
         }
-      }
+        }else{
+          message.channel.send("Unsuficcient Permissions!");
+        }
       break;
 
         case "§level":
-          con.query(`SELECT * FROM Leveling WHERE player_id = "`+message.author.id+`" AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
+          console.log("codeing 3");
+          if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz"){
+          if(args.length >= 2){
+          con.query(`SELECT * FROM RollenFürLevel WHERE levelrang = '`+args[1]+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
             if(err) throw err;
+            console.log("codeing 4");
                if(rows.length >= 1){
-
-
-
-               }
+                console.log("codeing 5");
+                
+                if(message.mentions.roles){
+                  console.log("codeing 7");
+                let rolle = message.mentions.roles.first();
+                console.log("codeing 6");
+                sql = `DELETE FROM RollenFürLevel WHERE levelrang = '`+args[1]+`' AND server_id = '`+message.guild.id+`';`;
+                      
+                con.query(sql);
+                sql = `INSERT INTO RollenFürLevel (rollen_id, levelrang, server_id) VALUES ('`+rolle.id+`', `+args[1]+`,'`+message.guild.id+`');`;
+                con.query(sql)
+                message.channel.send("Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.");
+               }else{
+                message.channel.send("Please mention a role! \n(§level 5 @...)");
+              }
+              console.log("codeing 8");
+              }else{
+                console.log("codeing 11");
+                if(message.mentions.roles){
+                let rolle = message.mentions.roles.first();
+                
+          console.log("codeing 9");
+                sql = `INSERT INTO RollenFürLevel (rollen_id, levelrang, server_id) VALUES ('`+rolle.id+`', `+args[1]+`,'`+message.guild.id+`');`;
+                con.query(sql)
+                message.channel.send("Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.");
+               }else{
+                message.channel.send("Please mention a role! \n(§level 5 @...)");
+              }
+              console.log("codeing 10");
+               
+            }
               });
+            }else{
+              message.channel.send("Please select a valid Level and mention a role! \n(§level 5 @...)");
+            }
+          }else{
+            message.channel.send("Unsuficcient Permissions!");
+          }
         break;
 
 
@@ -2065,42 +2133,107 @@ if(xvv==1){
 
 
       if(!message.author.bot){
-        con.query(`SELECT * FROM Leveling WHERE player_id = "`+message.author.id+`" AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
+        console.log("Test1");
+        con.query(`SELECT * FROM Leveling WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
           if(err) throw err;
-             if(rows.length >= 1){
+                      
 
+             if(rows.length >= 1){
               let XP = rows[0].xplevel;
               let Gained = Math.floor(Math.random() * 20);
               let Gained10bis30 = Gained + 10;
               let XPneu = (parseInt(XP)) + Gained10bis30;
-              sql = `UPDATE Leveling SET xplevel = `+XPneu+` WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
-              con.query(sql);
-
-
-              con.query(`SELECT * FROM LevelingLEVEL WHERE player_id = "`+message.author.id+`" AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
+              con.query(`SELECT * FROM LevelingLEVEL WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows2) => {
                 if(err) throw err;
-                   if(rows.length >= 1){
-                    let LevelNR = rows[0].levelvoll;
-
-
-
-                  }else{
-                    if(XPneu >= 200){
-                      sql = `UPDATE LevelingLEVEL SET levelvoll = 1 WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
+                   if(rows2.length >= 1){
+                    let LevelNR = rows2[0].levelvoll;
+                    con.query(`SELECT * FROM LevelCooldown WHERE player_id = '`+ message.author.id+`' AND server_id LIKE '`+message.guild.id+`'`, (err, rows1) => {
+                      if(err) throw err;
                       
-                con.query(sql);
-                    }
-                  }
-                });
+                       if(rows1.length >= 1){
+                              let alteUhr = rows1[0].cooldown;
+                              let timen = BigInt(alteUhr);
+                              if(BigInt(Date.now()) >= timen){
+                                  
+                                      let = rows1[0].cooldown; 
+                                      sql = `DELETE FROM LevelCooldown WHERE player_id = '`+ message.author.id+`' AND server_id = '`+message.guild.id+`';`;
+                                     
+                                      con.query(sql)
+                                      let COOLDOWN = Date.now()+20000;
+                                      sql = `INSERT INTO LevelCooldown (player_id, cooldown, server_id) VALUES ('`+ message.author.id+`', `+COOLDOWN+`,'`+message.guild.id+`');`;
+                                      con.query(sql)
+                                      console.log("asdasda");
+                                      
+                                      let a = parseInt(LevelNR);
 
-              }else{
-                sql = `Insert into Leveling values ("`+message.author.id+`", 15, "`+message.guild.id+`");`;
-                        
-                con.query(sql);
-              }
-      });
 
+                                      if(XP < (200+(200*a)) && XPneu >= (200+(200*a)) && (parseInt(LevelNR)) == 1){
+                                        message.channel.send('Glückwunsch, <@'+message.author.id+'>! Du hast Level '+(a+1)+' erreicht!').then(msg => msg.delete({timeout: 5000}));
+                                   sql = `UPDATE Leveling SET xplevel = `+(XPneu-(200+(200*a)))+` WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
+                                      con.query(sql);
+                                      sql = `DELETE FROM LevelingLEVEL WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
+                                      con.query(sql);
+                                    sql = `INSERT INTO LevelingLEVEL (player_id, levelvoll, server_id) VALUES ('`+message.author.id+`', `+(a+1)+`,'`+message.guild.id+`');`;
+                                        con.query(sql);
+                                      }else {
+                                        sql = `UPDATE Leveling SET xplevel = `+XPneu+` WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
+                                      con.query(sql);
+
+                                      }
+
+
+
+
+
+                                     for(a = 1; a <= LevelNR; a++) {
+                                      con.query(`SELECT * FROM RollenFürLevel WHERE levelrang = `+a+` AND server_id = '`+message.guild.id+`'`, (err, rows3) => {
+                                        if(err) throw err;
+                                        if(rows3.length >= 1){
+                                          let ROLLENID = rows3[0].rollen_id;
+                                          let LevelRolle = message.guild.roles.cache.find((r) => r.id == ""+ROLLENID);
+                                          if (LevelRolle != null && !message.member.roles.cache.has(LevelRolle)) {
+                                          message.member.roles.add(LevelRolle);
+                                          }
+                                        }
+
+                                      });
+
+                                    }
+                                  }
+                                
+                                  }else{
+                                    sql = `INSERT INTO LevelCooldown (player_id, cooldown, server_id) VALUES ('`+ message.author.id+`', 0,'`+message.guild.id+`');`;
+                                    con.query(sql)
+                                  }
+                                      });
+
+                  }else {
+                                      sql = `INSERT INTO LevelingLEVEL (player_id, levelvoll, server_id) VALUES ('`+message.author.id+`', 0,'`+message.guild.id+`');`;
+                                        con.query(sql);
+                                     }
+                                      let COOLDOWN = Date.now()+20000;
+                                      
+                                      sql = `INSERT INTO LevelCooldown (player_id, cooldown, server_id) VALUES ('`+ message.author.id+`', '`+COOLDOWN+`','`+message.guild.id+`');`;
+                                      con.query(sql)
+                                      
+                                     
+                                      con.query(sql);
+
+              });
+            }else{
+              sql = `Insert into Leveling values ("`+message.author.id+`", 15, "`+message.guild.id+`");`;
+                      
+              con.query(sql);
+            }
+                        });
+
+
+                  
+
+              
       }
+
+    
 
 })
 
@@ -2118,3 +2251,7 @@ bot.login(token)
 
 
 // const ser = client.users.cache.find(user => user.id === 'USER-ID');
+
+// if (<Message>.mentions.members.size) { // or message.mentions.members.size > 0
+  //DO STUFF
+//}
