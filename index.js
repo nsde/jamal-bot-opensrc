@@ -250,10 +250,9 @@ bot.on('message', message =>{
 
         con.query(`SELECT * FROM verwarntimes WHERE id = '`+ message.author.id+`'`, (err, rows) => {
             if(err) throw err;
-            console.log("code 3");
+            
            
-                if(rows.length >= 1){
-                  
+                if(rows.length >= 1){            
                   console.log("code 8");
                     let alteUhr = rows[0].ms;
                     const timen = BigInt(alteUhr);
@@ -2027,24 +2026,81 @@ if(xvv==1){
 
         break;
             
-        case "<><>spam":
-            if(message.author.username == "!Đeniz"){
-            const taggedUser = message.mentions.members.first();
-            let a = 1;
-            while(a < 300){
-                taggedUser.send("Message " + a + " from 300");
-                a = a+1;
-            }
-
-        }
-
-        break;
+       
         default:
             break;
 
     }}
-    
-    
+    switch(args[0]){
+            
+      case "§lang":
+        if (message.member.hasPermission("ADMINISTRATOR")){}
+        if(args[1] == "de"){
+
+        }else if(args[1] == "en"){
+
+        }else{
+          message.channel.send("This Language is not supported! \nSupported Languages until now are: \n -");
+        }
+      }
+      break;
+
+        case "§level":
+          con.query(`SELECT * FROM Leveling WHERE player_id = "`+message.author.id+`" AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
+            if(err) throw err;
+               if(rows.length >= 1){
+
+
+
+               }
+              });
+        break;
+
+
+      default:
+
+        break;
+
+  }
+
+
+      if(!message.author.bot){
+        con.query(`SELECT * FROM Leveling WHERE player_id = "`+message.author.id+`" AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
+          if(err) throw err;
+             if(rows.length >= 1){
+
+              let XP = rows[0].xplevel;
+              let Gained = Math.floor(Math.random() * 20);
+              let Gained10bis30 = Gained + 10;
+              let XPneu = (parseInt(XP)) + Gained10bis30;
+              sql = `UPDATE Leveling SET xplevel = `+XPneu+` WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
+              con.query(sql);
+
+
+              con.query(`SELECT * FROM LevelingLEVEL WHERE player_id = "`+message.author.id+`" AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
+                if(err) throw err;
+                   if(rows.length >= 1){
+                    let LevelNR = rows[0].levelvoll;
+
+
+
+                  }else{
+                    if(XPneu >= 200){
+                      sql = `UPDATE LevelingLEVEL SET levelvoll = 1 WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
+                      
+                con.query(sql);
+                    }
+                  }
+                });
+
+              }else{
+                sql = `Insert into Leveling values ("`+message.author.id+`", 15, "`+message.guild.id+`");`;
+                        
+                con.query(sql);
+              }
+      });
+
+      }
 
 })
 
@@ -2062,23 +2118,3 @@ bot.login(token)
 
 
 // const ser = client.users.cache.find(user => user.id === 'USER-ID');
-
-/*
-     
-    /**
-     * Beschreiben Sie hier die Klasse Nim_Spiel.
-     * 
-     * @author (Ihr Name) 
-     * @version (eine Versionsnummer oder ein Datum)
-     */
-    
-
-
-    
-    /**
-     * Beschreiben Sie hier die Klasse Nim_Spiel.
-     * 
-     * @author (Ihr Name) 
-     * @version (eine Versionsnummer oder ein Datum)
-     */
-    
