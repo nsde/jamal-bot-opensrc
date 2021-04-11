@@ -2283,7 +2283,7 @@ if(xvv==1){
 
     }
     let ARGS = message.content.toUpperCase();
-    switch(ARGS[0]){
+    switch(args[0]){
             
       case "§LANG":
         if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz"){
