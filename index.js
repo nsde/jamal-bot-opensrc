@@ -2283,12 +2283,13 @@ if(xvv==1){
 
     }
     let ARGS = message.content.toUpperCase();
+    console.log(args);
+    console.log(ARGS);
     switch(args[0]){
       case "§LANG":
         console.log("code 1");
         if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz"){
-          console.log(args);
-          console.log(ARGS);
+         
         if(ARGS[1] == "DE" || ARGS[1] == "DEUTSCH" ){
           con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
             if(err) throw err;
