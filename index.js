@@ -2339,9 +2339,35 @@ case "§LEVEL":
         con.query(sql);
         sql = `INSERT INTO RollenFürLevel (rollen_id, levelrang, server_id) VALUES ('`+rolle.id+`', `+args[1]+`,'`+message.guild.id+`');`;
         con.query(sql)
-        message.channel.send("Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.");
+        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+          if(err) throw err;
+              if(rows.length >= 1){
+                let language = rows[0].lang;
+                if(language == "de"){
+                  message.channel.send("Perfekt! Jeder mit dem Level "+args[1]+" bekommt nun die Rolle <@&"+rolle.id+">.");
+                }else if(language == "en"){
+                  message.channel.send("Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.");
+                }
+             }else{
+              message.channel.send("Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.");
+              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+             }
+            });
        }else{
-        message.channel.send("Please mention a role! \n(§level 5 @...)");
+        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+          if(err) throw err;
+              if(rows.length >= 1){
+                let language = rows[0].lang;
+                if(language == "de"){
+                  message.channel.send("Bitte Pinge eine Rolle! \n(§level 5 @...).");
+                }else if(language == "en"){
+                  message.channel.send("Please mention a role! \n(§level 5 @...).");
+                }
+             }else{
+              message.channel.send("Please mention a role! \n(§level 5 @...).");
+              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+             }
+            });
       }
       }else{
         if(message.mentions.roles.size == 1){
