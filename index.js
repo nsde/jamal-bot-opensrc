@@ -2124,7 +2124,27 @@ if(xvv==1){
           }
         break;
 
+          case "§leveling":
+            let Level = 0;
+            let Experience = 0;
 
+            con.query(`SELECT * FROM LevelingLEVEL WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows2) => {
+              if(err) throw err;
+                 if(rows2.length >= 1){
+                  Level = rows2[0].levelvoll;
+                 }
+
+                });
+                con.query(`SELECT * FROM Leveling WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
+                  if(err) throw err;
+                      if(rows.length >= 1){
+                      Experience = rows[0].xplevel;
+                     }
+                    });
+                    message.channel.send("You're level "+Level+" with "+Experience+"/"+(200+(200*a))+" XP.").then(msg => msg.delete({timeout: 20000}));
+
+
+          break;
       default:
 
         break;
@@ -2167,8 +2187,8 @@ if(xvv==1){
                                       let a = parseInt(LevelNR);
 
 
-                                      if(XP < (200+(200*a)) && XPneu >= (200+(200*a)) && (parseInt(LevelNR)) == 1){
-                                        message.channel.send('Glückwunsch, <@'+message.author.id+'>! Du hast Level '+(a+1)+' erreicht!').then(msg => msg.delete({timeout: 5000}));
+                                      if(XPneu >= (200+(200*a)) && (parseInt(LevelNR)) == 1){
+                                        message.channel.send('Glückwunsch, <@'+message.author.id+'>! Du hast Level '+(a+1)+' erreicht!').then(msg => msg.delete({timeout: 10000}));
                                    sql = `UPDATE Leveling SET xplevel = `+(XPneu-(200+(200*a)))+` WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
                                       con.query(sql);
                                       sql = `DELETE FROM LevelingLEVEL WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
