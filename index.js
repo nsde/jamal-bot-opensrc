@@ -2089,12 +2089,12 @@ default:
                 if(message.member.roles.cache.has(move.id) || message.author.username == "!Đeniz") {
                     
                 console.log("Code 3");
-                    
+                    if(message.mentions.members){
                 const taggedUser = message.mentions.members.first();
                 if(taggedUser.voice.channel){
                 taggedUser.voice.setChannel('811569789758603305');
                 }
-            
+              }
                 }
             break;
                 
@@ -2428,6 +2428,45 @@ case ""+Prefix+"LEVEL":
 break;
 
           case ""+Prefix+"LEVELING":
+            if(args.length == 2){
+              if(message.mentions.members){
+                let taggesUsa = message.mentions.members.first();
+                let Level = 0;
+            let Experience = 0;
+
+            con.query(`SELECT * FROM LevelingLEVEL WHERE player_id = '`+taggesUsa.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows2) => {
+              if(err) throw err;
+                 if(rows2.length >= 1){
+                  Level = rows2[0].levelvoll;
+                 }
+
+                });
+                con.query(`SELECT * FROM Leveling WHERE player_id = '`+taggesUsa.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
+                  if(err) throw err;
+                      if(rows.length >= 1){
+                      Experience = rows[0].xplevel;
+                     }
+                    });
+                    con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+taggesUsa.id+`';`, (err, rows) => {
+                      if(err) throw err;
+                          if(rows.length >= 1){
+                            let language = rows[0].lang;
+                            if(language == "de"){
+                              message.channel.send("Der Spieler <@"+taggesUsa.id+"> ist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
+
+                            }else if(language == "en"){
+                              message.channel.send("The User <@"+taggesUsa.id+"> is level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
+
+                            }
+                         }else{
+                          message.channel.send("YThe User <@"+taggesUsa.id+"> is level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
+
+                          message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                         }
+                        });
+              }else{
+
+            
             let Level = 0;
             let Experience = 0;
 
@@ -2461,7 +2500,8 @@ break;
                           message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
                          }
                         });
-                    
+                      }
+            }
             break;
             case ""+Prefix+"HELP":
               con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
