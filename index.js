@@ -2141,10 +2141,9 @@ if(xvv==1){
                       Experience = rows[0].xplevel;
                      }
                     });
+                    
                     message.channel.send("You're level "+Level+" with "+Experience+"/"+(200+(200*a))+" XP.").then(msg => msg.delete({timeout: 20000}));
-
-
-          break;
+            break;
       default:
 
         break;
