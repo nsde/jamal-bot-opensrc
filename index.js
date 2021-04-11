@@ -2511,6 +2511,12 @@ break;
                                           if (LevelRolle != null && !message.member.roles.cache.has(LevelRolle)) {
                                           message.member.roles.add(LevelRolle);
                                           }
+                                          if(b >= 5){
+                                            let LevelRolle2 = message.guild.roles.cache.find((r) => r.id == "808752092927623179");
+                                          if (LevelRolle2 != null && !message.member.roles.cache.has(LevelRolle2)) {
+                                          message.member.roles.add(LevelRolle2);
+                                          }
+                                          }
                                         }
 
                                       });
