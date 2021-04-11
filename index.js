@@ -2284,7 +2284,8 @@ if(xvv==1){
     }
     let ARGS = message.content.toUpperCase();
     console.log(args);
-    console.log(ARGS);
+
+    console.log(ARGS[1].content.toUpperCase());
     switch(args[0]){
       case "§LANG":
         console.log("code 1");
