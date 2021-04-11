@@ -18,6 +18,13 @@ var Prefix = "#";
 function isInt(value) {
   return !isNaN(value) && (function(x) { return (x | 0) === x; })(parseFloat(value))
 }
+function resetBot(channel) {
+  // send channel a message that you're resetting bot [optional]
+  channel.send('Resetting...')
+  .then(msg => client.destroy())
+  .then(() => client.login(token));
+}
+
 class HashTable {
 
     table = new Array(300)
