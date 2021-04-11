@@ -2125,6 +2125,7 @@ if(xvv==1){
         break;
 
           case "§leveling":
+            console.log("COde 1");
             let Level = 0;
             let Experience = 0;
 
@@ -2135,13 +2136,15 @@ if(xvv==1){
                  }
 
                 });
+                console.log("COde 2");
                 con.query(`SELECT * FROM Leveling WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
                   if(err) throw err;
                       if(rows.length >= 1){
                       Experience = rows[0].xplevel;
                      }
                     });
-                    
+                    console.log("COde 3");
+
                     message.channel.send("You're level "+Level+" with "+Experience+"/"+(200+(200*a))+" XP.").then(msg => msg.delete({timeout: 20000}));
             break;
       default:
