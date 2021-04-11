@@ -11,7 +11,8 @@ var f;
 var verwarnungen2;
 var verwarnungen;
 var vb;
-var deleteTime = 10000;
+var deleteTime = 20000;
+let CooldownLevel = 45000;
 var vb2;
 var Prefix = "#";
 function isInt(value) {
@@ -121,7 +122,7 @@ console.log(add);
     //     let geierr =  message.guild.roles.cache.find((r) => r.id == "738165766750339118");
          AlleRollen.setItem("18", "738165766750339118");
     //     let bruhplayer =  message.guild.roles.cache.find((r) => r.id == "738168309450801214");
-         AlleRollen.setItem("19", "738168309450801214");
+    //     AlleRollen.setItem("19", "738168309450801214");
     //     let advancedplayer =  message.guild.roles.cache.find((r) => r.id == "738167850820304947");
          AlleRollen.setItem("20", "738167850820304947");
      //  let schwitzer =  message.guild.roles.cache.find((r) => r.id == "738165647904735253");
@@ -215,7 +216,7 @@ console.log(add);
  //        let bl =  message.guild.roles.cache.find((r) => r.id == "808694672636903434");
          AlleRollen.setItem("64", "808694672636903434");
           AlleRollen.setItem("65", "808694870491136051");
-         AlleRollen.setItem("66", "808695151081685063");
+         AlleRollen.setItem("19", "808695151081685063");
   }
     
     bot.user.setActivity('Rainbow 6 Siege', {type: 'STREAMING'}).catch(console.error)
@@ -422,7 +423,7 @@ bot.on('message', message =>{
                                                         sql = `INSERT INTO playerrolle (id) VALUES ('`+message.author.id+`')`;
                                                         con.query(sql, console.log);
                                                         let gasd = "";
-                                                        for(var i = 1; i < 67; i++){
+                                                        for(var i = 1; i < 66; i++){
                                       
                                                           var a = AlleRollen.getItem(''+i);
                                                           let abc =  message.guild.roles.cache.find((r) => r.id == a);
@@ -534,7 +535,7 @@ bot.on('message', message =>{
                                                   sql = `INSERT INTO playerrolle (id) VALUES ('`+message.author.id+`')`;
                                                         con.query(sql, console.log);
                                                         let gasd = "";
-                                                        for(var i = 1; i < 67; i++){
+                                                        for(var i = 1; i < 66; i++){
                                       
                                                           var a = AlleRollen.getItem(''+i);
                                                           let abc =  message.guild.roles.cache.find((r) => r.id == a);
@@ -1111,7 +1112,7 @@ bot.on('message', message =>{
           penis = parseInt(penim);
           }
           var LogNRNR;
-          con.query(`SELECT * FROM maxlognr WHERE server = 'Kaan'`, (err, rows) => {
+          con.query(`SELECT * FROM maxLogNR WHERE server = 'Kaan'`, (err, rows) => {
             if(err) throw err;
             LogNR = rows[0].lognr;
             LogNRNR = parseInt(LogNR);
@@ -1149,7 +1150,7 @@ bot.on('message', message =>{
             console.log(""+LogNRNR);
             
                 sql = `INSERT INTO logswarnungen(log_id, id_player, dauer, grund, id_mod, datum, uhrzeit)
-                VALUES ('`+LogNR+`','`+taggedUser2.id+`','`+penim+` `+BanSuffix+`','`+message5+`','`+message.author.id+`','`+cur. getDate()+"."+(cur. getMonth() + 1)+"."+cur.getFullYear()`','`+cur. getHours()+":"+cur. getMinutes()+`');`;
+                VALUES ('`+LogNR+`','`+taggedUser2.id+`','`+penim+` `+BanSuffix+`','`+message5+`','`+message.author.id+`','`+cur. getDate()+"."+(cur. getMonth() + 1)+"."+cur.getFullYear()+`','`+cur. getHours()+":"+cur. getMinutes()+`');`;
                 myTable.setItem(taggedUser2.tag, 0);
                 con.query(sql, console.log);
             con2.query(sql2, console.log);
@@ -1270,9 +1271,11 @@ bot.on('message', message =>{
           
                 var cur = new Date();
                 console.log(""+LogNRNR);
+                console.log("test");
                 sql = `INSERT INTO logswarnungen(log_id, id_player, dauer, grund, id_mod, datum, uhrzeit)
                 VALUES ('`+LogNR+`','`+taggedUser2.id+`','`+penim+` `+BanSuffix+`','`+message5+`','`+message.author.id+`','`+cur. getDate()+"."+(cur. getMonth() + 1)+"."+cur. getFullYear()+`','`+cur. getHours()+":"+cur. getMinutes()+`');`;
                 con.query(sql, console.log);
+                console.log("hilfe");
 
 
             sql2 = `UPDATE verwarnungen SET number = `+vb2+` WHERE id = '`+ taggedUser2.id+`'`;
@@ -1281,6 +1284,7 @@ bot.on('message', message =>{
             if (!(taggedUser2.roles.cache.has(sunde.id))) {
               taggedUser2.roles.add(sunde);
             }     
+            console.log("hi");
                 sql = `INSERT INTO playerrolle (id) VALUES ('`+taggedUser2.id+`')`;
                 con.query(sql, console.log);
                 let gasd = "";
@@ -1442,45 +1446,117 @@ LogNRNR == LogNRNR-1;
        var id_mod= rows[0].id_mod; 
 
        console.log("code 5");
-       const exampleEmbed = new Discord.MessageEmbed()
+       
+             con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+              if(err) throw err;
+              if(rows.length >= 1){
+                let language = rows[0].lang;
+                if(language == "de"){
+                  const exampleEmbed = new Discord.MessageEmbed()
        .setColor('#ffa600')
        .setTitle('Log Nummer '+args[1]+':')
        .setURL('https://www.thisworldthesedays.com/command-description-userdeniz1.html')
        .setAuthor(message.author.username+'')
        .setDescription('Verwarnter User: <@'+id_player+'>')
-       
        .addField('Grund:', grund, false)
-       
        .addField('Dauer:', dauer, false)
-       
        .addField('Verwarnzeit:', 'Am '+datum+' um '+uhrzeit, false)
-       
        .addField('Verwarnt von:', '<@'+id_mod+'>', false)
        .setTimestamp()
        .setFooter(''+message.author.username+'');
-     
-             
-             message.channel.send(exampleEmbed);
+        message.channel.send(exampleEmbed);
+            
+                }else if(language == "en"){
+                  const exampleEmbed = new Discord.MessageEmbed()
+       .setColor('#ffa600')
+       .setTitle('Log Number '+args[1]+':')
+       .setURL('https://www.thisworldthesedays.com/command-description-userdeniz1.html')
+       .setAuthor(message.author.username+'')
+       .setDescription('Warned User: <@'+id_player+'>')
+       .addField('Reason:', grund, false)
+       .addField('Duration:', dauer, false)
+       .addField('Warntime:', 'On the '+datum+' at '+uhrzeit, false)
+       .addField('Warned moderator:', '<@'+id_mod+'>', false)
+       .setTimestamp()
+       .setFooter(''+message.author.username+'');
+        message.channel.send(exampleEmbed);  
+            
+                }
+             }else{
+              const exampleEmbed = new Discord.MessageEmbed()
+       .setColor('#ffa600')
+       .setTitle('Log Number '+args[1]+':')
+       .setURL('https://www.thisworldthesedays.com/command-description-userdeniz1.html')
+       .setAuthor(message.author.username+'')
+       .setDescription('Warned User: <@'+id_player+'>')
+       .addField('Reason:', grund, false)
+       .addField('Duration:', dauer, false)
+       .addField('Warntime:', 'On the '+datum+' at '+uhrzeit, false)
+       .addField('Warned moderator:', '<@'+id_mod+'>', false)
+       .setTimestamp()
+       .setFooter(''+message.author.username+'');
+        message.channel.send(exampleEmbed);  
+              message.channel.send('(No Language set! "§lang" as a Administrator!)').then(msg => msg.delete({timeout: 10000}));
+             }
+            })
       });
     }
   
   }else {
 
     console.log("code 7");
-    const exampleEmbed = new Discord.MessageEmbed()
-    .setColor('#ffa600')
-    .setTitle('Nutzung *log')
-    .setURL('https://www.thisworldthesedays.com/command-description-userdeniz1.html')
-    .setAuthor(message.author.username+'')
-    .setDescription('*log (Log nummer)')
-    .setThumbnail('https://i.imgur.com/wSTFkRM.png')
-    
-    .addField('.', 'Bitte bei Problemen <@466596723297484810> DMen!', false)
-    .setTimestamp()
-    .setFooter(''+message.author.username+'');
-  break1=2;
-          
-          message.channel.send(exampleEmbed);
+   
+  con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+    if(err) throw err;
+        if(rows.length >= 1){
+          let language = rows[0].lang;
+          if(language == "de"){
+            const exampleEmbed = new Discord.MessageEmbed()
+            .setColor('#ffa600')
+            .setTitle('Nutzung *log')
+            .setURL('https://www.thisworldthesedays.com/command-description-userdeniz1.html')
+            .setAuthor(message.author.username+'')
+            .setDescription('*log (Log nummer)')
+            .setThumbnail('https://i.imgur.com/wSTFkRM.png')
+            
+            .addField('.', 'Bitte bei Problemen <@466596723297484810> DMen!', false)
+            .setTimestamp()
+            .setFooter(''+message.author.username+'');
+            message.channel.send(exampleEmbed);
+          break1=2;                               
+          }else if(language == "en"){
+            const exampleEmbed = new Discord.MessageEmbed()
+            .setColor('#ffa600')
+            .setTitle('Using *log')
+            .setURL('https://www.thisworldthesedays.com/command-description-userdeniz1.html')
+            .setAuthor(message.author.username+'')
+            .setDescription('*log (Log number)')
+            .setThumbnail('https://i.imgur.com/wSTFkRM.png')
+            
+            .addField('.', 'Problems? DM <@466596723297484810>!', false)
+            .setTimestamp()
+            .setFooter(''+message.author.username+'');
+            message.channel.send(exampleEmbed);
+          break1=2;                                    
+          }
+       }else{
+        const exampleEmbed = new Discord.MessageEmbed()
+            .setColor('#ffa600')
+            .setTitle('Using *log')
+            .setURL('https://www.thisworldthesedays.com/command-description-userdeniz1.html')
+            .setAuthor(message.author.username+'')
+            .setDescription('*log (Log number)')
+            .setThumbnail('https://i.imgur.com/wSTFkRM.png')
+            
+            .addField('.', 'Problems? DM <@466596723297484810>!', false)
+            .setTimestamp()
+            .setFooter(''+message.author.username+'');
+            message.channel.send(exampleEmbed);
+          break1=2;                                    
+                                                               
+        message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+       }
+      });
 
   }
 break;
@@ -1612,7 +1688,21 @@ default:
                             });
                         sql = `DELETE FROM verwarntimes WHERE id = '`+ message.author.id+`'`;
                         
-                        message.channel.send("ok, bist entwarnt.").then(m => m.delete(deleteTime));
+                        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                          if(err) throw err;
+                              if(rows.length >= 1){
+                                let language = rows[0].lang;
+                                if(language == "de"){
+                                  message.channel.send("ok, bist entwarnt.");                                     
+                                }else if(language == "en"){
+                                  message.channel.send("ok, you're not warned anymore.");                                     
+                                }
+                             }else{
+                              message.channel.send("ok, you're not warned anymore.");                                      
+                                                                                     
+                              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                             }
+                            });
                         con.query(sql, console.log)
                         sql = `DELETE FROM playerrolle WHERE id = '`+ message.author.id+`'`;
                         con.query(sql, console.log)
@@ -1630,19 +1720,78 @@ default:
                           if(sec > 24){
                             sec = sec / 24;
                             secs = parseInt(sec);
-                          message.channel.send("Du bist noch für etwa "+ secs + " Tage verwarnt!").then(m => m.delete(deleteTime));
-
+                            con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                              if(err) throw err;
+                                  if(rows.length >= 1){
+                                    let language = rows[0].lang;
+                                    if(language == "de"){
+                                      message.channel.send("Du bist noch für "+ secs + " Tage verwarnt!");                                     
+                                    }else if(language == "en"){
+                                      message.channel.send("Your warn is lasting for further "+ secs + " days!");                                     
+                                    }
+                                 }else{
+                                  message.channel.send("Your warn is lasting for further "+ secs + " days!");                                     
+                                                                                         
+                                  message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                                 }
+                                });
+    
                           
                           }else{
                             secs = parseInt(sec);
-                            message.channel.send("Du bist noch für etwa "+ secs + " Stunden verwarnt!").then(m => m.delete(deleteTime));}
+                            con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                              if(err) throw err;
+                                  if(rows.length >= 1){
+                                    let language = rows[0].lang;
+                                    if(language == "de"){
+                                      message.channel.send("Du bist noch für "+ secs + " Stunden verwarnt!");                                     
+                                    }else if(language == "en"){
+                                      message.channel.send("Your warn is lasting for further "+ secs + " hours!");                                     
+                                    }
+                                 }else{
+                                  message.channel.send("Your warn is lasting for further "+ secs + " hours!");                                     
+                                                                                         
+                                  message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                                 }
+                                });
+                            }
                         }else{
                           secs = parseInt(sec);
-                          message.channel.send("Du bist noch für etwa "+ secs + " Minuten verwarnt!").then(m => m.delete(deleteTime));}
+                          con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                            if(err) throw err;
+                                if(rows.length >= 1){
+                                  let language = rows[0].lang;
+                                  if(language == "de"){
+                                    message.channel.send("Du bist noch für "+ secs + " Minuten verwarnt!");                                     
+                                  }else if(language == "en"){
+                                    message.channel.send("Your warn is lasting for further "+ secs + " minutes!");                                     
+                                  }
+                               }else{
+                                message.channel.send("Your warn is lasting for further "+ secs + " minutes!");                                     
+                                                                                       
+                                message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                               }
+                              });
+                          }
                         }else{
-
+    
                           secs = parseInt(sec);
-                          message.channel.send("Du bist noch für "+ secs + " Sekunden verwarnt!").then(m => m.delete(deleteTime));}
+                          con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                            if(err) throw err;
+                                if(rows.length >= 1){
+                                  let language = rows[0].lang;
+                                  if(language == "de"){
+                                    message.channel.send("Du bist noch für "+ secs + " Sekunden verwarnt!");                                     
+                                  }else if(language == "en"){
+                                    message.channel.send("Your warn is lasting for further "+ secs + " Seconds!");                                     
+                                  }
+                               }else{
+                                message.channel.send("Your warn is lasting for further "+ secs + " Seconds!");                                     
+                                                                                       
+                                message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                               }
+                              });
+                            }
                           
 
                     }
@@ -1653,8 +1802,22 @@ default:
             }
         });
       }else{
-      message.channel.send("Du bist garnicht gewarnt. Die Rolle als bot beherrschst du besser als ich").then(m => m.delete(deleteTime));}
-
+        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+          if(err) throw err;
+              if(rows.length >= 1){
+                let language = rows[0].lang;
+                if(language == "de"){
+                  message.channel.send("Du bist garnicht verwarnt! Die Rolle als bot beherrscht du besser als ich.");                                     
+                }else if(language == "en"){
+                  message.channel.send("You're not warned! Such a bot...");                                     
+                }
+             }else{
+              message.channel.send("You're not warned! Such a bot...");                                   
+                                                                     
+              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+             }
+            });
+          }
             break;
             case "!sündenbock":
                 console.log("sünde");
@@ -1776,7 +1939,21 @@ default:
                             
                             });
                         sql = `DELETE FROM verwarntimes WHERE id = '`+ message.author.id+`'`;
-                        message.channel.send("ok, bist entwarnt.").then(m => m.delete(deleteTime));
+                        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                          if(err) throw err;
+                              if(rows.length >= 1){
+                                let language = rows[0].lang;
+                                if(language == "de"){
+                                  message.channel.send("ok, bist entwarnt.");                                     
+                                }else if(language == "en"){
+                                  message.channel.send("ok, you're not warned anymore.");                                     
+                                }
+                             }else{
+                              message.channel.send("ok, you're not warned anymore.");                                      
+                                                                                     
+                              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                             }
+                            });
                         con.query(sql, console.log)
                         sql = `DELETE FROM playerrolle WHERE id = '`+ message.author.id+`'`;
                         con.query(sql, console.log)
@@ -1794,21 +1971,78 @@ default:
                       if(sec > 24){
                         sec = sec / 24;
                         secs = parseInt(sec);
-                      message.channel.send("Du bist noch für etwa "+ secs + " Tage verwarnt!");
+                        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                          if(err) throw err;
+                              if(rows.length >= 1){
+                                let language = rows[0].lang;
+                                if(language == "de"){
+                                  message.channel.send("Du bist noch für "+ secs + " Tage verwarnt!");                                     
+                                }else if(language == "en"){
+                                  message.channel.send("Your warn is lasting for further "+ secs + " days!");                                     
+                                }
+                             }else{
+                              message.channel.send("Your warn is lasting for further "+ secs + " days!");                                     
+                                                                                     
+                              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                             }
+                            });
 
                       
                       }else{
                         secs = parseInt(sec);
-                        message.channel.send("Du bist noch für etwa "+ secs + " Stunden verwarnt!");
+                        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                          if(err) throw err;
+                              if(rows.length >= 1){
+                                let language = rows[0].lang;
+                                if(language == "de"){
+                                  message.channel.send("Du bist noch für "+ secs + " Stunden verwarnt!");                                     
+                                }else if(language == "en"){
+                                  message.channel.send("Your warn is lasting for further "+ secs + " hours!");                                     
+                                }
+                             }else{
+                              message.channel.send("Your warn is lasting for further "+ secs + " hours!");                                     
+                                                                                     
+                              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                             }
+                            });
                         }
                     }else{
                       secs = parseInt(sec);
-                      message.channel.send("Du bist noch für etwa "+ secs + " Minuten verwarnt!");
+                      con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                        if(err) throw err;
+                            if(rows.length >= 1){
+                              let language = rows[0].lang;
+                              if(language == "de"){
+                                message.channel.send("Du bist noch für "+ secs + " Minuten verwarnt!");                                     
+                              }else if(language == "en"){
+                                message.channel.send("Your warn is lasting for further "+ secs + " minutes!");                                     
+                              }
+                           }else{
+                            message.channel.send("Your warn is lasting for further "+ secs + " minutes!");                                     
+                                                                                   
+                            message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                           }
+                          });
                       }
                     }else{
 
                       secs = parseInt(sec);
-                      message.channel.send("Du bist noch für "+ secs + " Sekunden verwarnt!");
+                      con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                        if(err) throw err;
+                            if(rows.length >= 1){
+                              let language = rows[0].lang;
+                              if(language == "de"){
+                                message.channel.send("Du bist noch für "+ secs + " Sekunden verwarnt!");                                     
+                              }else if(language == "en"){
+                                message.channel.send("Your warn is lasting for further "+ secs + " Seconds!");                                     
+                              }
+                           }else{
+                            message.channel.send("Your warn is lasting for further "+ secs + " Seconds!");                                     
+                                                                                   
+                            message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                           }
+                          });
+                      
                       }
 
                     }
@@ -2040,75 +2274,125 @@ if(xvv==1){
 
 
 
-    }else {
-      
-      }
+    }
+    
     switch(args[0]){
             
       case "§lang":
         if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz"){
-        if(args[1] == "de"){
-
-        }else if(args[1] == "en"){
-
+        if(args[1] == "de" || args[1] == "deutsch" ){
+          con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+            if(err) throw err;
+                if(rows.length >= 1){
+                  sql = `DELETE FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`;
+                  con.query(sql);
+                  sql = `INSERT INTO SpracheServer (lang, server_id) VALUES ('de', '`+message.guild.id+`');`;
+                  con.query(sql)
+                  
+               }else{
+                sql = `INSERT INTO SpracheServer (lang, server_id) VALUES ('de', '`+message.guild.id+`');`;
+                con.query(sql)
+               }
+              });
+              message.channel.send('Super! Die Serversprache wurde auf Deutsch gestellt!').then(msg => msg.delete({timeout: deleteTime}));
+        }else if(args[1] == "en" || args[1] == "english" ){
+          con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+            if(err) throw err;
+                if(rows.length >= 1){
+                  sql = `DELETE FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`;
+                  con.query(sql);
+                  sql = `INSERT INTO SpracheServer (lang, server_id) VALUES ('en', '`+message.guild.id+`');`;
+                  con.query(sql)
+                  
+               }else{
+                sql = `INSERT INTO SpracheServer (lang, server_id) VALUES ('en', '`+message.guild.id+`');`;
+                con.query(sql)
+               }
+              });
+              message.channel.send('The Serverlanguage is now set to English!').then(msg => msg.delete({timeout: deleteTime}));
         }else{
-          message.channel.send("This Language is not supported! \nSupported Languages until now are: \n -");
+          message.channel.send("This Language is not supported! \nSupported Languages until now are: \nGerman - DE \nEnglish - EN");
         }
-        }else{
-          message.channel.send("Unsuficcient Permissions!");
         }
       break;
 
-        case "§level":
-          console.log("codeing 3");
-          if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz"){
-          if(args.length >= 2){
-          con.query(`SELECT * FROM RollenFürLevel WHERE levelrang = '`+args[1]+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
-            if(err) throw err;
-            console.log("codeing 4");
-               if(rows.length >= 1){
-                console.log("codeing 5");
-                
-                if(message.mentions.roles){
-                  console.log("codeing 7");
-                let rolle = message.mentions.roles.first();
-                console.log("codeing 6");
-                sql = `DELETE FROM RollenFürLevel WHERE levelrang = '`+args[1]+`' AND server_id = '`+message.guild.id+`';`;
-                      
-                con.query(sql);
-                sql = `INSERT INTO RollenFürLevel (rollen_id, levelrang, server_id) VALUES ('`+rolle.id+`', `+args[1]+`,'`+message.guild.id+`');`;
-                con.query(sql)
-                message.channel.send("Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.");
-               }else{
-                message.channel.send("Please mention a role! \n(§level 5 @...)");
-              }
-              console.log("codeing 8");
-              }else{
-                console.log("codeing 11");
-                if(message.mentions.roles){
-                let rolle = message.mentions.roles.first();
-                
-          console.log("codeing 9");
-                sql = `INSERT INTO RollenFürLevel (rollen_id, levelrang, server_id) VALUES ('`+rolle.id+`', `+args[1]+`,'`+message.guild.id+`');`;
-                con.query(sql)
-                message.channel.send("Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.");
-               }else{
-                message.channel.send("Please mention a role! \n(§level 5 @...)");
-              }
-              console.log("codeing 10");
-               
-            }
-              });
-            }else{
-              message.channel.send("Please select a valid Level and mention a role! \n(§level 5 @...)");
-            }
-          }else{
-            message.channel.send("Unsuficcient Permissions!");
-          }
-        break;
+case "§level":
+  if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz"){
+  if(args.length == 3){
+  con.query(`SELECT * FROM RollenFürLevel WHERE levelrang = '`+args[1]+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
+    if(err) throw err;
+       if(rows.length >= 1){
+        
+        if(message.mentions.roles.size == 1){
+        let rolle = message.mentions.roles.first();
+        sql = `DELETE FROM RollenFürLevel WHERE levelrang = '`+args[1]+`' AND server_id = '`+message.guild.id+`';`;
+              
+        con.query(sql);
+        sql = `INSERT INTO RollenFürLevel (rollen_id, levelrang, server_id) VALUES ('`+rolle.id+`', `+args[1]+`,'`+message.guild.id+`');`;
+        con.query(sql)
+        message.channel.send("Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.");
+       }else{
+        message.channel.send("Please mention a role! \n(§level 5 @...)");
+      }
+      }else{
+        if(message.mentions.roles.size == 1){
+        let rolle = message.mentions.roles.first();
+        
+  console.log(rolle.id);
+        sql = `INSERT INTO RollenFürLevel (rollen_id, levelrang, server_id) VALUES ('`+rolle.id+`', `+args[1]+`,'`+message.guild.id+`');`;
+        con.query(sql)
+        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+          if(err) throw err;
+              if(rows.length >= 1){
+                let language = rows[0].lang;
+                if(language == "de"){
+                  message.channel.send("Perfekt! Jeder mit dem Level "+args[1]+" bekommt nun die Rolle <@&"+rolle.id+">.");
+                }else if(language == "en"){
+                  message.channel.send("Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.");
+                }
+             }else{
+              message.channel.send("Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.");
+              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+             }
+            });
+       
+       }else{
+        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+          if(err) throw err;
+              if(rows.length >= 1){
+                let language = rows[0].lang;
+                if(language == "de"){
+                  message.channel.send("Bitte Pinge eine Rolle! \n(§level 5 @...).");
+                }else if(language == "en"){
+                  message.channel.send("Please mention a role! \n(§level 5 @...).");
+                }
+             }else{
+              message.channel.send("Please mention a role! \n(§level 5 @...).");
+              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+             }
+            });
+      }
+       
+    }
+      });
+    }else{
+      con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+        if(err) throw err;
+            if(rows.length >= 1){
+              let language = rows[0].lang;
+              if(language == "de"){
+                message.channel.send("Bitte wähle ein gültiges Level und Pinge eine Rolle! \n(§level 5 @...)");              }else if(language == "en"){
+                message.channel.send("Please select a valid Level and mention a role! \n(§level 5 @...)");              }
+           }else{
+            message.channel.send("Please select a valid Level and mention a role! \n(§level 5 @...)");            message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+           }
+          });
+      
+    }
+  }
+break;
 
           case "§leveling":
-            console.log("COde 1");
             let Level = 0;
             let Experience = 0;
 
@@ -2119,20 +2403,34 @@ if(xvv==1){
                  }
 
                 });
-                console.log("COde 2");
                 con.query(`SELECT * FROM Leveling WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
                   if(err) throw err;
                       if(rows.length >= 1){
                       Experience = rows[0].xplevel;
                      }
                     });
-                    console.log("COde 3");
+                    con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                      if(err) throw err;
+                          if(rows.length >= 1){
+                            let language = rows[0].lang;
+                            if(language == "de"){
+                              message.channel.send("Du bist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
 
-                    message.channel.send("You're level "+Level+" with "+Experience+"/"+(200+(200*a))+" XP.").then(msg => msg.delete({timeout: 20000}));
+                            }else if(language == "en"){
+                              message.channel.send("You're level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
+
+                            }
+                         }else{
+                          message.channel.send("You're level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
+
+                          message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                         }
+                        });
+                    
             break;
       default:
 
-        break;
+        break; 
 
   }
 
@@ -2163,20 +2461,36 @@ if(xvv==1){
                                       sql = `DELETE FROM LevelCooldown WHERE player_id = '`+ message.author.id+`' AND server_id = '`+message.guild.id+`';`;
                                      
                                       con.query(sql)
-                                      let COOLDOWN = Date.now()+20000;
+                                      let COOLDOWN = Date.now()+CooldownLevel;
                                       sql = `INSERT INTO LevelCooldown (player_id, cooldown, server_id) VALUES ('`+ message.author.id+`', `+COOLDOWN+`,'`+message.guild.id+`');`;
                                       con.query(sql)
                                       
-                                      let a = parseInt(LevelNR);
+                                      let b = parseInt(LevelNR);
 
 
-                                      if(XPneu >= (200+(200*a)) && (parseInt(LevelNR)) == 1){
-                                        message.channel.send('Glückwunsch, <@'+message.author.id+'>! Du hast Level '+(a+1)+' erreicht!').then(msg => msg.delete({timeout: 10000}));
-                                   sql = `UPDATE Leveling SET xplevel = `+(XPneu-(200+(200*a)))+` WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
+                                      if(XPneu >= (200+(200*b))){
+                                        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                                          if(err) throw err;
+                                              if(rows.length >= 1){
+                                                let language = rows[0].lang;
+                                                if(language == "de"){
+                                                  message.channel.send('Glückwunsch, <@'+message.author.id+'>! Du hast Level '+(b+1)+' erreicht!').then(msg => msg.delete({timeout: deleteTime}));
+                                                       
+                                                }else if(language == "en"){
+                                                  message.channel.send('Congratulation, <@'+message.author.id+'>! You reached Level '+(b+1)+'!').then(msg => msg.delete({timeout: deleteTime}));
+                                                       
+                                                }
+                                             }else{
+                                              message.channel.send('Congratulation, <@'+message.author.id+'>! You reached Level '+(b+1)+'!').then(msg => msg.delete({timeout: deleteTime}));
+                                                                       
+                                              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                                             }
+                                            });
+                                        sql = `UPDATE Leveling SET xplevel = `+(XPneu-(200+(200*b)))+` WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
                                       con.query(sql);
                                       sql = `DELETE FROM LevelingLEVEL WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
                                       con.query(sql);
-                                    sql = `INSERT INTO LevelingLEVEL (player_id, levelvoll, server_id) VALUES ('`+message.author.id+`', `+(a+1)+`,'`+message.guild.id+`');`;
+                                    sql = `INSERT INTO LevelingLEVEL (player_id, levelvoll, server_id) VALUES ('`+message.author.id+`', `+(b+1)+`,'`+message.guild.id+`');`;
                                         con.query(sql);
                                       }else {
                                         sql = `UPDATE Leveling SET xplevel = `+XPneu+` WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
@@ -2188,8 +2502,8 @@ if(xvv==1){
 
 
 
-                                     for(a = 1; a <= LevelNR; a++) {
-                                      con.query(`SELECT * FROM RollenFürLevel WHERE levelrang = `+a+` AND server_id = '`+message.guild.id+`'`, (err, rows3) => {
+                                     for(a = 1; a <= b; a++) {
+                                      con.query(`SELECT * FROM RollenFürLevel WHERE levelrang = `+b+` AND server_id = '`+message.guild.id+`'`, (err, rows3) => {
                                         if(err) throw err;
                                         if(rows3.length >= 1){
                                           let ROLLENID = rows3[0].rollen_id;
@@ -2214,7 +2528,7 @@ if(xvv==1){
                                       sql = `INSERT INTO LevelingLEVEL (player_id, levelvoll, server_id) VALUES ('`+message.author.id+`', 0,'`+message.guild.id+`');`;
                                         con.query(sql);
                                      }
-                                      let COOLDOWN = Date.now()+20000;
+                                      let COOLDOWN = Date.now()+CooldownLevel;
                                       
                                       sql = `INSERT INTO LevelCooldown (player_id, cooldown, server_id) VALUES ('`+ message.author.id+`', '`+COOLDOWN+`','`+message.guild.id+`');`;
                                       con.query(sql)
@@ -2258,3 +2572,21 @@ bot.login(token)
 // if (<Message>.mentions.members.size) { // or message.mentions.members.size > 0
   //DO STUFF
 //}
+
+/*con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+  if(err) throw err;
+  if(rows.length >= 1){
+    let language = rows[0].lang;
+    if(language == "de"){
+      message.channel.send("Bitte wähle ein gültiges Level und Pinge eine Rolle! \n(§level 5 @...)");  
+
+    }else if(language == "en"){
+      message.channel.send("Please select a valid Level and mention a role! \n(§level 5 @...)");  
+
+    }
+ }else{
+  message.channel.send("You're level "+Level+" with "+Experience+"/"+(200+(200*a))+" XP.").then(msg => msg.delete({timeout: 20000}));
+  
+  message.channel.send('(No Language set! "§lang" as a Administrator!)').then(msg => msg.delete({timeout: 10000}));
+ }
+});*/
