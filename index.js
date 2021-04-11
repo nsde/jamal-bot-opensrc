@@ -2447,7 +2447,7 @@ break;
                       Experience = rows[0].xplevel;
                      }
                     });
-                    con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+taggesUsa.id+`';`, (err, rows) => {
+                    con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
                       if(err) throw err;
                           if(rows.length >= 1){
                             let language = rows[0].lang;
@@ -2459,7 +2459,7 @@ break;
 
                             }
                          }else{
-                          message.channel.send("YThe User <@"+taggesUsa.id+"> is level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
+                          message.channel.send("The User <@"+taggesUsa.id+"> is level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
 
                           message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
                          }
