@@ -1056,7 +1056,6 @@ bot.on('message', message =>{
         
         message.channel.send(exampleEmbed);
 
-        console.log("code 5");
             break;
           }
 
@@ -2139,7 +2138,6 @@ if(xvv==1){
 
 
       if(!message.author.bot){
-        console.log("Test1");
         con.query(`SELECT * FROM Leveling WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
           if(err) throw err;
                       
