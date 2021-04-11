@@ -302,7 +302,6 @@ bot.on('message', message =>{
       }
       
     }else if(message.channel.id === '807326959679176724'){
-        console.log("code 2");
         //message.channel.lastMessage;
         // Deal with command
         let sunde =  message.guild.roles.cache.find((r) => r.id == "772467882508156928");
@@ -314,8 +313,7 @@ bot.on('message', message =>{
             if(err) throw err;
             
            
-                if(rows.length >= 1){            
-                  console.log("code 8");
+                if(rows.length >= 1){      
                     let alteUhr = rows[0].ms;
                     const timen = BigInt(alteUhr);
                     
@@ -327,12 +325,10 @@ bot.on('message', message =>{
                        
                         switch(args[0]){
                             case "IUz8z8dsfwf<BIZ(z78&":
-                                console.log("code 4");
                                 message.delete({ timeout: 1 });
                                 message.member.roles.remove(sunde);
                             break;
                             case f:
-                                  console.log("code 6");
 
                                     if(message.author.tag != lastUser.tag){
                                         
@@ -349,17 +345,6 @@ bot.on('message', message =>{
                                         
                                 
                                 
-                                        con.query(`SELECT * FROM Couning WHERE server = 'Kaan'`, (err, rows) => {
-                                          if(err) throw err;
-                                          if(rows[0].nummer2 != null){
-                                          let nummer = rows[0].nummer2;
-                    
-                                          console.log('BUG FIXING 3');
-                                          }
-                                          console.log('BUG FIXING 4');
-                                        });
-                                            
-                                    console.log('Code 5');
                                             
                                     
                                         
@@ -407,7 +392,6 @@ bot.on('message', message =>{
                     
                     
                                     default:
-                                  console.log("code 6");
                                       
                                         message.delete({ timeout: 1 }) //Supposed to delete message
                                         if(myTable.getItem(message.author.tag)){
@@ -2184,7 +2168,6 @@ if(xvv==1){
                                       let COOLDOWN = Date.now()+20000;
                                       sql = `INSERT INTO LevelCooldown (player_id, cooldown, server_id) VALUES ('`+ message.author.id+`', `+COOLDOWN+`,'`+message.guild.id+`');`;
                                       con.query(sql)
-                                      console.log("asdasda");
                                       
                                       let a = parseInt(LevelNR);
 
