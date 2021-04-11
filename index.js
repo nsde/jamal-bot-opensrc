@@ -2469,17 +2469,14 @@ break;
                     if(rows.length >= 1){
                       let language = rows[0].lang;
                       if(language == "de"){
-                        message.channel.send("`PREFIX: § \n \nlevel -> Nur für Menschen mit der Rolle 'Moderator' oder als Admin verfügbar.",
-                         "\nStelle ein, ab welchem Level man welche Rolle bekommt (Nutzung: §level 5 @{Level5RollePingen}) \n \nleveling: Sieh, auf welchem Level du bist (oder jemand anderes.) §leveling {@Spieler} \n \nlang: Setze die Sprache auf deinem Server`.");
+                        message.channel.send("`PREFIX: § \n \nlevel: Nur für Menschen mit der Rolle 'Moderator' oder als Admin verfügbar. \nStelle ein, ab welchem Level man welche Rolle bekommt (Nutzung: §level 5 @{Level5RollePingen}) \n \nleveling: Sieh, auf welchem Level du bist (oder jemand anderes.) §leveling {@Spieler} \n \nlang: Setze die Sprache auf deinem Server`.");
 
                       }else if(language == "en"){
-                        message.channel.send("`PREFIX: § \n \nlevel -> Nur für Menschen mit der Rolle 'Moderator' oder als Admin verfügbar.",
-                         "\nStelle ein, ab welchem Level man welche Rolle bekommt (Nutzung: §level 5 @{Level5RollePingen}) \n \nleveling: Sieh, auf welchem Level du bist (oder jemand anderes.) §leveling {@Spieler} \n \nlang: Setze die Sprache auf deinem Server`.");
+                        message.channel.send("`PREFIX: § \n \nlevel: Only available for people with the role named 'moderator' or as admin. \nSetup with level a player will get which role (usage: §level 5 @ {Level5RollePingen}) \n \nleveling: See what level you are (or someone else.) §leveling {@player} \n \nlang : Set the language of the bot on your server`");
 
                       }
                    }else{
-                    message.channel.send("`PREFIX: § \n \nlevel -> Nur für Menschen mit der Rolle 'Moderator' oder als Admin verfügbar.",
-                         "\nStelle ein, ab welchem Level man welche Rolle bekommt (Nutzung: §level 5 @{Level5RollePingen}) \n \nleveling: Sieh, auf welchem Level du bist (oder jemand anderes.) §leveling {@Spieler} \n \nlang: Setze die Sprache auf deinem Server`.");
+                    message.channel.send("`PREFIX: § \n \nlevel: Only available for people with the role named 'moderator' or as admin. \nSetup with level a player will get which role (usage: §level 5 @ {Level5RollePingen}) \n \nleveling: See what level you are (or someone else.) §leveling {@player} \n \nlang : Set the language of the bot on your server`");
 
                     message.channel.send('(No Language set! "§lang" as an Administrator!)');
                    }
