@@ -2282,16 +2282,13 @@ if(xvv==1){
 
 
     }
-    let ARGS = message.content.toUpperCase();
-    console.log(args);
-
-    console.log(args[1].content.toUpperCase());
-    switch(args[0]){
+    
+    switch(args[0].toUpperCase()){
       case "§LANG":
         console.log("code 1");
         if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz"){
          
-        if(ARGS[1] == "DE" || ARGS[1] == "DEUTSCH" ){
+        if(args[1].toUpperCase() == "DE" || args[1].toUpperCase() == "DEUTSCH" ){
           con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
             if(err) throw err;
                 if(rows.length >= 1){
@@ -2307,7 +2304,7 @@ if(xvv==1){
                }
               });
               message.channel.send('Super! Die Serversprache wurde auf Deutsch gestellt!').then(msg => msg.delete({timeout: deleteTime}));
-        }else if(ARGS[1] == "EN" || ARGS[1] == "ENGLISH" ){
+        }else if(args[1].toUpperCase() == "EN" || args[1].toUpperCase() == "ENGLISH" ){
           con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
             if(err) throw err;
                 if(rows.length >= 1){
@@ -2330,7 +2327,7 @@ if(xvv==1){
 
 case "§LEVEL":
   if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz"){
-  if(ARGS.length == 3){
+  if(args.length == 3){
   con.query(`SELECT * FROM RollenFürLevel WHERE levelrang = '`+args[1]+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
     if(err) throw err;
        if(rows.length >= 1){
