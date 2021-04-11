@@ -14,7 +14,7 @@ var vb;
 var deleteTime = 20000;
 let CooldownLevel = 45000;
 var vb2;
-var Prefix = "#";
+var Prefix = "§";
 function isInt(value) {
   return !isNaN(value) && (function(x) { return (x | 0) === x; })(parseFloat(value))
 }
@@ -81,7 +81,7 @@ let sql2;
 
 bot.on("ready", () => {
     console.log('Der Bot ist nun aktiv')
-
+    
     con.query(`SELECT * FROM Counting WHERE server = 'Kaan'`, (err, rows) => {
       if(err) throw err;
       var add = rows[0].nummer2;
@@ -226,7 +226,7 @@ console.log(add);
          AlleRollen.setItem("19", "808695151081685063");
   }
     
-    bot.user.setActivity('Rainbow 6 Siege', {type: 'STREAMING'}).catch(console.error)
+    bot.user.setActivity('Type §help for help', {type: 'STREAMING'}).catch(console.error)
 
 })
 
@@ -2284,7 +2284,7 @@ if(xvv==1){
     }
     
     switch(args[0].toUpperCase()){
-      case "§LANG":
+      case ""+Prefix+"LANG":
         console.log("code 1");
         if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz"){
          
@@ -2325,7 +2325,7 @@ if(xvv==1){
         }
       break;
 
-case "§LEVEL":
+case ""+Prefix+"LEVEL":
   if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz"){
   if(args.length == 3){
   con.query(`SELECT * FROM RollenFürLevel WHERE levelrang = '`+args[1]+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
@@ -2427,7 +2427,7 @@ case "§LEVEL":
   }
 break;
 
-          case "§LEVELING":
+          case ""+Prefix+"LEVELING":
             let Level = 0;
             let Experience = 0;
 
@@ -2463,6 +2463,29 @@ break;
                         });
                     
             break;
+            case ""+Prefix+"HELP":
+              con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                if(err) throw err;
+                    if(rows.length >= 1){
+                      let language = rows[0].lang;
+                      if(language == "de"){
+                        message.channel.send("`PREFIX: § \n \nlevel -> Nur für Menschen mit der Rolle 'Moderator' oder als Admin verfügbar.",
+                         "\nStelle ein, ab welchem Level man welche Rolle bekommt (Nutzung: §level 5 @{Level5RollePingen}) \n \nleveling: Sieh, auf welchem Level du bist (oder jemand anderes.) §leveling {@Spieler} \n \nlang: Setze die Sprache auf deinem Server`.");
+
+                      }else if(language == "en"){
+                        message.channel.send("`PREFIX: § \n \nlevel -> Nur für Menschen mit der Rolle 'Moderator' oder als Admin verfügbar.",
+                         "\nStelle ein, ab welchem Level man welche Rolle bekommt (Nutzung: §level 5 @{Level5RollePingen}) \n \nleveling: Sieh, auf welchem Level du bist (oder jemand anderes.) §leveling {@Spieler} \n \nlang: Setze die Sprache auf deinem Server`.");
+
+                      }
+                   }else{
+                    message.channel.send("`PREFIX: § \n \nlevel -> Nur für Menschen mit der Rolle 'Moderator' oder als Admin verfügbar.",
+                         "\nStelle ein, ab welchem Level man welche Rolle bekommt (Nutzung: §level 5 @{Level5RollePingen}) \n \nleveling: Sieh, auf welchem Level du bist (oder jemand anderes.) §leveling {@Spieler} \n \nlang: Setze die Sprache auf deinem Server`.");
+
+                    message.channel.send('(No Language set! "§lang" as an Administrator!)');
+                   }
+                  });
+
+              break;
       default:
 
         break; 
