@@ -2297,6 +2297,7 @@ if(xvv==1){
                   con.query(sql);
                   sql = `INSERT INTO SpracheServer (lang, server_id) VALUES ('de', '`+message.guild.id+`');`;
                   con.query(sql)
+                  //
                   
                }else{
                 sql = `INSERT INTO SpracheServer (lang, server_id) VALUES ('de', '`+message.guild.id+`');`;
