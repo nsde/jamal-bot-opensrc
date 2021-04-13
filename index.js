@@ -2540,6 +2540,7 @@ break;
               let Gained = Math.floor(Math.random() * 20);
               let Gained10bis30 = Gained + 10;
               let XPneu = (parseInt(XP)) + Gained10bis30;
+              let b1 = 0;
               con.query(`SELECT * FROM LevelingLEVEL WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows2) => {
                 if(err) throw err;
                    if(rows2.length >= 1){
@@ -2561,6 +2562,7 @@ break;
                                       con.query(sql)
                                       
                                       let b = parseInt(LevelNR);
+                                      b1 = b;
 
 
                                       if(XPneu >= (200+(200*b))){
@@ -2628,31 +2630,31 @@ break;
 
 
                   
+                        for(a = 1; a <= b1; a++) {
+                          con.query(`SELECT * FROM RollenFürLevel WHERE levelrang = `+b1+` AND server_id = '`+message.guild.id+`'`, (err, rows3) => {
+                            if(err) throw err;
+                            if(rows3.length >= 1){
+                              let ROLLENID = rows3[0].rollen_id;
+                              let LevelRolle = message.guild.roles.cache.find((r) => r.id == ""+ROLLENID);
+                              if (LevelRolle != null && !message.member.roles.cache.has(LevelRolle)) {
+                              message.member.roles.add(LevelRolle);
+                              }
+                              if(b >= 5){
+                                let LevelRolle2 = message.guild.roles.cache.find((r) => r.id == "808752092927623179");
+                              if (LevelRolle2 != null && !message.member.roles.cache.has(LevelRolle2)) {
+                              message.member.roles.add(LevelRolle2);
+                              }
+                              }
+                            }
 
+                          });
+
+                        }
               
       }
 
       
-      for(a = 1; a <= b; a++) {
-        con.query(`SELECT * FROM RollenFürLevel WHERE levelrang = `+b+` AND server_id = '`+message.guild.id+`'`, (err, rows3) => {
-          if(err) throw err;
-          if(rows3.length >= 1){
-            let ROLLENID = rows3[0].rollen_id;
-            let LevelRolle = message.guild.roles.cache.find((r) => r.id == ""+ROLLENID);
-            if (LevelRolle != null && !message.member.roles.cache.has(LevelRolle)) {
-            message.member.roles.add(LevelRolle);
-            }
-            if(b >= 5){
-              let LevelRolle2 = message.guild.roles.cache.find((r) => r.id == "808752092927623179");
-            if (LevelRolle2 != null && !message.member.roles.cache.has(LevelRolle2)) {
-            message.member.roles.add(LevelRolle2);
-            }
-            }
-          }
-
-        });
-
-      }
+      
 
 });
 
