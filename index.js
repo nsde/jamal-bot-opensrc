@@ -2531,6 +2531,7 @@ break;
 
 
       if(!message.author.bot){
+        let b1 = 0;
         con.query(`SELECT * FROM Leveling WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
           if(err) throw err;
                       
@@ -2540,7 +2541,7 @@ break;
               let Gained = Math.floor(Math.random() * 20);
               let Gained10bis30 = Gained + 10;
               let XPneu = (parseInt(XP)) + Gained10bis30;
-              let b1 = 0;
+              
               con.query(`SELECT * FROM LevelingLEVEL WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows2) => {
                 if(err) throw err;
                    if(rows2.length >= 1){
