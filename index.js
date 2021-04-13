@@ -87,7 +87,7 @@ bot.on("ready", () => {
       var add = rows[0].nummer2;
 console.log(add);
        f = ''+add;
-       //f = ''+4079; 
+       f = ''+4152; 
        console.log(f);
 
     });
@@ -131,7 +131,7 @@ console.log(add);
     //     let bruhplayer =  message.guild.roles.cache.find((r) => r.id == "738168309450801214");
     //     AlleRollen.setItem("19", "738168309450801214");
     //     let advancedplayer =  message.guild.roles.cache.find((r) => r.id == "738167850820304947");
-         AlleRollen.setItem("20", "738167850820304947");
+     //    AlleRollen.setItem("20", "738167850820304947");
      //  let schwitzer =  message.guild.roles.cache.find((r) => r.id == "738165647904735253");
          AlleRollen.setItem("21", "738165647904735253");
    //      let versuchkanin =  message.guild.roles.cache.find((r) => r.id == "738165457600643102");
@@ -222,7 +222,7 @@ console.log(add);
          AlleRollen.setItem("63", "808694261062303754");
  //        let bl =  message.guild.roles.cache.find((r) => r.id == "808694672636903434");
          AlleRollen.setItem("64", "808694672636903434");
-          AlleRollen.setItem("65", "808694870491136051");
+          AlleRollen.setItem("20", "808694870491136051");
          AlleRollen.setItem("19", "808695151081685063");
   }
     
@@ -252,7 +252,7 @@ console.log(add);
 
 });*/
 
-bot.on('message', message =>{
+bot.on('message', async message =>{
 
     
 
@@ -773,7 +773,7 @@ bot.on('message', message =>{
                                     sql = `INSERT INTO playerrolle (id) VALUES ('`+message.author.id+`')`;
                                                         con.query(sql, console.log);
                                                         let gasd = "";
-                                                        for(var i = 1; i < 67; i++){
+                                                        for(var i = 1; i < 65; i++){
                                       
                                                           var a = AlleRollen.getItem(''+i);
                                                           let abc =  message.guild.roles.cache.find((r) => r.id == a);
@@ -895,7 +895,7 @@ bot.on('message', message =>{
                                     con.query(sql, console.log);
                                     let gasd = "";
                                     
-                                    for(var i = 1; i < 67; i++){
+                                    for(var i = 1; i < 65; i++){
                                       
                                       var a = AlleRollen.getItem(''+i);
                                       let abc =  message.guild.roles.cache.find((r) => r.id == a);
@@ -1167,7 +1167,7 @@ bot.on('message', message =>{
                 sql = `INSERT INTO playerrolle (id) VALUES ('`+taggedUser2.id+`')`;
                                     con.query(sql, console.log);
                                     let gasd = "";
-                for(var i = 1; i < 67; i++){
+                for(var i = 1; i < 65; i++){
                                       
                   var a = AlleRollen.getItem(''+i);
                   let abc =  message.guild.roles.cache.find((r) => r.id == a);
@@ -1295,7 +1295,7 @@ bot.on('message', message =>{
                 sql = `INSERT INTO playerrolle (id) VALUES ('`+taggedUser2.id+`')`;
                 con.query(sql, console.log);
                 let gasd = "";
-                for(var i = 1; i < 67; i++){
+                for(var i = 1; i < 65; i++){
                                       
                   var a = AlleRollen.getItem(''+i);
                   let abc =  message.guild.roles.cache.find((r) => r.id == a);
@@ -2651,8 +2651,33 @@ break;
               
       }
 
-    
+      
+      
 
+});
+
+bot.on('messageReactionAdd', async (reaction, user) => {
+  if (reaction.partial) { //this whole section just checks if the reaction is partial
+      try {
+          await reaction.fetch(); //fetches reaction because not every reaction is stored in the cache
+      } catch (error) {
+          console.error('Fetching message failed: ', error);
+          return;
+      }
+  }
+  if (!user.bot) {
+      if (reaction.emoji.id == "831149456325345310") { //if the user reacted with the right emoji
+
+          const role = reaction.message.guild.roles.cache.find(r => r.id === "738166493891788870"); //finds role you want to assign (you could also user .name instead of .id)
+
+          const { guild } = reaction.message //store the guild of the reaction in variable
+
+          const member = guild.members.cache.find(member => member.id === user.id); //find the member who reacted (because user and member are seperate things)
+
+          member.roles.add(role); //assign selected role to member
+
+      }
+  }
 })
 
    
