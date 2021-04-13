@@ -2597,26 +2597,7 @@ break;
 
 
 
-                                     for(a = 1; a <= b; a++) {
-                                      con.query(`SELECT * FROM RollenFürLevel WHERE levelrang = `+b+` AND server_id = '`+message.guild.id+`'`, (err, rows3) => {
-                                        if(err) throw err;
-                                        if(rows3.length >= 1){
-                                          let ROLLENID = rows3[0].rollen_id;
-                                          let LevelRolle = message.guild.roles.cache.find((r) => r.id == ""+ROLLENID);
-                                          if (LevelRolle != null && !message.member.roles.cache.has(LevelRolle)) {
-                                          message.member.roles.add(LevelRolle);
-                                          }
-                                          if(b >= 5){
-                                            let LevelRolle2 = message.guild.roles.cache.find((r) => r.id == "808752092927623179");
-                                          if (LevelRolle2 != null && !message.member.roles.cache.has(LevelRolle2)) {
-                                          message.member.roles.add(LevelRolle2);
-                                          }
-                                          }
-                                        }
-
-                                      });
-
-                                    }
+                                     
                                   }
                                 
                                   }else{
@@ -2652,7 +2633,26 @@ break;
       }
 
       
-      
+      for(a = 1; a <= b; a++) {
+        con.query(`SELECT * FROM RollenFürLevel WHERE levelrang = `+b+` AND server_id = '`+message.guild.id+`'`, (err, rows3) => {
+          if(err) throw err;
+          if(rows3.length >= 1){
+            let ROLLENID = rows3[0].rollen_id;
+            let LevelRolle = message.guild.roles.cache.find((r) => r.id == ""+ROLLENID);
+            if (LevelRolle != null && !message.member.roles.cache.has(LevelRolle)) {
+            message.member.roles.add(LevelRolle);
+            }
+            if(b >= 5){
+              let LevelRolle2 = message.guild.roles.cache.find((r) => r.id == "808752092927623179");
+            if (LevelRolle2 != null && !message.member.roles.cache.has(LevelRolle2)) {
+            message.member.roles.add(LevelRolle2);
+            }
+            }
+          }
+
+        });
+
+      }
 
 });
 
