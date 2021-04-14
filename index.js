@@ -59,26 +59,6 @@ con.connect(err => {
 });
 let sql;
 
-
-
-var con2 = mysql.createConnection({
-    host: "bn533iqsk5l9grxprdhf-mysql.services.clever-cloud.com",
-    user: "uku1exr0axpnpulg",
-    password: "GM2UUDcgnyNiRwTKG8QE",
-    database: "bn533iqsk5l9grxprdhf"
-});
-
-con2.connect(err => {
- if(err) throw err;
- console.log("Connected To Database!");
- con2.query("SHOW TABLES", console.log);
-
-
-});
-let sql2;
-
-
-
 bot.on("ready", () => {
     console.log('Der Bot ist nun aktiv')
     
@@ -384,7 +364,6 @@ bot.on('message', async message =>{
                                              lastUser = message.author;
                                              lastUser = message.author;
                                              con.query(sql);
-                                             con2.query(sql2);
                                 
                                 
                                 });
@@ -418,11 +397,11 @@ bot.on('message', async message =>{
                                                 console.log(''+message.author.id);
                                                 console.log("code 8");
                                                     if(rows < 1){
-                                                        sql2 = `INSERT INTO verwarnungen VALUES ('`+ message.author.id+`', 1)`;
+                                                        sql = `INSERT INTO verwarnungen VALUES ('`+ message.author.id+`', 1)`;
+                                                        con.query(sql);
                                                          bot.channels.cache.get("807619390279254047").send("*Name:* <@" + message.author.id + "> \n*Grund für Sündenbock*: Spam in <#807326959679176724> \n*Dauer*:  5 Minuten (nach 5 Minuten !Sündenbock in <#773446927710552094>).");
                                                         myTable.setItem(message.author.tag, 0);
-                                                        con.query(sql, console.log);
-                                                    con2.query(sql2, console.log);
+                                                        con.query(sql);
                                                     lastUser = message.author;
 
                                                     if (!(message.member.roles.cache.has(sunde.id))) {
@@ -531,7 +510,6 @@ bot.on('message', async message =>{
                                                     
                                                     sql = `INSERT INTO verwarntimes (id, ms) VALUES ('`+ message.author.id+`', '`+times+`')`;
                                                     con.query(sql);
-                                                    con2.query(sql2);
                                                     
                                                     
                                                     }else{
@@ -647,7 +625,6 @@ bot.on('message', async message =>{
                     
                                                    // sql2 = `UPDATE verwarnungen SET number = `+vb2+` WHERE id = '`+ message.author.id+`'`;
                                                     con.query(sql);
-                                                    con2.query(sql2);
                                                     lastUser = message.author;
                                                     if (!(message.member.roles.cache.has(sunde.id))) {
                                                         message.member.roles.add(sunde);
@@ -658,7 +635,6 @@ bot.on('message', async message =>{
                                                     sql = `INSERT INTO verwarntimes (id, ms) VALUES ('`+ message.author.id+`', '`+times+`')`;
                                                     
                                                     con.query(sql);
-                                                    con2.query(sql2);
                     
                     
                     
@@ -730,7 +706,6 @@ bot.on('message', async message =>{
                                lastUser = message.author;
                                lastUser = message.author;
                                con.query(sql);
-                               con2.query(sql2);
                   
             
             });
@@ -763,11 +738,11 @@ bot.on('message', async message =>{
                             if(err) throw err;
                             
                                 if(rows < 1){
-                                    sql2 = `INSERT INTO verwarnungen VALUES ('`+ message.author.id+`', 1)`;
+                                    sql = `INSERT INTO verwarnungen VALUES ('`+ message.author.id+`', 1)`;
+                                    con.query(sql);
                                     bot.channels.cache.get("807619390279254047").send("*Name:* <@" + message.author.id + "> \n*Grund für Sündenbock*: Spam in <#807326959679176724> \n*Dauer*:  5 Minuten (nach 5 Minuten !Sündenbock in <#773446927710552094>).");
                                     myTable.setItem(message.author.tag, 0);
-                                    con.query(sql, console.log);
-                                con2.query(sql2, console.log);
+                                    con.query(sql);
                                 lastUser = message.author;
                                 if (!(message.member.roles.cache.has(sunde.id))) {
                                     message.member.roles.add(sunde);
@@ -865,7 +840,7 @@ bot.on('message', async message =>{
                                                             sql = `UPDATE playerrolle SET `+SET+`='0' WHERE id='`+message.author.id+`'`;
                                                           } 
                                                           console.log(i+" penis "+SET);
-                                                          con.query(sql, console.log);
+                                                          con.query(sql);
                                                         
                                                       }  
                                 const time = Date.now()+300000;
@@ -873,8 +848,7 @@ bot.on('message', async message =>{
                                 console.log("code 15");
                                 sql = `INSERT INTO verwarntimes (id, ms) VALUES ('`+ message.author.id+`', '`+times+`')`;
                                 
-                                con.query(sql, console.log);
-                                             con2.query(sql2, console.log);
+                                con.query(sql);
                                 
                                 }else{
                                     let warnings = rows[0].number;
@@ -886,15 +860,14 @@ bot.on('message', async message =>{
                               
 
 
-                                sql2 = `UPDATE verwarnungen SET number = `+vb2+` WHERE id = '`+ message.author.id+`'`;
-                                con.query(sql, console.log);
-                                con2.query(sql2, console.log);
+                                sql = `UPDATE verwarnungen SET number = `+vb2+` WHERE id = '`+ message.author.id+`'`;
+                                con.query(sql);
                                 lastUser = message.author;
                                 if (!(message.member.roles.cache.has(sunde.id))) {
                                     message.member.roles.add(sunde);
                                 }     
                                     sql = `INSERT INTO playerrolle (id) VALUES ('`+message.author.id+`')`;
-                                    con.query(sql, console.log);
+                                    con.query(sql);
                                     let gasd = "";
                                     
                                     for(var i = 1; i < 65; i++){
@@ -996,7 +969,6 @@ bot.on('message', async message =>{
                                 sql = `INSERT INTO verwarntimes (id, ms) VALUES ('`+ message.author.id+`', '`+times+`')`;
                                 console.log("code 17");
                                 con.query(sql);
-                                con2.query(sql2);
 
 
                             }
@@ -1150,7 +1122,8 @@ bot.on('message', async message =>{
         
         
             if(rows < 1){
-                sql2 = `INSERT INTO verwarnungen VALUES ('`+taggedUser2.id+`', 1)`;
+                sql = `INSERT INTO verwarnungen VALUES ('`+taggedUser2.id+`', 1)`;
+                con.query(sql);
                 bot.channels.cache.get("807619390279254047").send("**WARNING - Log Nummer "+(LogNR)+"**\n*Name:* <@" + taggedUser2.id + "> \n*Grund für Sündenbock*:"+message5+" \n*Dauer*: "+penim+" " + BanSuffix +" (nach Ablauf der Zeit !Sündenbock in <#773446927710552094>).");
                 var benim = penis;
                 
@@ -1161,13 +1134,12 @@ bot.on('message', async message =>{
                 sql = `INSERT INTO logswarnungen(log_id, id_player, dauer, grund, id_mod, datum, uhrzeit)
                 VALUES ('`+LogNR+`','`+taggedUser2.id+`','`+penim+` `+BanSuffix+`','`+message5+`','`+message.author.id+`','`+cur. getDate()+"."+(cur. getMonth() + 1)+"."+cur.getFullYear()+`','`+cur. getHours()+":"+cur. getMinutes()+`');`;
                 myTable.setItem(taggedUser2.tag, 0);
-                con.query(sql, console.log);
-            con2.query(sql2, console.log);
+                con.query(sql);
             if (!(taggedUser2.roles.cache.has(sunde.id))) {
                 message.member.roles.add(sunde);
                 }
                 sql = `INSERT INTO playerrolle (id) VALUES ('`+taggedUser2.id+`')`;
-                                    con.query(sql, console.log);
+                                    con.query(sql);
                                     let gasd = "";
                 for(var i = 1; i < 65; i++){
                                       
@@ -1259,7 +1231,7 @@ bot.on('message', async message =>{
                     sql = `UPDATE playerrolle SET `+gasd+`='0' WHERE id='`+taggedUser2.id+`'`;
                   } 
                   console.log(i+" penis "+gasd);
-                  con.query(sql, console.log);
+                  con.query(sql);
                 
               }  
             const time = Date.now()+Zeit;
@@ -1268,7 +1240,6 @@ bot.on('message', async message =>{
             sql = `INSERT INTO verwarntimes (id, ms) VALUES ('`+ taggedUser2.id+`', '`+times+`')`;
             
             con.query(sql);
-                         con2.query(sql2);
             
             }else{
                 let warnings = rows[0].number;
@@ -1284,9 +1255,8 @@ bot.on('message', async message =>{
                 con.query(sql);
 
 
-            sql2 = `UPDATE verwarnungen SET number = `+vb2+` WHERE id = '`+ taggedUser2.id+`'`;
+            sql = `UPDATE verwarnungen SET number = `+vb2+` WHERE id = '`+ taggedUser2.id+`'`;
             con.query(sql);
-            con2.query(sql2);
             if (!(taggedUser2.roles.cache.has(sunde.id))) {
               taggedUser2.roles.add(sunde);
             }     
@@ -1384,7 +1354,7 @@ bot.on('message', async message =>{
                     sql = `UPDATE playerrolle SET `+gasd+`='0' WHERE id='`+taggedUser2.id+`'`;
                   } 
                   
-                  con.query(sql, console.log);
+                  con.query(sql);
                 
               }  
             }  
@@ -1709,9 +1679,9 @@ default:
                               message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
                              }
                             });
-                        con.query(sql, console.log)
+                        con.query(sql)
                         sql = `DELETE FROM playerrolle WHERE id = '`+ message.author.id+`'`;
-                        con.query(sql, console.log)
+                        con.query(sql)
                    }else {
                         
                         
