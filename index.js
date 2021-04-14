@@ -87,7 +87,7 @@ bot.on("ready", () => {
       var add = rows[0].nummer2;
 console.log(add);
        f = ''+add;
-       f = ''+4254; 
+       //f = ''+4254; 
        console.log(f);
 
     });
