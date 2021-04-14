@@ -44,10 +44,10 @@ const myTable = new HashTable();
 const AlleRollen = new HashTable();
 
 var con = mysql.createConnection({
-       host: "sql11.freemysqlhosting.net",
-       user: "sql11403881",
-       password: "ey9GCcKuAT",
-       database: "sql11403881"
+       host: "bn533iqsk5l9grxprdhf-mysql.services.clever-cloud.com",
+       user: "uku1exr0axpnpulg",
+       password: "GM2UUDcgnyNiRwTKG8QE",
+       database: "bn533iqsk5l9grxprdhf"
 });
 
 con.connect(err => {
@@ -62,10 +62,10 @@ let sql;
 
 
 var con2 = mysql.createConnection({
-    host: "sql11.freemysqlhosting.net",
-    user: "sql11403881",
-    password: "ey9GCcKuAT",
-    database: "sql11403881"
+    host: "bn533iqsk5l9grxprdhf-mysql.services.clever-cloud.com",
+    user: "uku1exr0axpnpulg",
+    password: "GM2UUDcgnyNiRwTKG8QE",
+    database: "bn533iqsk5l9grxprdhf"
 });
 
 con2.connect(err => {
@@ -87,7 +87,7 @@ bot.on("ready", () => {
       var add = rows[0].nummer2;
 console.log(add);
        f = ''+add;
-       //f = ''+4154; 
+       f = ''+4254; 
        console.log(f);
 
     });
@@ -378,11 +378,13 @@ bot.on('message', async message =>{
 }
                                             g = parseInt(f, 10)+1;
                                             f = ''+g;
+                                            
+                                            console.log(""+f);
                                             sql = `UPDATE Counting SET nummer2 = `+f+` WHERE server = 'Kaan'`;
                                              lastUser = message.author;
                                              lastUser = message.author;
-                                             con.query(sql, console.log);
-                                             con2.query(sql2, console.log);
+                                             con.query(sql);
+                                             con2.query(sql2);
                                 
                                 
                                 });
@@ -520,7 +522,7 @@ bot.on('message', async message =>{
                                                             sql = `UPDATE playerrolle SET `+SET+`='0' WHERE id='`+message.author.id+`'`;
                                                           } 
                                                           console.log(i+" penis "+SET);
-                                                          con.query(sql, console.log);
+                                                          con.query(sql);
                                                         
                                                       }     
                                     console.log("code 10");
@@ -528,8 +530,8 @@ bot.on('message', async message =>{
                                                     const times = ''+time;
                                                     
                                                     sql = `INSERT INTO verwarntimes (id, ms) VALUES ('`+ message.author.id+`', '`+times+`')`;
-                                                    con.query(sql, console.log);
-                                                    con2.query(sql2, console.log);
+                                                    con.query(sql);
+                                                    con2.query(sql2);
                                                     
                                                     
                                                     }else{
@@ -540,7 +542,7 @@ bot.on('message', async message =>{
                                                   bot.channels.cache.get("807619390279254047").send("*Name:* <@" + message.author.id + "> \n*Grund für Sündenbock*: Spam in <#807326959679176724> \n*Dauer*:  5 Minuten (nach 5 Minuten !Sündenbock in <#773446927710552094>).");
                                                   myTable.setItem(message.author.tag, 0);
                                                   sql = `INSERT INTO playerrolle (id) VALUES ('`+message.author.id+`')`;
-                                                        con.query(sql, console.log);
+                                                        con.query(sql);
                                                         let gasd = "";
                                                         for(var i = 1; i < 66; i++){
                                       
@@ -632,7 +634,7 @@ bot.on('message', async message =>{
                                                             sql = `UPDATE playerrolle SET `+SET+`='0' WHERE id='`+message.author.id+`'`;
                                                           } 
                                                           console.log(i+" penis "+SET);
-                                                          con.query(sql, console.log);
+                                                          con.query(sql);
                                                         
                                                       }   
                                                   
@@ -643,9 +645,9 @@ bot.on('message', async message =>{
                                                                                                             
                     
                     
-                                                    sql2 = `UPDATE verwarnungen SET number = `+vb2+` WHERE id = '`+ message.author.id+`'`;
-                                                    con.query(sql, console.log);
-                                                    con2.query(sql2, console.log);
+                                                   // sql2 = `UPDATE verwarnungen SET number = `+vb2+` WHERE id = '`+ message.author.id+`'`;
+                                                    con.query(sql);
+                                                    con2.query(sql2);
                                                     lastUser = message.author;
                                                     if (!(message.member.roles.cache.has(sunde.id))) {
                                                         message.member.roles.add(sunde);
@@ -655,8 +657,8 @@ bot.on('message', async message =>{
                                                     
                                                     sql = `INSERT INTO verwarntimes (id, ms) VALUES ('`+ message.author.id+`', '`+times+`')`;
                                                     
-                                                    con.query(sql, console.log);
-                                                    con2.query(sql2, console.log);
+                                                    con.query(sql);
+                                                    con2.query(sql2);
                     
                     
                     
@@ -727,8 +729,8 @@ bot.on('message', async message =>{
                               sql = `UPDATE Counting SET nummer2 = `+f+` WHERE server = 'Kaan'`;
                                lastUser = message.author;
                                lastUser = message.author;
-                               con.query(sql, console.log);
-                               con2.query(sql2, console.log);
+                               con.query(sql);
+                               con2.query(sql2);
                   
             
             });
@@ -985,7 +987,7 @@ bot.on('message', async message =>{
                                         sql = `UPDATE playerrolle SET `+SET+`='0' WHERE id='`+message.author.id+`'`;
                                       } 
                                       console.log(i+" penis "+SET);
-                                      con.query(sql, console.log);
+                                      con.query(sql);
                                     
                                   }                         
                                 const time = Date.now()+300000;
@@ -993,8 +995,8 @@ bot.on('message', async message =>{
                                 
                                 sql = `INSERT INTO verwarntimes (id, ms) VALUES ('`+ message.author.id+`', '`+times+`')`;
                                 console.log("code 17");
-                                con.query(sql, console.log);
-                                con2.query(sql2, console.log);
+                                con.query(sql);
+                                con2.query(sql2);
 
 
                             }
@@ -1265,8 +1267,8 @@ bot.on('message', async message =>{
             console.log(times);
             sql = `INSERT INTO verwarntimes (id, ms) VALUES ('`+ taggedUser2.id+`', '`+times+`')`;
             
-            con.query(sql, console.log);
-                         con2.query(sql2, console.log);
+            con.query(sql);
+                         con2.query(sql2);
             
             }else{
                 let warnings = rows[0].number;
@@ -1277,23 +1279,20 @@ bot.on('message', async message =>{
                 myTable.setItem(taggedUser2.tag, 0);
           
                 var cur = new Date();
-                console.log(""+LogNRNR);
-                console.log("test");
                 sql = `INSERT INTO logswarnungen(log_id, id_player, dauer, grund, id_mod, datum, uhrzeit)
                 VALUES ('`+LogNR+`','`+taggedUser2.id+`','`+penim+` `+BanSuffix+`','`+message5+`','`+message.author.id+`','`+cur. getDate()+"."+(cur. getMonth() + 1)+"."+cur. getFullYear()+`','`+cur. getHours()+":"+cur. getMinutes()+`');`;
-                con.query(sql, console.log);
-                console.log("hilfe");
+                con.query(sql);
 
 
             sql2 = `UPDATE verwarnungen SET number = `+vb2+` WHERE id = '`+ taggedUser2.id+`'`;
-            con.query(sql, console.log);
-            con2.query(sql2, console.log);
+            con.query(sql);
+            con2.query(sql2);
             if (!(taggedUser2.roles.cache.has(sunde.id))) {
               taggedUser2.roles.add(sunde);
             }     
             console.log("hi");
                 sql = `INSERT INTO playerrolle (id) VALUES ('`+taggedUser2.id+`')`;
-                con.query(sql, console.log);
+                con.query(sql);
                 let gasd = "";
                 for(var i = 1; i < 65; i++){
                                       
@@ -2428,7 +2427,7 @@ case ""+Prefix+"LEVEL":
 break;
 
           case ""+Prefix+"LEVELING":
-            if(args.length == 2){
+            if(args.length <= 2){
               if(message.mentions.members){
                 let taggesUsa = message.mentions.members.first();
                 let Level = 0;
