@@ -63,6 +63,13 @@ let sql;
 
 con.on('error', function(err) {
   console.log(err.code);
+  con.connect(err => {
+    if(err) throw err;
+    console.log("Connected To Database!");
+    con.query("SHOW TABLES", console.log);
+
+
+});
 });
 
 
