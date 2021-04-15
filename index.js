@@ -1,3 +1,4 @@
+'use strict';
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 const PREFIX = "De!";
@@ -6,7 +7,8 @@ const token = "ODA3MzczOTgyNDExNTIyMDgw.YB3DnQ.Zjk82JnKFOY65DxMuZDmo33zhzg";
 const mysql = require("mysql");
 "Code 5";
 var version = '1.3.1';
-Discord.User = lastUser = '';
+
+let lastUser = Discord.User = '';
 var f;
 var verwarnungen2;
 var verwarnungen;
@@ -59,29 +61,11 @@ con.connect(err => {
 });
 let sql;
 
-function handleDisconnect() {
-  sql = mysql.createConnection(con); // Recreate the connection, since
-                                                  // the old one cannot be reused.
+con.on('error', function(err) {
+  console.log(err.code);
+});
 
-sql.connect(function(err) {              // The server is either down
-    if(err) {                                     // or restarting (takes a while sometimes).
-      //console.log('error when connecting to db:', err);
-      setTimeout(handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
-    }                                     // to avoid a hot loop, and to allow our node script to
-  });                                     // process asynchronous requests in the meantime.
-                                          // If you're also serving http, display a 503 error.
 
-   sql.on('error', function(err) {
-    console.log('db error', err);
-    if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
-      handleDisconnect();                         // lost due to either server restart, or a
-    } else {                                      // connnection idle timeout (the wait_timeout
-      throw err;                                  // server variable configures this)
-    }
-  });
-}
-
-handleDisconnect();
 
 bot.on("ready", () => {
     console.log('Der Bot ist nun aktiv')
@@ -91,7 +75,7 @@ bot.on("ready", () => {
       var add = rows[0].nummer2;
 console.log(add);
        f = ''+add;
-       //f = ''+4254; 
+       //f = ''+4233; 
        console.log(f);
 
     });
@@ -724,7 +708,7 @@ bot.on('message', async message =>{
   
 }
 }
-                              g = parseInt(f, 10)+1;
+                              let g = parseInt(f, 10)+1;
                               f = ''+g;
                               sql = `UPDATE Counting SET nummer2 = `+f+` WHERE server = 'Kaan'`;
                                lastUser = message.author;
@@ -2547,7 +2531,7 @@ break;
                               let timen = BigInt(alteUhr);
                               if(BigInt(Date.now()) >= timen){
                                   
-                                      let = rows1[0].cooldown; 
+                                      let CooldownLevel = rows1[0].cooldown; 
                                       sql = `DELETE FROM LevelCooldown WHERE player_id = '`+ message.author.id+`' AND server_id = '`+message.guild.id+`';`;
                                      
                                       con.query(sql)
@@ -2624,7 +2608,7 @@ break;
 
 
                   
-                        for(a = 1; a <= b1; a++) {
+                        for(let a = 1; a <= b1; a++) {
                           con.query(`SELECT * FROM RollenFürLevel WHERE levelrang = `+b1+` AND server_id = '`+message.guild.id+`'`, (err, rows3) => {
                             if(err) throw err;
                             if(rows3.length >= 1){
