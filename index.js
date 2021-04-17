@@ -17,6 +17,13 @@ var deleteTime = 20000;
 let CooldownLevel = 45000;
 var vb2;
 var Prefix = "§";
+
+
+
+
+
+
+
 function isInt(value) {
   return !isNaN(value) && (function(x) { return (x | 0) === x; })(parseFloat(value))
 }
@@ -46,10 +53,10 @@ const myTable = new HashTable();
 const AlleRollen = new HashTable();
 
 var con = mysql.createConnection({
-       host: "bn533iqsk5l9grxprdhf-mysql.services.clever-cloud.com",
-       user: "uku1exr0axpnpulg",
-       password: "GM2UUDcgnyNiRwTKG8QE",
-       database: "bn533iqsk5l9grxprdhf"
+       host: "db4free.net",
+       user: "denizcakmak",
+       password: "Deniz11&9",
+       database: "jamalbot"
 });
 
 con.connect(err => {
@@ -62,38 +69,6 @@ con.connect(err => {
 let sql;
 
 
-    module.exports = function(){
-
-        var mysql  = require('mysql');
-        
-
-        var connection;
-
-        function handleDisconnect() {
-              connection = mysql.createConnection(con); // Recreate the connection, since
-
-              connection.connect(function(err) {              
-                if(err) {                                    
-                  console.log('error when connecting to db:', err);
-                  setTimeout(handleDisconnect, 2000); 
-                }                                   
-              });                                   
-
-              connection.on('error', function(err) {
-                console.log('db error', err);
-                if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
-                  handleDisconnect();                        
-                } else {                                     
-                  throw err;                                 
-                }
-              });
-            }
-
-            handleDisconnect();
-
-        return connection;
-
-    }
 
 /*con.on('error', function(err) {
   console.log(err.code);
@@ -111,12 +86,12 @@ let sql;
 bot.on("ready", () => {
     console.log('Der Bot ist nun aktiv')
     
-    con.query(`SELECT * FROM Counting WHERE server = 'Kaan'`, (err, rows) => {
+    con.query(`SELECT * FROM Counting WHERE server = '566311931174977536'`, (err, rows) => {
       if(err) throw err;
       var add = rows[0].nummer2;
 console.log(add);
        f = ''+add;
-       //f = ''+4233; 
+       f = ''+4254; 
        console.log(f);
 
     });
@@ -377,7 +352,7 @@ bot.on('message', async message =>{
                                             
                                 
                                 
-                                con.query(`SELECT * FROM Counting WHERE server = 'Kaan'`, (err, rows) => {
+                                        con.query(`SELECT * FROM Counting WHERE server = '`+message.guild.id+`'`, (err, rows) => {
                                         if(err) throw err;
                                         
                                 
@@ -727,7 +702,7 @@ bot.on('message', async message =>{
                               
                   
                   
-                  con.query(`SELECT * FROM Counting WHERE server = 'Kaan'`, (err, rows) => {
+                          con.query(`SELECT * FROM Counting WHERE server = '`+message.guild.id+`'`, (err, rows) => {
                           if(err) throw err;
                           
                               
