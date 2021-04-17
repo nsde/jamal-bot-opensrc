@@ -373,7 +373,7 @@ bot.on('message', async message =>{
                         let t = o+1;
  if(test[o] == "6"){
   if(test[t] == "9"){
-    const reactionEmoji = message.guild.emojis.cache.find(emoji => emoji.name === 'heheboi');
+    const reactionEmoji = message.guild.emojis.cache.find(emoji => emoji.name === '+1');
     message.react(reactionEmoji);
     
   }
@@ -717,7 +717,7 @@ bot.on('message', async message =>{
                         let t = o+1;
  if(test[o] == "6"){
   if(test[t] == "9"){
-    const reactionEmoji = message.guild.emojis.cache.find(emoji => emoji.name === 'heheboi');
+    const reactionEmoji = message.guild.emojis.cache.find(emoji => emoji.name === '+1');
     message.react(reactionEmoji);
     
   }
