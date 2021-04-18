@@ -384,7 +384,7 @@ bot.on('message', async message =>{
                                             f = ''+g;
                                             
                                             console.log(""+f);
-                                            sql = `UPDATE Counting SET nummer2 = `+f+` WHERE server = 'Kaan'`;
+                                            sql = `UPDATE Counting SET nummer2 = `+f+` WHERE server = '`+message.guild.id+`'`;
                                              lastUser = message.author;
                                              lastUser = message.author;
                                              con.query(sql);
@@ -726,7 +726,7 @@ bot.on('message', async message =>{
 }
                               let g = parseInt(f, 10)+1;
                               f = ''+g;
-                              sql = `UPDATE Counting SET nummer2 = `+f+` WHERE server = 'Kaan'`;
+                              sql = `UPDATE Counting SET nummer2 = `+f+` WHERE server = '`+message.guild.id+`'`;
                                lastUser = message.author;
                                lastUser = message.author;
                                con.query(sql);
