@@ -2279,8 +2279,8 @@ if(xvv==1){
     switch(args[0].toUpperCase()){
       case ""+Prefix+"LANG":
         console.log("code 1");
-        let role = message. guild. roles. find(r => r. name === "Moderator"); 
-  if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz" || message.member.roles.cache.has(role)){
+        let role3 = message. guild. roles. find(r => r. name === "Moderator"); 
+  if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz" || message.member.roles.cache.has(role3)){
    
         if(args[1].toUpperCase() == "DE" || args[1].toUpperCase() == "DEUTSCH" ){
           con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
@@ -2320,8 +2320,8 @@ if(xvv==1){
       break;
 
 case ""+Prefix+"LEVEL":
-  let role = message. guild. roles. find(r => r. name === "Moderator"); 
-  if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz" || message.member.roles.cache.has(role)){
+  let role4 = message. guild. roles. find(r => r. name === "Moderator"); 
+  if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz" || message.member.roles.cache.has(role4)){
   if(args.length == 3){
   con.query(`SELECT * FROM RollenFürLevel WHERE levelrang = '`+args[1]+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
     if(err) throw err;
