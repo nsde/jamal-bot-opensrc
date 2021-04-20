@@ -2279,8 +2279,9 @@ if(xvv==1){
     switch(args[0].toUpperCase()){
       case ""+Prefix+"LANG":
         console.log("code 1");
-        if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz"){
-         
+        let role = message. guild. roles. find(r => r. name === "Moderator"); 
+  if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz" || message.member.roles.cache.has(role)){
+   
         if(args[1].toUpperCase() == "DE" || args[1].toUpperCase() == "DEUTSCH" ){
           con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
             if(err) throw err;
@@ -2319,7 +2320,8 @@ if(xvv==1){
       break;
 
 case ""+Prefix+"LEVEL":
-  if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz"){
+  let role = message. guild. roles. find(r => r. name === "Moderator"); 
+  if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz" || message.member.roles.cache.has(role)){
   if(args.length == 3){
   con.query(`SELECT * FROM RollenFürLevel WHERE levelrang = '`+args[1]+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
     if(err) throw err;
@@ -2421,9 +2423,32 @@ case ""+Prefix+"LEVEL":
 break;
 
           case ""+Prefix+"LEVELING":
-            if(args.length <= 2){
-              if(message.mentions.members){
+            if(args.length == 2){
+              if(message.mentions.members.size == 1){
                 let taggesUsa = message.mentions.members.first();
+                if(taggesUsa == null){
+                  taggesUsa = bot.users.find(user => user.username == args[1]);
+
+                }
+if(taggesUsa == null){
+  con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+    if(err) throw err;
+        if(rows.length >= 1){
+          let language = rows[0].lang;
+          if(language == "de"){
+            message.channel.send("User nicht gefunden. (Wenn du deine XP wissen, schreibe NUR §leveling!)").then(msg => msg.delete({timeout: deleteTime}));
+
+          }else if(language == "en"){
+            message.channel.send("User not found. (If you want to know your XP, you just need to type §leveling!)").then(msg => msg.delete({timeout: deleteTime}));
+
+          }
+       }else{
+        message.channel.send("User not found. (If you want to know your XP, you just need to type §leveling!)").then(msg => msg.delete({timeout: deleteTime}));
+
+        message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+       }
+      });
+}else{
                 let Level = 0;
             let Experience = 0;
 
@@ -2457,6 +2482,7 @@ break;
                           message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
                          }
                         });
+                      }
               }else{
 
             
@@ -2494,6 +2520,7 @@ break;
                          }
                         });
                       }
+                    
             }
             break;
             case ""+Prefix+"HELP":
