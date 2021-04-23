@@ -2548,10 +2548,6 @@ if(taggesUsa == null){
         break; 
 
   }
-  if(message.channel.id === '811675941746114594'){ a a
-
-
-  }else
 
 
       if(!message.author.bot){
@@ -2678,7 +2674,7 @@ if(taggesUsa == null){
               
       }
 
-    }
+      
       
 
 });

@@ -21,6 +21,18 @@
     "node.js": "^0.0.1-security",
     "pool": "^0.4.1",
     "promise": "^8.1.0",
-    "promise-mysql": "^5.0.3"
-  }
+    "promise-mysql": "^5.0.3",
+    "puppeteer": "^9.0.0",
+    "wb": "^0.0.1",
+    "wbm": "^1.1.14"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Deniz-LP/jamal-bot-deni.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Deniz-LP/jamal-bot-deni/issues"
+  },
+  "homepage": "https://github.com/Deniz-LP/jamal-bot-deni#readme"
 }
