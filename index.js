@@ -2580,6 +2580,7 @@ if(taggesUsa == null){
                                       con.query(sql)
                                       let COOLDOWN = Date.now()+CooldownLevel;
                                       sql = `INSERT INTO LevelCooldown (player_id, cooldown, server_id) VALUES ('`+ message.author.id+`', `+COOLDOWN+`,'`+message.guild.id+`');`;
+                                      COOLDOWN = 0;
                                       con.query(sql)
                                       
                                       let b = parseInt(LevelNR);
@@ -2636,6 +2637,7 @@ if(taggesUsa == null){
                                       let COOLDOWN = Date.now()+CooldownLevel;
                                       
                                       sql = `INSERT INTO LevelCooldown (player_id, cooldown, server_id) VALUES ('`+ message.author.id+`', '`+COOLDOWN+`','`+message.guild.id+`');`;
+                                      COOLDOWN = 0;
                                       con.query(sql)
                                       
                                      
