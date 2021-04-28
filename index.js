@@ -371,14 +371,8 @@ bot.on('message', async message =>{
                                         var test = args[0].split('');
                       for(var o = 0; o < 10 ; o++) {
                         let t = o+1;
- if(test[o] == "6"){
-  if(test[t] == "9"){
-    const reactionEmoji = message.guild.emojis.cache.find(emoji => emoji.name === '+1');
-    message.react(reactionEmoji);
-    
-  }
-  
-}
+ 
+
 }
                                             g = parseInt(f, 10)+1;
                                             f = ''+g;
@@ -715,14 +709,7 @@ bot.on('message', async message =>{
                         var test = args[0].split('');
                       for(var o = 0; o < 10 ; o++) {
                         let t = o+1;
- if(test[o] == "6"){
-  if(test[t] == "9"){
-    const reactionEmoji = message.guild.emojis.cache.find(emoji => emoji.name === '+1');
-    message.react(reactionEmoji);
-    
-  }
-  
-}
+
 }
                               let g = parseInt(f, 10)+1;
                               f = ''+g;
