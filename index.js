@@ -2675,6 +2675,7 @@ if(taggesUsa == null){
                                       con.query(sql);
 
               });
+              XP = 0;
             }else{
               sql = `Insert into Leveling values ("`+message.author.id+`", 15, "`+message.guild.id+`");`;
                       
@@ -2705,7 +2706,7 @@ if(taggesUsa == null){
 
                         }
                         
-              XP = 0;
+              
               
       }
 
