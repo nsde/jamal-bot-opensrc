@@ -2266,9 +2266,10 @@ if(xvv==1){
     switch(args[0].toUpperCase()){
       case ""+Prefix+"LANG":
         console.log("code 1");
-        let role3 = message. guild. roles. find(r => r. name === "Moderator"); 
-  if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz" || message.member.roles.cache.has(role3)){
-   
+        
+        
+  if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz" || message.member.roles.cache.find(r => r.name === "Mod") || message.member.roles.cache.find(r => r.name === "Moderator")){
+  
         if(args[1].toUpperCase() == "DE" || args[1].toUpperCase() == "DEUTSCH" ){
           con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
             if(err) throw err;
@@ -2307,8 +2308,8 @@ if(xvv==1){
       break;
 
 case ""+Prefix+"LEVEL":
-  let role4 = message. guild. roles. find(r => r. name === "Moderator"); 
-  if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz" || message.member.roles.cache.has(role4)){
+  
+if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz" || message.member.roles.cache.find(r => r.name === "Mod") || message.member.roles.cache.find(r => r.name === "Moderator")){
   if(args.length == 3){
   con.query(`SELECT * FROM RollenFürLevel WHERE levelrang = '`+args[1]+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
     if(err) throw err;
@@ -2508,7 +2509,45 @@ if(taggesUsa == null){
                         });
                       }
                     
-            }
+            }else if(rows.length == 1){
+              let Level = 0;
+              let Experience = 0;
+  
+              con.query(`SELECT * FROM LevelingLEVEL WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows2) => {
+                if(err) throw err;
+                   if(rows2.length >= 1){
+                    Level = rows2[0].levelvoll;
+                   }
+  
+                  });
+                  con.query(`SELECT * FROM Leveling WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
+                    if(err) throw err;
+                        if(rows.length >= 1){
+                        Experience = rows[0].xplevel;
+                       }
+                      });
+                      con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                        if(err) throw err;
+                            if(rows.length >= 1){
+                              let language = rows[0].lang;
+                              if(language == "de"){
+                                message.channel.send("Du bist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
+  
+                              }else if(language == "en"){
+                                message.channel.send("You're level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
+  
+                              }
+                           }else{
+                            message.channel.send("You're level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
+  
+                            message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                           }
+                          });
+
+                        }
+
+
+            
             break;
             case ""+Prefix+"HELP":
               con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
@@ -2544,10 +2583,15 @@ if(taggesUsa == null){
                       
 
              if(rows.length >= 1){
+               console.log("test1");
               let XP = rows[0].xplevel;
+              console.log("test2");
               let Gained = Math.floor(Math.random() * 20);
+              console.log("test3");
               let Gained10bis30 = Gained + 10;
+              console.log("test4");
               let XPneu = (parseInt(XP)) + Gained10bis30;
+              console.log("test5");
               
               con.query(`SELECT * FROM LevelingLEVEL WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows2) => {
                 if(err) throw err;
@@ -2660,6 +2704,8 @@ if(taggesUsa == null){
                           });
 
                         }
+                        
+              XP = 0;
               
       }
 
