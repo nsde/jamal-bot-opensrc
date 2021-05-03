@@ -2264,6 +2264,19 @@ if(xvv==1){
     }
     
     switch(args[0].toUpperCase()){
+      case ""+Prefix+"COUNTING":
+        console.log("code 1");
+        
+        
+  if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz" || message.member.roles.cache.find(r => r.name === "Mod") || message.member.roles.cache.find(r => r.name === "Moderator")){
+  
+        if(args[1].toUpperCase() == "DE" || args[1].toUpperCase() == "DEUTSCH" ){
+          
+          
+        }
+      }
+      break;
+
       case ""+Prefix+"LANG":
         console.log("code 1");
         
@@ -2562,7 +2575,7 @@ if(taggesUsa == null){
 
                       }
                    }else{
-                    message.channel.send("`PREFIX: § \n \nlevel: Only available for people with the role named 'moderator' or as admin. \nSetup with level a player will get which role (usage: §level 5 @ {Level5RollePingen}) \n \nleveling: See what level you are (or someone else.) §leveling {@player} \n \nlang : Set the language of the bot on your server```");
+                    message.channel.send("```PREFIX: § \n \nlevel: Only available for people with the role named 'moderator' or as admin. \nSetup with level a player will get which role (usage: §level 5 @ {Level5RollePingen}) \n \nleveling: See what level you are (or someone else.) §leveling {@player} \n \nlang : Set the language of the bot on your server```");
 
                     message.channel.send('(No Language set! "§lang" as an Administrator!)');
                    }
@@ -2583,15 +2596,10 @@ if(taggesUsa == null){
                       
 
              if(rows.length >= 1){
-               console.log("test1");
               let XP = rows[0].xplevel;
-              console.log("test2");
               let Gained = Math.floor(Math.random() * 20);
-              console.log("test3");
               let Gained10bis30 = Gained + 10;
-              console.log("test4");
               let XPneu = (parseInt(XP)) + Gained10bis30;
-              console.log("test5");
               
               con.query(`SELECT * FROM LevelingLEVEL WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows2) => {
                 if(err) throw err;
