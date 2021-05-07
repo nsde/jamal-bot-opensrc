@@ -629,7 +629,6 @@ bot.on('message', async message =>{
                                                           }else {
                                                             sql = `UPDATE playerrolle SET `+SET+`='0' WHERE id='`+message.author.id+`'`;
                                                           } 
-                                                          console.log(i+" penis "+SET);
                                                           con.query(sql);
                                                         
                                                       }   
@@ -2281,7 +2280,7 @@ if(xvv==1){
         console.log("code 1");
         
         
-  if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz" || message.member.roles.cache.find(r => r.name === "Mod") || message.member.roles.cache.find(r => r.name === "Moderator")){
+  if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "Deniz" || message.member.roles.cache.find(r => r.name === "Mod") || message.member.roles.cache.find(r => r.name === "Moderator")){
   
         if(args[1].toUpperCase() == "DE" || args[1].toUpperCase() == "DEUTSCH" ){
           con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
