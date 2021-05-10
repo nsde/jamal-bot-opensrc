@@ -2582,7 +2582,7 @@ if(taggesUsa == null){
 
               break;
               case ""+Prefix+"JAMAL":
-              message.delete({ timeout: 1 })
+              
                     
                     if(message.mentions.members.size >= 1){
                 const taggedUser = message.mentions.members.first();
