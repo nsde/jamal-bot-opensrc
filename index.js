@@ -2582,7 +2582,9 @@ if(taggesUsa == null){
 
               break;
               case ""+Prefix+"JAMAL":
-              
+                if(message.guild.me.hasPermission("MANAGE_MESSAGES")) {
+                  console.log("I have the Permission Administrator"); 
+                }
                     
                     if(message.mentions.members.size >= 1){
                 const taggedUser = message.mentions.members.first();
@@ -2591,11 +2593,20 @@ if(taggesUsa == null){
                message.channel.send("Super, <@"+message.author.id+"> 👍 👍 👍 👍");}
               break;
 
+              case ""+Prefix+"TEEST":
+                if(message.guild.me.hasPermission("MANAGE_MESSAGES")) {
+                  console.log("I have the Permission Administrator");
+                }else {
+                  console.log("I don't have Permission Administrator");
+                }
+          break;
 
 
               case ""+Prefix+"LAUCH":
-             
-                    
+                message.guild.channels.cache.find(channel => 
+                  channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES")
+                )
+
                     if(message.mentions.members.size >= 1){
                 const taggedUser = message.mentions.members.first();
                 if(taggedUser.id == "466596723297484810"){
