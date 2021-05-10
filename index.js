@@ -2581,7 +2581,7 @@ if(taggesUsa == null){
                   });
 
               break;
-              case ""+Prefix+"Jamal":
+              case ""+Prefix+"JAMAL":
               message.delete({ timeout: 1 })
                     
                     if(message.mentions.members.size >= 1){
@@ -2593,7 +2593,7 @@ if(taggesUsa == null){
 
 
 
-              case ""+Prefix+"lauch":
+              case ""+Prefix+"LAUCH":
              
                     
                     if(message.mentions.members.size >= 1){
@@ -2603,7 +2603,7 @@ if(taggesUsa == null){
                 }else{
 
                   let Gained = Math.floor(Math.random() * 100);
-                  let XPneu = (parseInt(XP)) + Gained;
+                  let XPneu = (parseInt(Gained));
 
                   message.channel.send("🥬Der User <@"+taggedUser.id+"> ist zu "+XPneu+"% ein Lauch.🥬"); 
               }
@@ -2613,14 +2613,13 @@ if(taggesUsa == null){
                 }else{
 
                 let Gained = Math.floor(Math.random() * 100);
-                let XPneu = (parseInt(XP)) + Gained;
+                let XPneu = (parseInt(Gained));
                message.channel.send("🥬Du bist zu "+XPneu+"% ein Lauch.🥬");}
                 }
               break;
 
-              case ""+Prefix+"pp":
+              case ""+Prefix+"PP":
                 
-                      
                       if(message.mentions.members.size >= 1){
                   const taggedUser = message.mentions.members.first();
                   if(taggedUser.id == "466596723297484810"){
@@ -2628,7 +2627,7 @@ if(taggesUsa == null){
                   }else{
   
                     let Gained = Math.floor(Math.random() * 20);
-                    let XPneu = (parseInt(XP)) + Gained;
+                    let XPneu = (parseInt(Gained));
   
                     message.channel.send("🍆<@"+taggedUser.id+">'s pp ist "+XPneu+"cm groß .🍆"); 
                 }
@@ -2639,7 +2638,7 @@ if(taggesUsa == null){
                   }else{
   
                     let Gained = Math.floor(Math.random() * 20);
-                    let XPneu = (parseInt(XP)) + Gained;
+                    let XPneu = (parseInt(Gained));
   
                     message.channel.send("🍆Dein pp ist "+XPneu+"cm groß .🍆"); 
                   }
