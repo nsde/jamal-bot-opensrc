@@ -2609,24 +2609,24 @@ if(taggesUsa == null){
 
                     if(message.mentions.members.size >= 1){
                 const taggedUser = message.mentions.members.first();
-                if(taggedUser.id == "466596723297484810"){
-                  message.channel.send("🥬Der User <@"+taggedUser.id+"> ist zu 0% ein Lauch.🥬");
-                }else{
+               // if(taggedUser.id == "466596723297484810"){
+                //  message.channel.send("🥬Der User <@"+taggedUser.id+"> ist zu 0% ein Lauch.🥬");
+                //}else{
 
                   let Gained = Math.floor(Math.random() * 100);
                   let XPneu = (parseInt(Gained));
 
                   message.channel.send("🥬Der User <@"+taggedUser.id+"> ist zu "+XPneu+"% ein Lauch.🥬"); 
-              }
+              //}
               }else {
-                if(message.author.id == "466596723297484810"){
-                  message.channel.send("🥬Du bist zu 0% ein Lauch.🥬");
-                }else{
+               // if(message.author.id == "466596723297484810"){
+               //   message.channel.send("🥬Du bist zu 0% ein Lauch.🥬");
+               // }else{
 
                 let Gained = Math.floor(Math.random() * 100);
                 let XPneu = (parseInt(Gained));
                message.channel.send("🥬Du bist zu "+XPneu+"% ein Lauch.🥬");}
-                }
+                //}
               break;
 
               case ""+Prefix+"PP":
