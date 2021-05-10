@@ -2581,7 +2581,7 @@ if(taggesUsa == null){
                   });
 
               break;
-              case "Jamal":
+              case ""+Prefix+"Jamal":
               message.delete({ timeout: 1 })
                     
                     if(message.mentions.members.size >= 1){
@@ -2593,7 +2593,7 @@ if(taggesUsa == null){
 
 
 
-              case "lauch":
+              case ""+Prefix+"lauch":
              
                     
                     if(message.mentions.members.size >= 1){
@@ -2618,7 +2618,7 @@ if(taggesUsa == null){
                 }
               break;
 
-              case "pp":
+              case ""+Prefix+"pp":
                 
                       
                       if(message.mentions.members.size >= 1){
