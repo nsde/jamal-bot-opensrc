@@ -2567,7 +2567,7 @@ if(taggesUsa == null){
                     if(rows.length >= 1){
                       let language = rows[0].lang;
                       if(language == "de"){
-                        message.channel.send("```PREFIX: § \n \nlevel: Nur für Menschen mit der Rolle 'Moderator' oder als Admin verfügbar. \nStelle ein, ab welchem Level man welche Rolle bekommt (Nutzung: §level 5 @{Level5RollePingen}) \n \nleveling: Sieh, auf welchem Level du bist (oder jemand anderes.) §leveling {@Spieler} \n \nlang: Setze die Sprache auf deinem Server```.");
+                        message.channel.send("```PREFIX: § \n \nlevel: Nur für Menschen mit der Rolle 'Moderator' oder als Admin verfügbar. \nStelle ein, ab welchem Level man welche Rolle bekommt (Nutzung: §level 5 @{Level5RollePingen}) \n \nleveling: Sieh, auf welchem Level du bist (oder jemand anderes.) §leveling {@Spieler} \n \nlang: Setze die Sprache auf deinem Server.```");
 
                       }else if(language == "en"){
                         message.channel.send("```PREFIX: § \n \nlevel: Only available for people with the role named 'moderator' or as admin. \nSetup with level a player will get which role (usage: §level 5 @ {Level5RollePingen}) \n \nleveling: See what level you are (or someone else.) §leveling {@player} \n \nlang : Set the language of the bot on your server```");
@@ -2581,6 +2581,71 @@ if(taggesUsa == null){
                   });
 
               break;
+              case "Jamal":
+              message.delete({ timeout: 1 })
+                    
+                    if(message.mentions.members.size >= 1){
+                const taggedUser = message.mentions.members.first();
+                message.channel.send("Super, <@"+taggedUser.id+"> 👍 👍 👍 👍");
+              }else {
+               message.channel.send("Super, <@"+message.author.id+"> 👍 👍 👍 👍");}
+              break;
+
+
+
+              case "lauch":
+             
+                    
+                    if(message.mentions.members.size >= 1){
+                const taggedUser = message.mentions.members.first();
+                if(taggedUser.id == "466596723297484810"){
+                  message.channel.send("🥬Der User <@"+taggedUser.id+"> ist zu 0% ein Lauch.🥬");
+                }else{
+
+                  let Gained = Math.floor(Math.random() * 100);
+                  let XPneu = (parseInt(XP)) + Gained;
+
+                  message.channel.send("🥬Der User <@"+taggedUser.id+"> ist zu "+XPneu+"% ein Lauch.🥬"); 
+              }
+              }else {
+                if(message.author.id == "466596723297484810"){
+                  message.channel.send("🥬Du bist zu 0% ein Lauch.🥬");
+                }else{
+
+                let Gained = Math.floor(Math.random() * 100);
+                let XPneu = (parseInt(XP)) + Gained;
+               message.channel.send("🥬Du bist zu "+XPneu+"% ein Lauch.🥬");}
+                }
+              break;
+
+              case "pp":
+                
+                      
+                      if(message.mentions.members.size >= 1){
+                  const taggedUser = message.mentions.members.first();
+                  if(taggedUser.id == "466596723297484810"){
+                    message.channel.send("🍆<@"+taggedUser.id+">'s pp ist 25cm groß.🍆");
+                  }else{
+  
+                    let Gained = Math.floor(Math.random() * 20);
+                    let XPneu = (parseInt(XP)) + Gained;
+  
+                    message.channel.send("🍆<@"+taggedUser.id+">'s pp ist "+XPneu+"cm groß .🍆"); 
+                }
+                }else {
+                  if(message.author.id == "466596723297484810"){
+                    
+                    message.channel.send("🍆Dein pp ist 25cm groß.🍆");
+                  }else{
+  
+                    let Gained = Math.floor(Math.random() * 20);
+                    let XPneu = (parseInt(XP)) + Gained;
+  
+                    message.channel.send("🍆Dein pp ist "+XPneu+"cm groß .🍆"); 
+                  }
+                  }
+                break;
+
       default:
 
         break; 
