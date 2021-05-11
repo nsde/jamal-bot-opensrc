@@ -2656,6 +2656,30 @@ if(taggesUsa == null){
                   }
                 break;
 
+                case ""+Prefix+"FYNNDERWAHRE":
+                
+                  con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                    if(err) throw err;
+                        if(rows.length >= 1){
+                          let language = rows[0].lang;
+                          if(language == "de"){
+                            message.channel.send("Wahre Finns werden mit **y** geschrieben!");
+                                 
+                          }else if(language == "en"){
+                            message.channel.send("The real Finns are written with a **y**!");
+                                 
+                          }
+                       }else{
+                       
+                        message.channel.send("The real Finns are written with a **y**!");
+                                                 
+                        message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                       }
+                      });
+
+                      
+                break;
+
       default:
 
         break; 
