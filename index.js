@@ -2567,16 +2567,22 @@ if(taggesUsa == null){
                     if(rows.length >= 1){
                       let language = rows[0].lang;
                       if(language == "de"){
-                        message.channel.send("```PREFIX: § \n \n{} = Ping (optional), [] = Argumente (auch optional), () = Argumente (Eingabe erfordert) \n \n \n \nlevel: Nur für Menschen mit der Rolle 'Moderator' oder als Admin verfügbar. \nStelle ein, ab welchem Level man welche Rolle bekommt (Nutzung: §level 5 @{Level5RollePingen}) \n \nleveling: Sieh, auf welchem Level du bist (oder jemand anderes.) §leveling {@Spieler} \n \npp @{player}: Checke die Schw*nzlänge von... dir oder einem User "+
+                        message.channel.send("```PREFIX: § \n \n{} = Ping (optional), [] = Argumente (auch optional), () = Argumente (Eingabe erfordert) "+
+                        "\n \nlevel (LevelNr) (@role): Nur für Menschen mit der Rolle 'Moderator' oder als Admin verfügbar. \nStelle ein, ab welchem Level man welche Rolle bekommt (Beispiel: level 5 @Level5) \n \nleveling {@User}: Sieh, auf welchem Level du bist (oder jemand anderes.)"+
+                        "\n \npp @{player}: Checke die Schw*nzlänge von... dir oder einem User "+
                         " \n \nlang: Setze die Sprache auf deinem Server.```");
 
                       }else if(language == "en"){
-                        message.channel.send("```PREFIX: §\n \n{} = Ping (optional), [] = Argument (also optional), () = Argument (needed) \n \nlevel: Only available for people with the role named 'moderator' or as admin. \nSetup with level a player will get which role (usage: §level 5 @ {Level5RollePingen}) \n \nleveling: See what level you are (or someone else.) §leveling {@player} \n \npp @{player}: Check the length of a co*k of you or a user "+
+                        message.channel.send("```PREFIX: §\n \n{} = Ping (optional), [] = Argument (also optional), () = Argument (needed) "+
+                        "\n \nlevel: Only available for people with the role named 'moderator' or as admin. \nSetup with level a player will get which role (usage: level 5 @ {Level5RollePingen}) \n \nleveling {@user}: See what level you are (or someone else.)"+
+                        "\n \npp {@user}: Check the length of a co*k of you or a user "+
                         " \n \nlang : Set the language of the bot on your server```");
 
                       }
                    }else{
-                    message.channel.send("```PREFIX: §\n \n{} = Ping (optional), [] = Argument (also optional), () = Argument (needed) \n \nlevel: Only available for people with the role named 'moderator' or as admin. \nSetup with level a player will get which role (usage: §level 5 @ {Level5RollePingen}) \n \nleveling: See what level you are (or someone else.) §leveling {@player} \n \npp @{player}: Check the length of a co*k of you or a user "+
+                    message.channel.send("```PREFIX: §\n \n{} = Ping (optional), [] = Argument (also optional), () = Argument (needed) "+
+                    "\n \nlevel: Only available for people with the role named 'moderator' or as admin. \nSetup with level a player will get which role (usage: level 5 @ {Level5RollePingen}) \n \nleveling {@user}: See what level you are (or someone else.)"+
+                    "\n \npp @{player}: Check the length of a co*k of you or a user "+
                     "\n \nlang : Set the language of the bot on your server```");
 
                     message.channel.send('(No Language set! "§lang" as an Administrator!)');
@@ -2719,6 +2725,8 @@ if(taggesUsa == null){
                                      
                                       con.query(sql)
                                       let COOLDOWN = Date.now()+CooldownLevel;
+                                      sql = `Delete from LevelCooldown WHERE player_id = '`+ message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
+                                      con.query(sql)
                                       sql = `INSERT INTO LevelCooldown (player_id, cooldown, server_id) VALUES ('`+ message.author.id+`', `+COOLDOWN+`,'`+message.guild.id+`');`;
                                       COOLDOWN = 0;
                                       con.query(sql)
@@ -2775,7 +2783,8 @@ if(taggesUsa == null){
                                         con.query(sql);
                                      }
                                       let COOLDOWN = Date.now()+CooldownLevel;
-                                      
+                                      sql = `Delete from LevelCooldown WHERE player_id = '`+ message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
+                                      con.query(sql)
                                       sql = `INSERT INTO LevelCooldown (player_id, cooldown, server_id) VALUES ('`+ message.author.id+`', '`+COOLDOWN+`','`+message.guild.id+`');`;
                                       COOLDOWN = 0;
                                       con.query(sql)
