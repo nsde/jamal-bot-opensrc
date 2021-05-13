@@ -27,6 +27,7 @@ var Prefix = "§";
 function isInt(value) {
   return !isNaN(value) && (function(x) { return (x | 0) === x; })(parseFloat(value))
 }
+
 function resetBot(channel) {
   // send channel a message that you're resetting bot [optional]
   channel.send('Resetting...')
@@ -258,88 +259,76 @@ console.log(add);
 
 bot.on('message', async message =>{
 
+  function SpracheUndSendMessagePerms(frage, deutschh, englischh) {
+    if(message.guild.me.hasPermission("SEND_MESSAGES")) {
+
+      con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+        if(err) throw err;
+            if(rows.length >= 1){
+              let language = rows[0].lang;
+              if(language == "de"){
+                if(frage == 1){
+                  
+                message.channel.send(deutschh).then(msg => msg.delete({timeout: deleteTime}));
+                }else{
+                message.channel.send(deutschh);
+                }
+                     
+              }else if(language == "en"){
+                if(frage == 1){
+                  message.channel.send(englischh).then(msg => msg.delete({timeout: deleteTime}));
+                }else{
+                message.channel.send(englischh);
+                }    
+              }
+           }else{
+           
+            if(frage == 1){
+              message.channel.send(englischh).then(msg => msg.delete({timeout: deleteTime}));
+            }else{
+            message.channel.send(englischh);
+            }  
+            
+            message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+           }
+          });
+
+    }else {
+      const randomChannel = message.guild.channels.cache.find(channel => 
+        channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
+
+        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+          if(err) throw err;
+              if(rows.length >= 1){
+                let language = rows[0].lang;
+                if(language == "de"){
+                  randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung SEND_MESSAGES in Server, <@"+message.guild.ownerID+">.");
+                       
+                }else if(language == "en"){
+                  randomChannel.send("Sorry for disturb, but Jamal would like to get the permission SEND_MESSAGES in this Server, <@"+message.guild.ownerID+">.");
+                       
+                }
+             }else{
+             
+              randomChannel.send("Sorry for disturb, but Jamal would like to get the permission SEND_MESSAGES in this Server, <@"+message.guild.ownerID+">.");
+              
+              randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+             }
+            });
+
+    }
+  }
     
 
   var SET = "";
     
     let args = message.content.split(" ");
-    if(message.channel.id === '827514965996339222'){
-      switch(args[0]){
-
-        case "!verify":
-          message.delete({ timeout: 1 })
-          const taggedUser2 = message.mentions.members.first();
-          let Suro =  message.guild.roles.cache.find((r) => r.id == "827515886927478805");
-          let Mitglied =  message.guild.roles.cache.find((r) => r.id == "827516317476061195");
-          taggedUser2.roles.remove(Mitglied);
-          taggedUser2.roles.add(Suro);
-          message.channel.send("Neuer Spieler: \n<@"+taggedUser2.id+">.");
-                                                  
-        break;
-           
-        default:
-          if(message.author.bot){
-
-          }else{
-            message.delete({ timeout: 1 })
-          }
-      }
-      
-    }else if(message.channel.id === '827514965996339223'){
-      switch(args[0]){
-
-        case "]verify":
-           message.delete({ timeout: 1 })
-          const exampleEmbed = new Discord.MessageEmbed()
-          .setColor('#ffa600')
-          .setTitle('Verify')
-          .setAuthor(message.author.username+'')
-          .setDescription('DM <@466596723297484810>')
-          .setThumbnail('https://i.imgur.com/wSTFkRM.png')
-          
-          .addField('Verifizieren', 'Damit ich verifizieren kann ob du ein Member vom Projekt bist, schick mir bitte ein Screenshot (Wie Bild oben) um zu beweisen, dass der Account dir gehört.', true)
-          
-          .setTimestamp()
-          .setFooter(''+message.author.username+'');
+   if(message.channel.id === '807326959679176724'){
         
-                
-                message.channel.send(exampleEmbed);
-                break;
-        default:
-          if(message.author.bot){
 
-          }else{
-            message.delete({ timeout: 1 })
-          }
-      }
-      
-    }else if(message.channel.id === '807326959679176724'){
-        //message.channel.lastMessage;
-        // Deal with command
-        let sunde =  message.guild.roles.cache.find((r) => r.id == "772467882508156928");
-
-
-
-
-        con.query(`SELECT * FROM verwarntimes WHERE id = '`+ message.author.id+`'`, (err, rows) => {
-            if(err) throw err;
-            
-           
-                if(rows.length >= 1){      
-                    let alteUhr = rows[0].ms;
-                    const timen = BigInt(alteUhr);
-                    
-                    if(BigInt(Date.now()-300000) >= timen){
-                        if (message.member.roles.cache.has(sunde.id)) {
-                            message.member.roles.remove(sunde);
-                            }  
-                        sql = `DELETE FROM verwarntimes WHERE id = '`+ message.author.id+`'`;
                        
                         switch(args[0]){
-                            case "IUz8z8dsfwf<BIZ(z78&":
-                                message.delete({ timeout: 1 });
-                                message.member.roles.remove(sunde);
-                            break;
+                            
                             case f:
 
                                     if(message.author.tag != lastUser.tag){
@@ -389,9 +378,37 @@ bot.on('message', async message =>{
                                     //sql = `UPDATE nummber set nummber = `+a+` `;
                                     
                                         
-                                }else{var warns = myTable.getItem(message.author.tag);
-                                    
-                                    message.delete({ timeout: 1 })}
+                                }else{
+
+                                  if(message.guild.me.hasPermission("MANAGE_MESSAGES")) {
+
+                                  message.delete({ timeout: 1 });
+                  
+                                }else {
+                                  const randomChannel = message.guild.channels.cache.find(channel => 
+                                    channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
+                  
+                                    con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                                      if(err) throw err;
+                                          if(rows.length >= 1){
+                                            let language = rows[0].lang;
+                                            if(language == "de"){
+                                              randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+                                                   
+                                            }else if(language == "en"){
+                                              randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+                                                   
+                                            }
+                                         }else{
+                                         
+                                          randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+                  
+                                          randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                                         }
+                                        });
+                  
+                                }
+                              }
 
 
                                     break;
@@ -400,1666 +417,52 @@ bot.on('message', async message =>{
                     
                                     default:
                                       
-                                        message.delete({ timeout: 1 }) //Supposed to delete message
-                                        if(myTable.getItem(message.author.tag)){
-                                        var warns = myTable.getItem(message.author.tag);
-                                            myTable.setItem(message.author.tag, warns+1);
-                                            
-                                        }else{myTable.setItem(message.author.tag, 1);console.log('Code 7')}
-                                    
-                                    
-                                        if((myTable.getItem(message.author.tag) >= 3) && (myTable.getItem(message.author.tag) <= 3)){
-                                            
-                                            con2.query(`SELECT * FROM verwarnungen WHERE id = '`+ message.author.id+`'`, (err, rows) => {
-                                                if(err) throw err;
-                                                console.log(''+message.author.id);
-                                                console.log("code 8");
-                                                    if(rows < 1){
-                                                        sql = `INSERT INTO verwarnungen VALUES ('`+ message.author.id+`', 1)`;
-                                                        con.query(sql);
-                                                         bot.channels.cache.get("807619390279254047").send("*Name:* <@" + message.author.id + "> \n*Grund für Sündenbock*: Spam in <#807326959679176724> \n*Dauer*:  5 Minuten (nach 5 Minuten !Sündenbock in <#773446927710552094>).");
-                                                        myTable.setItem(message.author.tag, 0);
-                                                        con.query(sql);
-                                                    lastUser = message.author;
+                                        if(message.guild.me.hasPermission("MANAGE_MESSAGES")) {
 
-                                                    if (!(message.member.roles.cache.has(sunde.id))) {
-                                                        message.member.roles.add(sunde);
-                                                        }  
-                                                        console.log("code 9");
-                                                        sql = `INSERT INTO playerrolle (id) VALUES ('`+message.author.id+`')`;
-                                                        con.query(sql, console.log);
-                                                        let gasd = "";
-                                                        for(var i = 1; i < 66; i++){
-                                      
-                                                          var a = AlleRollen.getItem(''+i);
-                                                          let abc =  message.guild.roles.cache.find((r) => r.id == a);
-                                                        
-                                                          if(1 < 2){
-                                                          if(i == 1){ 
-                                                             SET = "a"; 
-                                                            }else if(i == 2){ 
-                                                             SET = "b";  }else if(i == 3){ 
-                                                             SET = "c";  }else if(i == 4){ 
-                                                             SET = "d"; }else if(i == 5){
-                                                              
-                                                             SET = "e";  }else if(i == 6){
-                                                             SET = "f"; }else if(i == 7){
-                                                             SET = "g"; }else if(i == 8){
-                                                             SET = "h"; }else if(i == 9){
-                                                              SET = "i"; }else if(i == 10){
-                                                               SET = "j";  }else if(i == 11){
-                                                              SET= "k"; }else if(i == 12){
-                                                               SET = "l"; }else if(i == 13){
-                                                             SET = "m";  }else if(i == 14){
-                                                              SET = "n"; }else if(i == 15){
-                                                                SET = "o"; }else if(i == 16){
-                                                                  SET = "p";  }else if(i == 17){
-                                                                    SET = "q";  }else if(i == 18){
-                                                                      SET = "r";  }else if(i == 19){
-                                                                        SET = "s"; }else if(i == 20){
-                                                                          SET = "t";  }else if(i == 21){
-                                                                            SET = "u";  }else if(i == 22){
-                                                                              SET = "v"; }else if(i == 23){
-                                                                                SET = "w";  }else if(i == 24){
-                                                                                  SET = "x";  }else if(i == 25){
-                                                                                    SET = "y"; }else if(i == 26){
-                                                                                      SET = "z";}else if(i == 27){
-                                                                                        SET = "aa"; }else if(i == 28){
-                                                                                          SET = "ab"; }else if(i == 29){
-                                                                                            SET = "ac";}else if(i == 30){
-                                                                                              SET = "ad"; }else if(i == 31){
-                                                                                                SET = "ae";  }else if(i == 32){
-                                                                                                  SET = "af";  }else if(i == 33){
-                                                                                                    SET = "ag"; }else if(i == 34){
-                                                                                                      SET = "ah"; }else if(i == 35){
-                                                                                                        SET = "ai"; }else if(i == 36){
-                                                                                                          SET = "aj"; }else if(i == 37){
-                                                               SET = "ak"; }else if(i == 38){
-                                                                SET = "al"; }else if(i == 39){
-                                                                  SET = "am"; }else if(i == 40){
-                                                                    SET = "an";}else if(i == 41){
-                                                                      SET = "ao";}else if(i == 42){
-                                                                        SET = "ap";}else if(i == 43){
-                                                                          SET = "aq"; }else if(i == 44){
-                                                                            SET = "ar"; }else if(i == 45){
-                                                                              SET = "ass";}else if(i == 46){
-                                                                                SET = "at"; }else if(i == 47){
-                                                                                  SET = "au";}else if(i == 48){
-                                                                                    SET = "av"; }else if(i == 49){
-                                                                                      SET = "aw"; }else if(i == 50){
-                                                                                        SET = "ax";}else if(i == 51){
-                                                                                          SET = "ay";  }else if(i == 52){
-                                                                                            SET = "az";}else if(i == 53){
-                                                                                              SET = "ba";}else if(i == 54){
-                                                                                                SET = "bb"; }else if(i == 55){
-                                                                                                  SET = "bc";}else if(i == 56){
-                                                                                                    SET = "bd"; }else if(i == 57){
-                                                                                                      SET = "be";}else if(i == 58){
-                                                                                                        SET = "bf";}else if(i == 59){
-                                                                                                          SET = "bg";}else if(i == 60){
-                                                                                                            SET = "bh";}else if(i == 61){
-                                                                                                              SET = "bi";}else if(i == 62){
-                                                                                                                SET = "bj"; }else if(i == 63){
-                                                                                                                  SET = "bk"; }else if(i == 64){
-                                                                                                                    SET = "bl";}else if(i == 65){
-                                                                                                                      SET = "bm"; }else if(i == 66){
-                                                                                                                        SET = "bn"; }else if(i == 67){
-                                                                                                                          SET = "bo";}else if(i == 68){
-                                                                                                                            SET = "bp";}else if(i == 69){
-                                                                                                                              SET = "bq"; }else if(i == 70){
-                                                                                                                                SET = "br";}else if(i == 71){
-                                                                                                                                  SET = "bs";}    }         
-                    
-                                                          if(message.member.roles.cache.has(abc.id)){
-                                                            
-                                                            sql = `UPDATE playerrolle SET `+SET+`=`+a+` WHERE id='`+message.author.id+`'`;
-                                                            message.member.roles.remove(abc);
-                                                            
-                                                          }else {
-                                                            sql = `UPDATE playerrolle SET `+SET+`='0' WHERE id='`+message.author.id+`'`;
-                                                          } 
-                                                          console.log(i+" penis "+SET);
-                                                          con.query(sql);
-                                                        
-                                                      }     
-                                    console.log("code 10");
-                                                    const time = Date.now()+300000;
-                                                    const times = ''+time;
-                                                    
-                                                    sql = `INSERT INTO verwarntimes (id, ms) VALUES ('`+ message.author.id+`', '`+times+`')`;
-                                                    con.query(sql);
-                                                    
-                                                    
-                                                    }else{
-                                                        let warnings = rows[0].number;
-                                                    
-                                               vb = parseInt(warnings, 10)+1;
-                                                  vb2 = ''+vb;
-                                                  bot.channels.cache.get("807619390279254047").send("*Name:* <@" + message.author.id + "> \n*Grund für Sündenbock*: Spam in <#807326959679176724> \n*Dauer*:  5 Minuten (nach 5 Minuten !Sündenbock in <#773446927710552094>).");
-                                                  myTable.setItem(message.author.tag, 0);
-                                                  sql = `INSERT INTO playerrolle (id) VALUES ('`+message.author.id+`')`;
-                                                        con.query(sql);
-                                                        let gasd = "";
-                                                        for(var i = 1; i < 66; i++){
-                                      
-                                                          var a = AlleRollen.getItem(''+i);
-                                                          let abc =  message.guild.roles.cache.find((r) => r.id == a);
-                                                        
-                                                          if(1 < 2){
-                                                          if(i == 1){ 
-                                                             SET = "a"; 
-                                                            }else if(i == 2){ 
-                                                             SET = "b";  }else if(i == 3){ 
-                                                             SET = "c";  }else if(i == 4){ 
-                                                             SET = "d"; }else if(i == 5){
-                                                              
-                                                             SET = "e";  }else if(i == 6){
-                                                             SET = "f"; }else if(i == 7){
-                                                             SET = "g"; }else if(i == 8){
-                                                             SET = "h"; }else if(i == 9){
-                                                              SET = "i"; }else if(i == 10){
-                                                               SET = "j";  }else if(i == 11){
-                                                              SET= "k"; }else if(i == 12){
-                                                               SET = "l"; }else if(i == 13){
-                                                             SET = "m";  }else if(i == 14){
-                                                              SET = "n"; }else if(i == 15){
-                                                                SET = "o"; }else if(i == 16){
-                                                                  SET = "p";  }else if(i == 17){
-                                                                    SET = "q";  }else if(i == 18){
-                                                                      SET = "r";  }else if(i == 19){
-                                                                        SET = "s"; }else if(i == 20){
-                                                                          SET = "t";  }else if(i == 21){
-                                                                            SET = "u";  }else if(i == 22){
-                                                                              SET = "v"; }else if(i == 23){
-                                                                                SET = "w";  }else if(i == 24){
-                                                                                  SET = "x";  }else if(i == 25){
-                                                                                    SET = "y"; }else if(i == 26){
-                                                                                      SET = "z";}else if(i == 27){
-                                                                                        SET = "aa"; }else if(i == 28){
-                                                                                          SET = "ab"; }else if(i == 29){
-                                                                                            SET = "ac";}else if(i == 30){
-                                                                                              SET = "ad"; }else if(i == 31){
-                                                                                                SET = "ae";  }else if(i == 32){
-                                                                                                  SET = "af";  }else if(i == 33){
-                                                                                                    SET = "ag"; }else if(i == 34){
-                                                                                                      SET = "ah"; }else if(i == 35){
-                                                                                                        SET = "ai"; }else if(i == 36){
-                                                                                                          SET = "aj"; }else if(i == 37){
-                                                               SET = "ak"; }else if(i == 38){
-                                                                SET = "al"; }else if(i == 39){
-                                                                  SET = "am"; }else if(i == 40){
-                                                                    SET = "an";}else if(i == 41){
-                                                                      SET = "ao";}else if(i == 42){
-                                                                        SET = "ap";}else if(i == 43){
-                                                                          SET = "aq"; }else if(i == 44){
-                                                                            SET = "ar"; }else if(i == 45){
-                                                                              SET = "ass";}else if(i == 46){
-                                                                                SET = "at"; }else if(i == 47){
-                                                                                  SET = "au";}else if(i == 48){
-                                                                                    SET = "av"; }else if(i == 49){
-                                                                                      SET = "aw"; }else if(i == 50){
-                                                                                        SET = "ax";}else if(i == 51){
-                                                                                          SET = "ay";  }else if(i == 52){
-                                                                                            SET = "az";}else if(i == 53){
-                                                                                              SET = "ba";}else if(i == 54){
-                                                                                                SET = "bb"; }else if(i == 55){
-                                                                                                  SET = "bc";}else if(i == 56){
-                                                                                                    SET = "bd"; }else if(i == 57){
-                                                                                                      SET = "be";}else if(i == 58){
-                                                                                                        SET = "bf";}else if(i == 59){
-                                                                                                          SET = "bg";}else if(i == 60){
-                                                                                                            SET = "bh";}else if(i == 61){
-                                                                                                              SET = "bi";}else if(i == 62){
-                                                                                                                SET = "bj"; }else if(i == 63){
-                                                                                                                  SET = "bk"; }else if(i == 64){
-                                                                                                                    SET = "bl";}else if(i == 65){
-                                                                                                                      SET = "bm"; }else if(i == 66){
-                                                                                                                        SET = "bn"; }else if(i == 67){
-                                                                                                                          SET = "bo";}else if(i == 68){
-                                                                                                                            SET = "bp";}else if(i == 69){
-                                                                                                                              SET = "bq"; }else if(i == 70){
-                                                                                                                                SET = "br";}else if(i == 71){
-                                                                                                                                  SET = "bs";}    }         
-                    
-                                                          if(message.member.roles.cache.has(abc.id)){
-                                                            
-                                                            sql = `UPDATE playerrolle SET `+SET+`=`+a+` WHERE id='`+message.author.id+`'`;
-                                                            message.member.roles.remove(abc);
-                                                            
-                                                          }else {
-                                                            sql = `UPDATE playerrolle SET `+SET+`='0' WHERE id='`+message.author.id+`'`;
-                                                          } 
-                                                          con.query(sql);
-                                                        
-                                                      }   
-                                                  
-                                                  
-                                                  
-                                                  /////////////////////////////////////////////
+                 message.delete({ timeout: 1 });
 
-                                                                                                            
-                    
-                    
-                                                   // sql2 = `UPDATE verwarnungen SET number = `+vb2+` WHERE id = '`+ message.author.id+`'`;
-                                                    con.query(sql);
-                                                    lastUser = message.author;
-                                                    if (!(message.member.roles.cache.has(sunde.id))) {
-                                                        message.member.roles.add(sunde);
-                                                        }                                      
-                                                    const time = Date.now()+300000;
-                                                    const times = ''+time;
-                                                    
-                                                    sql = `INSERT INTO verwarntimes (id, ms) VALUES ('`+ message.author.id+`', '`+times+`')`;
-                                                    
-                                                    con.query(sql);
-                    
-                    
-                    
-                                                }
-                                                     
-                                                
-                                                
-                                        });
-                                          
-                                        }
-                                        
-                                       
-                                        
-                        
-                                break;
-                                }
+               }else {
+                 const randomChannel = message.guild.channels.cache.find(channel => 
+                  channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
 
-
-
-                        
-                    }else {
-                        
-                             
-                    message.delete({ timeout: 1 });
-
-                    }
-                    
-                }else {
-                    
-                 switch(args[0]){
-                  case f:
-                    console.log("code 6");
-
-                      if(message.author.tag != lastUser.tag){
-                          
-                         // if(myTable.getItem(message.author.tag) >= 5){
-                         //     message.delete({ timeout: 1 })
-                         //     message.author.send("Du bist verwarnt! Du kannst nicht mehr in #counting schreiben. Bitte melde dich bei @Deniz#5879");
-                         // }else{
-                  
-                              
-                  
-                  
-                          con.query(`SELECT * FROM Counting WHERE server = '`+message.guild.id+`'`, (err, rows) => {
-                          if(err) throw err;
-                          
-                              
-                          if(f == "4000" || f == "5000" || f == "6000"|| f == "7000"|| f == "8000"|| f == "9000"
-                          || f == "10000"|| f == "11000"|| f == "12000"|| f == "13000"|| f == "14000"|| f == "15000"
-                          || f == "20000"|| f == "25000"|| f == "30000"|| f == "40000"|| f == "50000"|| f == "60000"|| f == "69420"){
-                              message.pin();
-                          }
-                          
-                        var test = args[0].split('');
-                      for(var o = 0; o < 10 ; o++) {
-                        let t = o+1;
-
-}
-                              let g = parseInt(f, 10)+1;
-                              f = ''+g;
-                              sql = `UPDATE Counting SET nummer2 = `+f+` WHERE server = '`+message.guild.id+`'`;
-                               lastUser = message.author;
-                               lastUser = message.author;
-                               con.query(sql);
-                  
-            
-            });
-               
-                //sql = `UPDATE nummber set nummber = `+a+` `;
-                
-                    
-            }else{var warns = myTable.getItem(message.author.tag);
-                
-                message.delete({ timeout: 1 })}
-                
-                break;
-            
-
-
-                default:
-                  if(message.author.bot == false){
-                    
-                    message.delete({ timeout: 1 }) //Supposed to delete message
-                    if(myTable.getItem(message.author.tag)){
-                    var warns = myTable.getItem(message.author.tag);
-                        myTable.setItem(message.author.tag, warns+1);
-                        
-                    }else{myTable.setItem(message.author.tag, 1);}
-                
-                
-                    if((myTable.getItem(message.author.tag) >= 3) && (myTable.getItem(message.author.tag) <= 3)){
-                        
-                        con2.query(`SELECT * FROM verwarnungen WHERE id = '`+ message.author.id+`'`, (err, rows) => {
-                            if(err) throw err;
-                            
-                                if(rows < 1){
-                                    sql = `INSERT INTO verwarnungen VALUES ('`+ message.author.id+`', 1)`;
-                                    con.query(sql);
-                                    bot.channels.cache.get("807619390279254047").send("*Name:* <@" + message.author.id + "> \n*Grund für Sündenbock*: Spam in <#807326959679176724> \n*Dauer*:  5 Minuten (nach 5 Minuten !Sündenbock in <#773446927710552094>).");
-                                    myTable.setItem(message.author.tag, 0);
-                                    con.query(sql);
-                                lastUser = message.author;
-                                if (!(message.member.roles.cache.has(sunde.id))) {
-                                    message.member.roles.add(sunde);
-                                    }
-                                    sql = `INSERT INTO playerrolle (id) VALUES ('`+message.author.id+`')`;
-                                                        con.query(sql, console.log);
-                                                        let gasd = "";
-                                                        for(var i = 1; i < 65; i++){
-                                      
-                                                          var a = AlleRollen.getItem(''+i);
-                                                          let abc =  message.guild.roles.cache.find((r) => r.id == a);
-                                                        
-                                                          if(1 < 2){
-                                                          if(i == 1){ 
-                                                             SET = "a"; 
-                                                            }else if(i == 2){ 
-                                                             SET = "b";  }else if(i == 3){ 
-                                                             SET = "c";  }else if(i == 4){ 
-                                                             SET = "d"; }else if(i == 5){
-                                                              
-                                                             SET = "e";  }else if(i == 6){
-                                                             SET = "f"; }else if(i == 7){
-                                                             SET = "g"; }else if(i == 8){
-                                                             SET = "h"; }else if(i == 9){
-                                                              SET = "i"; }else if(i == 10){
-                                                               SET = "j";  }else if(i == 11){
-                                                              SET= "k"; }else if(i == 12){
-                                                               SET = "l"; }else if(i == 13){
-                                                             SET = "m";  }else if(i == 14){
-                                                              SET = "n"; }else if(i == 15){
-                                                                SET = "o"; }else if(i == 16){
-                                                                  SET = "p";  }else if(i == 17){
-                                                                    SET = "q";  }else if(i == 18){
-                                                                      SET = "r";  }else if(i == 19){
-                                                                        SET = "s"; }else if(i == 20){
-                                                                          SET = "t";  }else if(i == 21){
-                                                                            SET = "u";  }else if(i == 22){
-                                                                              SET = "v"; }else if(i == 23){
-                                                                                SET = "w";  }else if(i == 24){
-                                                                                  SET = "x";  }else if(i == 25){
-                                                                                    SET = "y"; }else if(i == 26){
-                                                                                      SET = "z";}else if(i == 27){
-                                                                                        SET = "aa"; }else if(i == 28){
-                                                                                          SET = "ab"; }else if(i == 29){
-                                                                                            SET = "ac";}else if(i == 30){
-                                                                                              SET = "ad"; }else if(i == 31){
-                                                                                                SET = "ae";  }else if(i == 32){
-                                                                                                  SET = "af";  }else if(i == 33){
-                                                                                                    SET = "ag"; }else if(i == 34){
-                                                                                                      SET = "ah"; }else if(i == 35){
-                                                                                                        SET = "ai"; }else if(i == 36){
-                                                                                                          SET = "aj"; }else if(i == 37){
-                                                               SET = "ak"; }else if(i == 38){
-                                                                SET = "al"; }else if(i == 39){
-                                                                  SET = "am"; }else if(i == 40){
-                                                                    SET = "an";}else if(i == 41){
-                                                                      SET = "ao";}else if(i == 42){
-                                                                        SET = "ap";}else if(i == 43){
-                                                                          SET = "aq"; }else if(i == 44){
-                                                                            SET = "ar"; }else if(i == 45){
-                                                                              SET = "ass";}else if(i == 46){
-                                                                                SET = "at"; }else if(i == 47){
-                                                                                  SET = "au";}else if(i == 48){
-                                                                                    SET = "av"; }else if(i == 49){
-                                                                                      SET = "aw"; }else if(i == 50){
-                                                                                        SET = "ax";}else if(i == 51){
-                                                                                          SET = "ay";  }else if(i == 52){
-                                                                                            SET = "az";}else if(i == 53){
-                                                                                              SET = "ba";}else if(i == 54){
-                                                                                                SET = "bb"; }else if(i == 55){
-                                                                                                  SET = "bc";}else if(i == 56){
-                                                                                                    SET = "bd"; }else if(i == 57){
-                                                                                                      SET = "be";}else if(i == 58){
-                                                                                                        SET = "bf";}else if(i == 59){
-                                                                                                          SET = "bg";}else if(i == 60){
-                                                                                                            SET = "bh";}else if(i == 61){
-                                                                                                              SET = "bi";}else if(i == 62){
-                                                                                                                SET = "bj"; }else if(i == 63){
-                                                                                                                  SET = "bk"; }else if(i == 64){
-                                                                                                                    SET = "bl";}else if(i == 65){
-                                                                                                                      SET = "bm"; }else if(i == 66){
-                                                                                                                        SET = "bn"; }else if(i == 67){
-                                                                                                                          SET = "bo";}else if(i == 68){
-                                                                                                                            SET = "bp";}else if(i == 69){
-                                                                                                                              SET = "bq"; }else if(i == 70){
-                                                                                                                                SET = "br";}else if(i == 71){
-                                                                                                                                  SET = "bs";}    }         
-                    
-                                                          if(message.member.roles.cache.has(abc.id)){
-                                                            
-                                                            sql = `UPDATE playerrolle SET `+SET+`=`+a+` WHERE id='`+message.author.id+`'`;
-                                                            message.member.roles.remove(abc);
-                                                            
-                                                          }else {
-                                                            sql = `UPDATE playerrolle SET `+SET+`='0' WHERE id='`+message.author.id+`'`;
-                                                          } 
-                                                          console.log(i+" penis "+SET);
-                                                          con.query(sql);
-                                                        
-                                                      }  
-                                const time = Date.now()+300000;
-                                const times = ''+time;
-                                console.log("code 15");
-                                sql = `INSERT INTO verwarntimes (id, ms) VALUES ('`+ message.author.id+`', '`+times+`')`;
-                                
-                                con.query(sql);
-                                
-                                }else{
-                                    let warnings = rows[0].number;
-                                
-                                    vb = parseInt(warnings, 10)+1;
-                                    vb2 = ''+vb;
-                                    bot.channels.cache.get("807619390279254047").send("*Name:* <@" + message.author.id + "> \n*Grund für Sündenbock*: Spam in <#807326959679176724> \n*Dauer*:  5 Minuten (nach 5 Minuten !Sündenbock in <#773446927710552094>).");
-                                    myTable.setItem(message.author.tag, 0);
-                              
-
-
-                                sql = `UPDATE verwarnungen SET number = `+vb2+` WHERE id = '`+ message.author.id+`'`;
-                                con.query(sql);
-                                lastUser = message.author;
-                                if (!(message.member.roles.cache.has(sunde.id))) {
-                                    message.member.roles.add(sunde);
-                                }     
-                                    sql = `INSERT INTO playerrolle (id) VALUES ('`+message.author.id+`')`;
-                                    con.query(sql);
-                                    let gasd = "";
-                                    
-                                    for(var i = 1; i < 65; i++){
-                                      
-                                      var a = AlleRollen.getItem(''+i);
-                                      let abc =  message.guild.roles.cache.find((r) => r.id == a);
-                                    
-                                      if(1 < 2){
-                                      if(i == 1){ 
-                                         SET = "a"; 
-                                        }else if(i == 2){ 
-                                         SET = "b";  }else if(i == 3){ 
-                                         SET = "c";  }else if(i == 4){ 
-                                         SET = "d"; }else if(i == 5){
-                                          
-                                         SET = "e";  }else if(i == 6){
-                                         SET = "f"; }else if(i == 7){
-                                         SET = "g"; }else if(i == 8){
-                                         SET = "h"; }else if(i == 9){
-                                          SET = "i"; }else if(i == 10){
-                                           SET = "j";  }else if(i == 11){
-                                          SET= "k"; }else if(i == 12){
-                                           SET = "l"; }else if(i == 13){
-                                         SET = "m";  }else if(i == 14){
-                                          SET = "n"; }else if(i == 15){
-                                            SET = "o"; }else if(i == 16){
-                                              SET = "p";  }else if(i == 17){
-                                                SET = "q";  }else if(i == 18){
-                                                  SET = "r";  }else if(i == 19){
-                                                    SET = "s"; }else if(i == 20){
-                                                      SET = "t";  }else if(i == 21){
-                                                        SET = "u";  }else if(i == 22){
-                                                          SET = "v"; }else if(i == 23){
-                                                            SET = "w";  }else if(i == 24){
-                                                              SET = "x";  }else if(i == 25){
-                                                                SET = "y"; }else if(i == 26){
-                                                                  SET = "z";}else if(i == 27){
-                                                                    SET = "aa"; }else if(i == 28){
-                                                                      SET = "ab"; }else if(i == 29){
-                                                                        SET = "ac";}else if(i == 30){
-                                                                          SET = "ad"; }else if(i == 31){
-                                                                            SET = "ae";  }else if(i == 32){
-                                                                              SET = "af";  }else if(i == 33){
-                                                                                SET = "ag"; }else if(i == 34){
-                                                                                  SET = "ah"; }else if(i == 35){
-                                                                                    SET = "ai"; }else if(i == 36){
-                                                                                      SET = "aj"; }else if(i == 37){
-                                           SET = "ak"; }else if(i == 38){
-                                            SET = "al"; }else if(i == 39){
-                                              SET = "am"; }else if(i == 40){
-                                                SET = "an";}else if(i == 41){
-                                                  SET = "ao";}else if(i == 42){
-                                                    SET = "ap";}else if(i == 43){
-                                                      SET = "aq"; }else if(i == 44){
-                                                        SET = "ar"; }else if(i == 45){
-                                                          SET = "ass";}else if(i == 46){
-                                                            SET = "at"; }else if(i == 47){
-                                                              SET = "au";}else if(i == 48){
-                                                                SET = "av"; }else if(i == 49){
-                                                                  SET = "aw"; }else if(i == 50){
-                                                                    SET = "ax";}else if(i == 51){
-                                                                      SET = "ay";  }else if(i == 52){
-                                                                        SET = "az";}else if(i == 53){
-                                                                          SET = "ba";}else if(i == 54){
-                                                                            SET = "bb"; }else if(i == 55){
-                                                                              SET = "bc";}else if(i == 56){
-                                                                                SET = "bd"; }else if(i == 57){
-                                                                                  SET = "be";}else if(i == 58){
-                                                                                    SET = "bf";}else if(i == 59){
-                                                                                      SET = "bg";}else if(i == 60){
-                                                                                        SET = "bh";}else if(i == 61){
-                                                                                          SET = "bi";}else if(i == 62){
-                                                                                            SET = "bj"; }else if(i == 63){
-                                                                                              SET = "bk"; }else if(i == 64){
-                                                                                                SET = "bl";}else if(i == 65){
-                                                                                                  SET = "bm"; }else if(i == 66){
-                                                                                                    SET = "bn"; }else if(i == 67){
-                                                                                                      SET = "bo";}else if(i == 68){
-                                                                                                        SET = "bp";}else if(i == 69){
-                                                                                                          SET = "bq"; }else if(i == 70){
-                                                                                                            SET = "br";}else if(i == 71){
-                                                                                                              SET = "bs";}    }         
-
-                                      if(message.member.roles.cache.has(abc.id)){
-                                        
-                                        sql = `UPDATE playerrolle SET `+SET+`=`+a+` WHERE id='`+message.author.id+`'`;
-                                        message.member.roles.remove(abc);
-                                        
-                                      }else {
-                                        sql = `UPDATE playerrolle SET `+SET+`='0' WHERE id='`+message.author.id+`'`;
-                                      } 
-                                      console.log(i+" penis "+SET);
-                                      con.query(sql);
-                                    
-                                  }                         
-                                const time = Date.now()+300000;
-                                const times = ''+time;
-                                
-                                sql = `INSERT INTO verwarntimes (id, ms) VALUES ('`+ message.author.id+`', '`+times+`')`;
-                                console.log("code 17");
-                                con.query(sql);
-
-
-                            }
+                  con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                    if(err) throw err;
+                        if(rows.length >= 1){
+                          let language = rows[0].lang;
+                          if(language == "de"){
+                            randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
                                  
-                            
-                            
-                    });
-                      
-                    }
-                    
-                   
-                    
-                  }
-            break;
-             }
-            }
-        });
-                 
-            
-    
-        
-      }else if(message.channel.id === '807619390279254047'){
-        
-        let sunde =  message.guild.roles.cache.find((r) => r.id == "772467882508156928");
-        switch(args[0]){
-
-          case "*warn":
-             message.delete({ timeout: 1 })
-          var message5 = " ";
-          var a1 = 0;
-          var Zeit = 0;
-          var BanSuffix = " ";
-          if(message.mentions.members.first()){
-          var taggedUser2 = message.mentions.members.first();
-          }else {const exampleEmbed = new Discord.MessageEmbed()
-            .setColor('#ffa600')
-            .setTitle('Nutzung *warn')
-            .setURL('https://www.thisworldthesedays.com/command-description-userdeniz1.html')
-            .setAuthor(message.author.username+'')
-            .setDescription('*warn @(user) (Dauer z.B. 14m oder 5h) (Begründung)')
-            .setThumbnail('https://i.imgur.com/wSTFkRM.png')
-            
-            .addField('.', 'Bitte bei Problemen <@466596723297484810> DMen!', true)
-            .addField('Gültige Dauern', 'Tag - D; Stunde - h; Minute - m; sekunde - s', true)
-            .setTimestamp()
-            .setFooter(''+message.author.username+'');
-          
-                  
-                  message.channel.send(exampleEmbed);break;}
-
-          if(args.length <= 2){
-            
-            
-            const exampleEmbed = new Discord.MessageEmbed()
-	.setColor('#ffa600')
-	.setTitle('Nutzung *warn')
-	.setURL('https://www.thisworldthesedays.com/command-description-userdeniz1.html')
-	.setAuthor(message.author.username+'')
-	.setDescription('*warn @(user) (Dauer z.B. 14m oder 5h) (Begründung)')
-	.setThumbnail('https://i.imgur.com/wSTFkRM.png')
-  .addField('Gültige Dauern', 'Tag - D; Stunde - h; Minute - m; sekunde - s', true)
-	
-	.addField('.', 'Bitte bei Problemen <@466596723297484810> DMen!', true)
-	.setTimestamp()
-	.setFooter(''+message.author.username+'');
-
-        
-        message.channel.send(exampleEmbed);
-
-            break;
-          }
-
-
-          var penim = '';
-          var penis='';
-          
-          var test = args[2].split('');
-          for(jj = 0; jj < test.length; jj++){
-          if(isInt(test[jj])){
-          penim = penim + '' + test[jj]
-          
-          }else if(test[jj] == "m"){
-            BanSuffix = "Minuten";
-            Zeit = penis*60000;
-            a1 === 1;
-            jj == 9999;
-          }else if(test[jj] == "s"){
-            a1 === 2;
-            BanSuffix = "Sekunden";
-            Zeit = penis*1000;
-            jj == 9999;
-          }else if(test[jj] == "h"){
-            a1 === 3;
-            BanSuffix = "Stunden";
-            Zeit = penis*3600000;
-            jj == 9999;
-          }else if(test[jj] == "d"){
-            a1 === 4;
-            BanSuffix = "Tage";
-            Zeit = penis*86400000;
-            jj == 9999;
-          }else{
-            const exampleEmbed = new Discord.MessageEmbed()
-      .setColor('#ffa600')
-      .setTitle('Nutzung *warn')
-      .setURL('https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO')
-      .setAuthor(message.author.username+'')
-      .setDescription('*warn @(user) (Dauer z.B. 14m oder 5h) (Begründung)')
-      .setThumbnail('https://i.imgur.com/wSTFkRM.png')
-      
-      .addField('.', 'Bitte bei Problemen <@466596723297484810> DMen!', true)
-      .addField('Gültige Dauern', 'Tag - D; Stunde - h; Minute - m; sekunde - s', true)
-      .setTimestamp()
-      .setFooter('<@'+message.author.id+'>');
-    
-            
-            message.channel.send(exampleEmbed);
-    
-            console.log("code 5");
-            break;
-          }
-          penis = parseInt(penim);
-          }
-          var LogNRNR;
-          con.query(`SELECT * FROM maxLogNR WHERE server = 'Kaan'`, (err, rows) => {
-            if(err) throw err;
-            LogNR = rows[0].lognr;
-            LogNRNR = parseInt(LogNR);
-            
-            sql = `Update maxLogNR set lognr = '`+(LogNRNR+1)+`' WHERE server = 'Kaan'`;
-            con.query(sql, console.log);
-          });
-          const time = Date.now()+Zeit;
-          const times = ''+time;
-          
-          console.log(Zeit);
-          console.log(time);
-          console.log(times);
-          console.log(taggedUser2.id);
-          sql = `INSERT INTO verwarntimes (id, ms) VALUES ('`+ taggedUser2.id+`', '`+times+`')`;
-          con.query(sql, console.log);
-
-      for( aii = 3; aii < args.length; aii++){
-        message5 = message5 + args[aii] + " ";
-    } 
-    
-    
-
-      con2.query(`SELECT * FROM verwarnungen WHERE id = '`+ taggedUser2.id+`'`, (err, rows) => {
-        if(err) throw err;
-        
-        
-            if(rows < 1){
-                sql = `INSERT INTO verwarnungen VALUES ('`+taggedUser2.id+`', 1)`;
-                con.query(sql);
-                bot.channels.cache.get("807619390279254047").send("**WARNING - Log Nummer "+(LogNR)+"**\n*Name:* <@" + taggedUser2.id + "> \n*Grund für Sündenbock*:"+message5+" \n*Dauer*: "+penim+" " + BanSuffix +" (nach Ablauf der Zeit !Sündenbock in <#773446927710552094>).");
-                var benim = penis;
-                
-                var cur = new Date();
-                
-            console.log(""+LogNRNR);
-            
-                sql = `INSERT INTO logswarnungen(log_id, id_player, dauer, grund, id_mod, datum, uhrzeit)
-                VALUES ('`+LogNR+`','`+taggedUser2.id+`','`+penim+` `+BanSuffix+`','`+message5+`','`+message.author.id+`','`+cur. getDate()+"."+(cur. getMonth() + 1)+"."+cur.getFullYear()+`','`+cur. getHours()+":"+cur. getMinutes()+`');`;
-                myTable.setItem(taggedUser2.tag, 0);
-                con.query(sql);
-            if (!(taggedUser2.roles.cache.has(sunde.id))) {
-                message.member.roles.add(sunde);
-                }
-                sql = `INSERT INTO playerrolle (id) VALUES ('`+taggedUser2.id+`')`;
-                                    con.query(sql);
-                                    let gasd = "";
-                for(var i = 1; i < 65; i++){
-                                      
-                  var a = AlleRollen.getItem(''+i);
-                  let abc =  message.guild.roles.cache.find((r) => r.id == a);
-                
-                  if(1 < 2){
-                  if(i == 1){ 
-                     gasd = "a"; 
-                    }else if(i == 2){ 
-                      gasd = "b";  }else if(i == 3){ 
-                        gasd = "c";  }else if(i == 4){ 
-                          gasd = "d"; }else if(i == 5){
-                      
-                            gasd = "e";  }else if(i == 6){
-                              gasd = "f"; }else if(i == 7){
-                                gasd = "g"; }else if(i == 8){
-                                  gasd = "h"; }else if(i == 9){
-                                    gasd = "i"; }else if(i == 10){
-                                      gasd = "j";  }else if(i == 11){
-                                        gasd= "k"; }else if(i == 12){
-                                          gasd = "l"; }else if(i == 13){
-                                            gasd = "m";  }else if(i == 14){
-                                              gasd = "n"; }else if(i == 15){
-                                                gasd = "o"; }else if(i == 16){
-                                                  gasd = "p";  }else if(i == 17){
-                                                    gasd = "q";  }else if(i == 18){
-                                                      gasd = "r";  }else if(i == 19){
-                                                        gasd = "s"; }else if(i == 20){
-                                                          gasd = "t";  }else if(i == 21){
-                                                            gasd = "u";  }else if(i == 22){
-                                                              gasd = "v"; }else if(i == 23){
-                                                                gasd = "w";  }else if(i == 24){
-                                                                  gasd = "x";  }else if(i == 25){
-                                                                    gasd = "y"; }else if(i == 26){
-                                                                      gasd = "z";}else if(i == 27){
-                                                                        gasd = "aa"; }else if(i == 28){
-                                                                          gasd = "ab"; }else if(i == 29){
-                                                                            gasd = "ac";}else if(i == 30){
-                                                                              gasd = "ad"; }else if(i == 31){
-                                                                                gasd = "ae";  }else if(i == 32){
-                                                                                  gasd = "af";  }else if(i == 33){
-                                                                                    gasd = "ag"; }else if(i == 34){
-                                                                                      gasd = "ah"; }else if(i == 35){
-                                                                                        gasd = "ai"; }else if(i == 36){
-                                                                                          gasd = "aj"; }else if(i == 37){
-                       gasd = "ak"; }else if(i == 38){
-                        gasd = "al"; }else if(i == 39){
-                          gasd = "am"; }else if(i == 40){
-                            gasd = "an";}else if(i == 41){
-                              gasd = "ao";}else if(i == 42){
-                                gasd = "ap";}else if(i == 43){
-                                  gasd = "aq"; }else if(i == 44){
-                                    gasd = "ar"; }else if(i == 45){
-                                      gasd = "ass";}else if(i == 46){
-                                        gasd = "at"; }else if(i == 47){
-                                          gasd = "au";}else if(i == 48){
-                                            gasd = "av"; }else if(i == 49){
-                                              gasd = "aw"; }else if(i == 50){
-                                                gasd = "ax";}else if(i == 51){
-                                                  gasd = "ay";  }else if(i == 52){
-                                                    gasd = "az";}else if(i == 53){
-                                                      gasd = "ba";}else if(i == 54){
-                                                        gasd = "bb"; }else if(i == 55){
-                                                          gasd = "bc";}else if(i == 56){
-                                                            gasd = "bd"; }else if(i == 57){
-                                                              gasd = "be";}else if(i == 58){
-                                                                gasd = "bf";}else if(i == 59){
-                                                                  gasd = "bg";}else if(i == 60){
-                                                                    gasd = "bh";}else if(i == 61){
-                                                                      gasd = "bi";}else if(i == 62){
-                                                                        gasd = "bj"; }else if(i == 63){
-                                                                          gasd = "bk"; }else if(i == 64){
-                                                                            gasd = "bl";}else if(i == 65){
-                                                                              gasd = "bm"; }else if(i == 66){
-                                                                                gasd = "bn"; }else if(i == 67){
-                                                                                  gasd = "bo";}else if(i == 68){
-                                                                                    gasd = "bp";}else if(i == 69){
-                                                                                      gasd = "bq"; }else if(i == 70){
-                                                                                        gasd = "br";}else if(i == 71){
-                                                                                          gasd = "bs";}    }         
-
-                  if(taggedUser2.roles.cache.has(abc.id)){
-                    
-                    sql = `UPDATE playerrolle SET `+gasd+`=`+a+` WHERE id='`+taggedUser2.id+`'`;
-                    taggedUser2.roles.remove(abc);
-                    
-                  }else {
-                    sql = `UPDATE playerrolle SET `+gasd+`='0' WHERE id='`+taggedUser2.id+`'`;
-                  } 
-                  console.log(i+" penis "+gasd);
-                  con.query(sql);
-                
-              }  
-            const time = Date.now()+Zeit;
-            const times = ''+time;
-            console.log(times);
-            sql = `INSERT INTO verwarntimes (id, ms) VALUES ('`+ taggedUser2.id+`', '`+times+`')`;
-            
-            con.query(sql);
-            
-            }else{
-                let warnings = rows[0].number;
-            
-                vb = parseInt(warnings, 10)+1;
-                vb2 = ''+vb;
-                bot.channels.cache.get("807619390279254047").send("**WARNING - Log Nummer "+(LogNR)+"**\n*Name:* <@" + taggedUser2.id + "> \n*Grund für Sündenbock:* "+message5+" \n*Dauer*: "+penim+" " + BanSuffix +" (nach Ablauf der Zeit !Sündenbock in <#773446927710552094>).\n*Aufgetragen von:* <@"+message.author.id+">");
-                myTable.setItem(taggedUser2.tag, 0);
-          
-                var cur = new Date();
-                sql = `INSERT INTO logswarnungen(log_id, id_player, dauer, grund, id_mod, datum, uhrzeit)
-                VALUES ('`+LogNR+`','`+taggedUser2.id+`','`+penim+` `+BanSuffix+`','`+message5+`','`+message.author.id+`','`+cur. getDate()+"."+(cur. getMonth() + 1)+"."+cur. getFullYear()+`','`+cur. getHours()+":"+cur. getMinutes()+`');`;
-                con.query(sql);
-
-
-            sql = `UPDATE verwarnungen SET number = `+vb2+` WHERE id = '`+ taggedUser2.id+`'`;
-            con.query(sql);
-            if (!(taggedUser2.roles.cache.has(sunde.id))) {
-              taggedUser2.roles.add(sunde);
-            }     
-            console.log("hi");
-                sql = `INSERT INTO playerrolle (id) VALUES ('`+taggedUser2.id+`')`;
-                con.query(sql);
-                let gasd = "";
-                for(var i = 1; i < 65; i++){
-                                      
-                  var a = AlleRollen.getItem(''+i);
-                  let abc =  message.guild.roles.cache.find((r) => r.id == a);
-                
-                  if(1 < 2){
-                  if(i == 1){ 
-                     gasd = "a"; 
-                    }else if(i == 2){ 
-                      gasd = "b";  }else if(i == 3){ 
-                        gasd = "c";  }else if(i == 4){ 
-                          gasd = "d"; }else if(i == 5){
-                      
-                            gasd = "e";  }else if(i == 6){
-                              gasd = "f"; }else if(i == 7){
-                                gasd = "g"; }else if(i == 8){
-                                  gasd = "h"; }else if(i == 9){
-                                    gasd = "i"; }else if(i == 10){
-                                      gasd = "j";  }else if(i == 11){
-                                        gasd= "k"; }else if(i == 12){
-                                          gasd = "l"; }else if(i == 13){
-                                            gasd = "m";  }else if(i == 14){
-                                              gasd = "n"; }else if(i == 15){
-                                                gasd = "o"; }else if(i == 16){
-                                                  gasd = "p";  }else if(i == 17){
-                                                    gasd = "q";  }else if(i == 18){
-                                                      gasd = "r";  }else if(i == 19){
-                                                        gasd = "s"; }else if(i == 20){
-                                                          gasd = "t";  }else if(i == 21){
-                                                            gasd = "u";  }else if(i == 22){
-                                                              gasd = "v"; }else if(i == 23){
-                                                                gasd = "w";  }else if(i == 24){
-                                                                  gasd = "x";  }else if(i == 25){
-                                                                    gasd = "y"; }else if(i == 26){
-                                                                      gasd = "z";}else if(i == 27){
-                                                                        gasd = "aa"; }else if(i == 28){
-                                                                          gasd = "ab"; }else if(i == 29){
-                                                                            gasd = "ac";}else if(i == 30){
-                                                                              gasd = "ad"; }else if(i == 31){
-                                                                                gasd = "ae";  }else if(i == 32){
-                                                                                  gasd = "af";  }else if(i == 33){
-                                                                                    gasd = "ag"; }else if(i == 34){
-                                                                                      gasd = "ah"; }else if(i == 35){
-                                                                                        gasd = "ai"; }else if(i == 36){
-                                                                                          gasd = "aj"; }else if(i == 37){
-                       gasd = "ak"; }else if(i == 38){
-                        gasd = "al"; }else if(i == 39){
-                          gasd = "am"; }else if(i == 40){
-                            gasd = "an";}else if(i == 41){
-                              gasd = "ao";}else if(i == 42){
-                                gasd = "ap";}else if(i == 43){
-                                  gasd = "aq"; }else if(i == 44){
-                                    gasd = "ar"; }else if(i == 45){
-                                      gasd = "ass";}else if(i == 46){
-                                        gasd = "at"; }else if(i == 47){
-                                          gasd = "au";}else if(i == 48){
-                                            gasd = "av"; }else if(i == 49){
-                                              gasd = "aw"; }else if(i == 50){
-                                                gasd = "ax";}else if(i == 51){
-                                                  gasd = "ay";  }else if(i == 52){
-                                                    gasd = "az";}else if(i == 53){
-                                                      gasd = "ba";}else if(i == 54){
-                                                        gasd = "bb"; }else if(i == 55){
-                                                          gasd = "bc";}else if(i == 56){
-                                                            gasd = "bd"; }else if(i == 57){
-                                                              gasd = "be";}else if(i == 58){
-                                                                gasd = "bf";}else if(i == 59){
-                                                                  gasd = "bg";}else if(i == 60){
-                                                                    gasd = "bh";}else if(i == 61){
-                                                                      gasd = "bi";}else if(i == 62){
-                                                                        gasd = "bj"; }else if(i == 63){
-                                                                          gasd = "bk"; }else if(i == 64){
-                                                                            gasd = "bl";}else if(i == 65){
-                                                                              gasd = "bm"; }else if(i == 66){
-                                                                                gasd = "bn"; }else if(i == 67){
-                                                                                  gasd = "bo";}else if(i == 68){
-                                                                                    gasd = "bp";}else if(i == 69){
-                                                                                      gasd = "bq"; }else if(i == 70){
-                                                                                        gasd = "br";}else if(i == 71){
-                                                                                          gasd = "bs";}    }         
-
-                  if(taggedUser2.roles.cache.has(abc.id)){
-                    
-                    sql = `UPDATE playerrolle SET `+gasd+`=`+a+` WHERE id='`+taggedUser2.id+`'`;
-                    taggedUser2.roles.remove(abc);
-                    
-                  }else {
-                    sql = `UPDATE playerrolle SET `+gasd+`='0' WHERE id='`+taggedUser2.id+`'`;
-                  } 
-                  
-                  con.query(sql);
-                
-              }  
-            }  
-             
-        
-        
-});
-break;
-
-case "*log":
-       message.delete({ timeout: 1 })
-       
-       var LogNR;
-       var LogNRNR;
-       var break1 = 1;
-       var eingabe = parseInt(args[1]);
-       var eingabeargs1 = args[1];
-       console.log("4");
-if(args.length >= 1 || args.length <= 1 ){
-  console.log(eingabe);
-       con.query(`SELECT * FROM maxlognr WHERE server = 'Kaan'`, (err, rows) => {
-        if(err) throw err;
-        LogNR = rows[0].lognr;
-        LogNRNR = parseInt(LogNR);
-        
-       var eingabe = parseInt(args[1]);
-       console.log("code 1");
-        if(eingabe > 0 && eingabe < LogNRNR){
-
-          console.log("code 2");
-
-        }else{
-LogNRNR == LogNRNR-1;
-          console.log("code 3");
-          const exampleEmbed = new Discord.MessageEmbed()
-          .setColor('#ffa600')
-          .setTitle('Nutzung *log')
-          .setURL('https://www.thisworldthesedays.com/command-description-userdeniz1.html')
-          .setAuthor(message.author.username+'')
-          .setDescription('*log (**gültige** Log nummer) ')
-          .setThumbnail('https://i.imgur.com/wSTFkRM.png')
-          
-          .addField('.', 'Max Log NR ist '+LogNRNR+'!', false)
-          .addField('.', 'Bitte bei Problemen <@466596723297484810> DMen!', false)
-          .setTimestamp()
-          .setFooter(''+message.author.username+'');
-        break1=2;
-                
-                message.channel.send(exampleEmbed);
-
-        }
-        
-       console.log("code 4");
-      });
-      if(break1 = 1){
-        console.log(args[1]);
-      con.query(`SELECT * FROM logswarnungen WHERE log_id = '`+args[1]+`'`, (err, rows) => {
-        if(err) throw err;
-        console.log(rows[0].id_player);
-        var id_player = rows[0].id_player;
-       var grund= rows[0].grund;
-       var dauer= rows[0].dauer;
-       var datum= rows[0].datum;
-       var uhrzeit= rows[0].uhrzeit;
-       var id_mod= rows[0].id_mod; 
-
-       console.log("code 5");
-       
-             con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-              if(err) throw err;
-              if(rows.length >= 1){
-                let language = rows[0].lang;
-                if(language == "de"){
-                  const exampleEmbed = new Discord.MessageEmbed()
-       .setColor('#ffa600')
-       .setTitle('Log Nummer '+args[1]+':')
-       .setURL('https://www.thisworldthesedays.com/command-description-userdeniz1.html')
-       .setAuthor(message.author.username+'')
-       .setDescription('Verwarnter User: <@'+id_player+'>')
-       .addField('Grund:', grund, false)
-       .addField('Dauer:', dauer, false)
-       .addField('Verwarnzeit:', 'Am '+datum+' um '+uhrzeit, false)
-       .addField('Verwarnt von:', '<@'+id_mod+'>', false)
-       .setTimestamp()
-       .setFooter(''+message.author.username+'');
-        message.channel.send(exampleEmbed);
-            
-                }else if(language == "en"){
-                  const exampleEmbed = new Discord.MessageEmbed()
-       .setColor('#ffa600')
-       .setTitle('Log Number '+args[1]+':')
-       .setURL('https://www.thisworldthesedays.com/command-description-userdeniz1.html')
-       .setAuthor(message.author.username+'')
-       .setDescription('Warned User: <@'+id_player+'>')
-       .addField('Reason:', grund, false)
-       .addField('Duration:', dauer, false)
-       .addField('Warntime:', 'On the '+datum+' at '+uhrzeit, false)
-       .addField('Warned moderator:', '<@'+id_mod+'>', false)
-       .setTimestamp()
-       .setFooter(''+message.author.username+'');
-        message.channel.send(exampleEmbed);  
-            
-                }
-             }else{
-              const exampleEmbed = new Discord.MessageEmbed()
-       .setColor('#ffa600')
-       .setTitle('Log Number '+args[1]+':')
-       .setURL('https://www.thisworldthesedays.com/command-description-userdeniz1.html')
-       .setAuthor(message.author.username+'')
-       .setDescription('Warned User: <@'+id_player+'>')
-       .addField('Reason:', grund, false)
-       .addField('Duration:', dauer, false)
-       .addField('Warntime:', 'On the '+datum+' at '+uhrzeit, false)
-       .addField('Warned moderator:', '<@'+id_mod+'>', false)
-       .setTimestamp()
-       .setFooter(''+message.author.username+'');
-        message.channel.send(exampleEmbed);  
-              message.channel.send('(No Language set! "§lang" as a Administrator!)').then(msg => msg.delete({timeout: 10000}));
-             }
-            })
-      });
-    }
-  
-  }else {
-
-    console.log("code 7");
-   
-  con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-    if(err) throw err;
-        if(rows.length >= 1){
-          let language = rows[0].lang;
-          if(language == "de"){
-            const exampleEmbed = new Discord.MessageEmbed()
-            .setColor('#ffa600')
-            .setTitle('Nutzung *log')
-            .setURL('https://www.thisworldthesedays.com/command-description-userdeniz1.html')
-            .setAuthor(message.author.username+'')
-            .setDescription('*log (Log nummer)')
-            .setThumbnail('https://i.imgur.com/wSTFkRM.png')
-            
-            .addField('.', 'Bitte bei Problemen <@466596723297484810> DMen!', false)
-            .setTimestamp()
-            .setFooter(''+message.author.username+'');
-            message.channel.send(exampleEmbed);
-          break1=2;                               
-          }else if(language == "en"){
-            const exampleEmbed = new Discord.MessageEmbed()
-            .setColor('#ffa600')
-            .setTitle('Using *log')
-            .setURL('https://www.thisworldthesedays.com/command-description-userdeniz1.html')
-            .setAuthor(message.author.username+'')
-            .setDescription('*log (Log number)')
-            .setThumbnail('https://i.imgur.com/wSTFkRM.png')
-            
-            .addField('.', 'Problems? DM <@466596723297484810>!', false)
-            .setTimestamp()
-            .setFooter(''+message.author.username+'');
-            message.channel.send(exampleEmbed);
-          break1=2;                                    
-          }
-       }else{
-        const exampleEmbed = new Discord.MessageEmbed()
-            .setColor('#ffa600')
-            .setTitle('Using *log')
-            .setURL('https://www.thisworldthesedays.com/command-description-userdeniz1.html')
-            .setAuthor(message.author.username+'')
-            .setDescription('*log (Log number)')
-            .setThumbnail('https://i.imgur.com/wSTFkRM.png')
-            
-            .addField('.', 'Problems? DM <@466596723297484810>!', false)
-            .setTimestamp()
-            .setFooter(''+message.author.username+'');
-            message.channel.send(exampleEmbed);
-          break1=2;                                    
-                                                               
-        message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-       }
-      });
-
-  }
-break;
-default:
-
-  break;
-}
-
-
-    }else if(message.channel.id === '773446927710552094'){
-        let sunde =  message.guild.roles.cache.find((r) => r.id == "772467882508156928");
-        
-        console.log("bis hierhin");
-        
-        switch(args[0]){
-            case "!Sündenbock":
-                console.log("sünde");
-                if (message.member.roles.cache.has(sunde.id)) {
-        con.query(`SELECT * FROM verwarntimes WHERE id = '`+ message.author.id+`'`, (err, rows1) => {
-            if(err) throw err;
-
-            console.log("code 1");
-            
-           
-                if(rows1.length >= 1){
-                    let alteUhr = rows1[0].ms;
-                    const timen = BigInt(alteUhr);
-                    
-                    if(BigInt(Date.now()) >= timen){
-                        
-                            message.member.roles.remove(sunde);
-                            
-                            
-                            con.query(`SELECT * FROM playerrolle WHERE id = '`+ message.author.id+`'`, (err, rows) => {
-                                if(err) throw err; 
-                                let gasd2 = rows[0].a;
-                                if(rows[0].id == message.author.id){
-                                for (var i = 1; i <= 70; i++) {
-                                    
-                                    
-                                    
-                                    if(1 < 2){
-                                    if(i == 1) {
-                                            }else if(i == 2){  gasd2 = rows[0].b;
-                                  }else if(i == 3){  gasd2 = rows[0].c;
-                                  }else if(i == 4){  gasd2 = rows[0].d;
-                              }else if(i == 5){  gasd2 = rows[0].e;
-                          }else if(i == 6){  gasd2 = rows[0].f;
-                      }else if(i == 7){  gasd2 = rows[0].g;
-                  }else if(i == 8){  gasd2 = rows[0].h;
-              }else if(i == 9){  gasd2 = rows[0].i;
-          }else if(i == 10){  gasd2 = rows[0].j;
-      }else if(i == 11){  gasd2 = rows[0].k;
-  }else if(i == 12){  gasd2 = rows[0].l;
-}else if(i == 13){  gasd2 = rows[0].m;
-    }else if(i == 14){  gasd2 = rows[0].n;
-  }else if(i == 15){  gasd2 = rows[0].o;
-}else if(i == 16){  gasd2 = rows[0].p;
-}else if(i == 17){  gasd2 = rows[0].q;
-}else if(i == 18){  gasd2 = rows[0].r;
-}else if(i == 19){  gasd2 = rows[0].s;
-}else if(i == 20){  gasd2 = rows[0].t;
-}else if(i == 21){  gasd2 = rows[0].u;
-}else if(i == 22){  gasd2 = rows[0].v;
-}else if(i == 23){  gasd2 = rows[0].w;
-}else if(i == 24){  gasd2 = rows[0].x;
-}else if(i == 25){  gasd2 = rows[0].y;
-}else if(i == 26){  gasd2 = rows[0].z;
-}else if(i == 27){ gasd2 = rows[0].aa;
-}else if(i == 28){ gasd2 = rows[0].ab;
-}else if(i == 29){ gasd2 = rows[0].ac;
-}else if(i == 30){ gasd2 = rows[0].ad;
-}else if(i == 31){ gasd2 = rows[0].ae;
-}else if(i == 32){ gasd2 = rows[0].af;
-}else if(i == 33){ gasd2 = rows[0].ag;
-}else if(i == 34){ gasd2 = rows[0].ah;
-}else if(i == 35){ gasd2 = rows[0].ai;
-}else if(i == 36){ gasd2 = rows[0].aj;
-}else if(i == 37){ gasd2 = rows[0].ak;
-}else if(i == 38){ gasd2 = rows[0].al;
-}else if(i == 39){ gasd2 = rows[0].am;
-}else if(i == 40){ gasd2 = rows[0].an;
-}else if(i == 41){ gasd2 = rows[0].ao;
-}else if(i == 42){ gasd2 = rows[0].ap;
-}else if(i == 43){ gasd2 = rows[0].aq;
-}else if(i == 44){ gasd2 = rows[0].ar;
-}else if(i == 45){ gasd2 = rows[0].as;
-}else if(i == 46){ gasd2 = rows[0].at;
-}else if(i == 47){ gasd2 = rows[0].au;
-}else if(i == 48){ gasd2 = rows[0].av;
-}else if(i == 49){ gasd2 = rows[0].aw;
-}else if(i == 50){ gasd2 = rows[0].ax;
-}else if(i == 51){ gasd2 = rows[0].ay;
-}else if(i == 52){ gasd2 = rows[0].az;
-}else if(i == 53){ gasd2 = rows[0].ba;
-}else if(i == 54){ gasd2 = rows[0].bb;
-}else if(i == 55){ gasd2 = rows[0].bc;
-}else if(i == 56){ gasd2 = rows[0].bd;
-}else if(i == 57){ gasd2 = rows[0].be;
-}else if(i == 58){ gasd2 = rows[0].bf;
-}else if(i == 59){ gasd2 = rows[0].bg;
-}else if(i == 60){ gasd2 = rows[0].bh;
-}else if(i == 61){ gasd2 = rows[0].bi;
-}else if(i == 62){ gasd2 = rows[0].bj;
-}else if(i == 63){ gasd2 = rows[0].bk;
-}else if(i == 64){ gasd2 = rows[0].bl;
-}else if(i == 65){ gasd2 = rows[0].bm;
-}else if(i == 66){ gasd2 = rows[0].bn;
-}else if(i == 67){ gasd2 = rows[0].bo;
-}else if(i == 68){ gasd2 = rows[0].bp;
-}else if(i == 69){ gasd2 = rows[0].bq;
-}else if(i == 70){ gasd2 = rows[0].br;
-}else if(i == 71){ gasd2 = rows[0].bs;
-          }}
-
-          if(gasd2 == "0"){
-
-          }else if(gasd2 == null){
-
-
-          }else{
-              let abc =  message.guild.roles.cache.find((r) => r.id == ""+gasd2);
-              if(!(message.member.roles.cache.has(abc.id))){
-              message.member.roles.add(abc);
-          }
-          }
-       }
-        }
-                            });
-                        sql = `DELETE FROM verwarntimes WHERE id = '`+ message.author.id+`'`;
-                        
-                        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                          if(err) throw err;
-                              if(rows.length >= 1){
-                                let language = rows[0].lang;
-                                if(language == "de"){
-                                  message.channel.send("ok, bist entwarnt.");                                     
-                                }else if(language == "en"){
-                                  message.channel.send("ok, you're not warned anymore.");                                     
-                                }
-                             }else{
-                              message.channel.send("ok, you're not warned anymore.");                                      
-                                                                                     
-                              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                             }
-                            });
-                        con.query(sql)
-                        sql = `DELETE FROM playerrolle WHERE id = '`+ message.author.id+`'`;
-                        con.query(sql)
-                   }else {
-                        
-                        
-                        const timen1 = Number(timen);
-                        
-                        const left = Date.now() - timen1;
-                        var sec = left / 1000 * -1;
-                        if(sec > 600){
-                        sec = sec / 60;
-                        if(sec > 120){
-                          sec = sec / 60;
-                          if(sec > 24){
-                            sec = sec / 24;
-                            secs = parseInt(sec);
-                            con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                              if(err) throw err;
-                                  if(rows.length >= 1){
-                                    let language = rows[0].lang;
-                                    if(language == "de"){
-                                      message.channel.send("Du bist noch für "+ secs + " Tage verwarnt!");                                     
-                                    }else if(language == "en"){
-                                      message.channel.send("Your warn is lasting for further "+ secs + " days!");                                     
-                                    }
-                                 }else{
-                                  message.channel.send("Your warn is lasting for further "+ secs + " days!");                                     
-                                                                                         
-                                  message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                                 }
-                                });
-    
-                          
-                          }else{
-                            secs = parseInt(sec);
-                            con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                              if(err) throw err;
-                                  if(rows.length >= 1){
-                                    let language = rows[0].lang;
-                                    if(language == "de"){
-                                      message.channel.send("Du bist noch für "+ secs + " Stunden verwarnt!");                                     
-                                    }else if(language == "en"){
-                                      message.channel.send("Your warn is lasting for further "+ secs + " hours!");                                     
-                                    }
-                                 }else{
-                                  message.channel.send("Your warn is lasting for further "+ secs + " hours!");                                     
-                                                                                         
-                                  message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                                 }
-                                });
-                            }
-                        }else{
-                          secs = parseInt(sec);
-                          con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                            if(err) throw err;
-                                if(rows.length >= 1){
-                                  let language = rows[0].lang;
-                                  if(language == "de"){
-                                    message.channel.send("Du bist noch für "+ secs + " Minuten verwarnt!");                                     
-                                  }else if(language == "en"){
-                                    message.channel.send("Your warn is lasting for further "+ secs + " minutes!");                                     
-                                  }
-                               }else{
-                                message.channel.send("Your warn is lasting for further "+ secs + " minutes!");                                     
-                                                                                       
-                                message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                               }
-                              });
+                          }else if(language == "en"){
+                            randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+                                 
                           }
-                        }else{
+                       }else{
+                       
+                        randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+
+                        randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                       }
+                      });
+
+              
+                                        
+                                
+
+
+
+                        
+                    }
+                    
+                  break;
+                  }
+                    
+                
+        
+                 
+            
     
-                          secs = parseInt(sec);
-                          con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                            if(err) throw err;
-                                if(rows.length >= 1){
-                                  let language = rows[0].lang;
-                                  if(language == "de"){
-                                    message.channel.send("Du bist noch für "+ secs + " Sekunden verwarnt!");                                     
-                                  }else if(language == "en"){
-                                    message.channel.send("Your warn is lasting for further "+ secs + " Seconds!");                                     
-                                  }
-                               }else{
-                                message.channel.send("Your warn is lasting for further "+ secs + " Seconds!");                                     
-                                                                                       
-                                message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                               }
-                              });
-                            }
-                          
-
-                    }
-                    
-                }else {
-
-                 
-            }
-        });
-      }else{
-        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-          if(err) throw err;
-              if(rows.length >= 1){
-                let language = rows[0].lang;
-                if(language == "de"){
-                  message.channel.send("Du bist garnicht verwarnt! Die Rolle als bot beherrscht du besser als ich.");                                     
-                }else if(language == "en"){
-                  message.channel.send("You're not warned! Such a bot...");                                     
-                }
-             }else{
-              message.channel.send("You're not warned! Such a bot...");                                   
-                                                                     
-              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-             }
-            });
-          }
-            break;
-            case "!sündenbock":
-                console.log("sünde");
-        con.query(`SELECT * FROM verwarntimes WHERE id = '`+ message.author.id+`'`, (err, rows1) => {
-            if(err) throw err;
-
-            console.log("code 1");
-            
-           
-                if(rows1.length >= 1){
-                    let alteUhr = rows1[0].ms;
-                    const timen = BigInt(alteUhr);
-                    
-                    if(BigInt(Date.now()) >= timen){
-                        
-                        
-                            message.member.roles.remove(sunde);
-                            
-                            con.query(`SELECT * FROM playerrolle WHERE id = '`+ message.author.id+`'`, (err, rows) => {
-                                if(err) throw err; 
-                                
-                            let gasd2 = rows[0].a;
-                                
-                                for (var i = 1; i <= 70; i++) {
-                                    
-                                    
-                                    
-                                    if(1 < 2){
-                                    if(i == 1) {
-                                            }else if(i == 2){  gasd2 = rows[0].b;
-                                  }else if(i == 3){  gasd2 = rows[0].c;
-                                  }else if(i == 4){  gasd2 = rows[0].d;
-                              }else if(i == 5){  gasd2 = rows[0].e;
-                          }else if(i == 6){  gasd2 = rows[0].f;
-                      }else if(i == 7){  gasd2 = rows[0].g;
-                  }else if(i == 8){  gasd2 = rows[0].h;
-              }else if(i == 9){  gasd2 = rows[0].i;
-          }else if(i == 10){  gasd2 = rows[0].j;
-      }else if(i == 11){  gasd2 = rows[0].k;
-  }else if(i == 12){  gasd2 = rows[0].l;
-}else if(i == 13){  gasd2 = rows[0].m;
-    }else if(i == 14){  gasd2 = rows[0].n;
-  }else if(i == 15){  gasd2 = rows[0].o;
-}else if(i == 16){  gasd2 = rows[0].p;
-}else if(i == 17){  gasd2 = rows[0].q;
-}else if(i == 18){  gasd2 = rows[0].r;
-}else if(i == 19){  gasd2 = rows[0].s;
-}else if(i == 20){  gasd2 = rows[0].t;
-}else if(i == 21){  gasd2 = rows[0].u;
-}else if(i == 22){  gasd2 = rows[0].v;
-}else if(i == 23){  gasd2 = rows[0].w;
-}else if(i == 24){  gasd2 = rows[0].x;
-}else if(i == 25){  gasd2 = rows[0].y;
-}else if(i == 26){  gasd2 = rows[0].z;
-}else if(i == 27){ gasd2 = rows[0].aa;
-}else if(i == 28){ gasd2 = rows[0].ab;
-}else if(i == 29){ gasd2 = rows[0].ac;
-}else if(i == 30){ gasd2 = rows[0].ad;
-}else if(i == 31){ gasd2 = rows[0].ae;
-}else if(i == 32){ gasd2 = rows[0].af;
-}else if(i == 33){ gasd2 = rows[0].ag;
-}else if(i == 34){ gasd2 = rows[0].ah;
-}else if(i == 35){ gasd2 = rows[0].ai;
-}else if(i == 36){ gasd2 = rows[0].aj;
-}else if(i == 37){ gasd2 = rows[0].ak;
-}else if(i == 38){ gasd2 = rows[0].al;
-}else if(i == 39){ gasd2 = rows[0].am;
-}else if(i == 40){ gasd2 = rows[0].an;
-}else if(i == 41){ gasd2 = rows[0].ao;
-}else if(i == 42){ gasd2 = rows[0].ap;
-}else if(i == 43){ gasd2 = rows[0].aq;
-}else if(i == 44){ gasd2 = rows[0].ar;
-}else if(i == 45){ gasd2 = rows[0].as;
-}else if(i == 46){ gasd2 = rows[0].at;
-}else if(i == 47){ gasd2 = rows[0].au;
-}else if(i == 48){ gasd2 = rows[0].av;
-}else if(i == 49){ gasd2 = rows[0].aw;
-}else if(i == 50){ gasd2 = rows[0].ax;
-}else if(i == 51){ gasd2 = rows[0].ay;
-}else if(i == 52){ gasd2 = rows[0].az;
-}else if(i == 53){ gasd2 = rows[0].ba;
-}else if(i == 54){ gasd2 = rows[0].bb;
-}else if(i == 55){ gasd2 = rows[0].bc;
-}else if(i == 56){ gasd2 = rows[0].bd;
-}else if(i == 57){ gasd2 = rows[0].be;
-}else if(i == 58){ gasd2 = rows[0].bf;
-}else if(i == 59){ gasd2 = rows[0].bg;
-}else if(i == 60){ gasd2 = rows[0].bh;
-}else if(i == 61){ gasd2 = rows[0].bi;
-}else if(i == 62){ gasd2 = rows[0].bj;
-}else if(i == 63){ gasd2 = rows[0].bk;
-}else if(i == 64){ gasd2 = rows[0].bl;
-}else if(i == 65){ gasd2 = rows[0].bm;
-}else if(i == 66){ gasd2 = rows[0].bn;
-}else if(i == 67){ gasd2 = rows[0].bo;
-}else if(i == 68){ gasd2 = rows[0].bp;
-}else if(i == 69){ gasd2 = rows[0].bq;
-}else if(i == 70){ gasd2 = rows[0].br;
-}else if(i == 71){ gasd2 = rows[0].bs;
-          }}
-
-          if(gasd2 == "0"){
-
-          }else if(gasd2 == null){
-
-
-          }else{
-              let abc =  message.guild.roles.cache.find((r) => r.id == ""+gasd2);
-              if(!(message.member.roles.cache.has(abc.id))){
-              message.member.roles.add(abc);
-          }
-          }
-       }
-                            
-                            
-                            
-                    
-                            
-                            
-                            });
-                        sql = `DELETE FROM verwarntimes WHERE id = '`+ message.author.id+`'`;
-                        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                          if(err) throw err;
-                              if(rows.length >= 1){
-                                let language = rows[0].lang;
-                                if(language == "de"){
-                                  message.channel.send("ok, bist entwarnt.");                                     
-                                }else if(language == "en"){
-                                  message.channel.send("ok, you're not warned anymore.");                                     
-                                }
-                             }else{
-                              message.channel.send("ok, you're not warned anymore.");                                      
-                                                                                     
-                              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                             }
-                            });
-                        con.query(sql, console.log)
-                        sql = `DELETE FROM playerrolle WHERE id = '`+ message.author.id+`'`;
-                        con.query(sql, console.log)
-                   }else {
-                        
-                        
-                    const timen1 = Number(timen);
-                        
-                    const left = Date.now() - timen1;
-                    var sec = left / 1000 * -1;
-                    if(sec > 600){
-                    sec = sec / 60;
-                    if(sec > 120){
-                      sec = sec / 60;
-                      if(sec > 24){
-                        sec = sec / 24;
-                        secs = parseInt(sec);
-                        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                          if(err) throw err;
-                              if(rows.length >= 1){
-                                let language = rows[0].lang;
-                                if(language == "de"){
-                                  message.channel.send("Du bist noch für "+ secs + " Tage verwarnt!");                                     
-                                }else if(language == "en"){
-                                  message.channel.send("Your warn is lasting for further "+ secs + " days!");                                     
-                                }
-                             }else{
-                              message.channel.send("Your warn is lasting for further "+ secs + " days!");                                     
-                                                                                     
-                              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                             }
-                            });
-
-                      
-                      }else{
-                        secs = parseInt(sec);
-                        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                          if(err) throw err;
-                              if(rows.length >= 1){
-                                let language = rows[0].lang;
-                                if(language == "de"){
-                                  message.channel.send("Du bist noch für "+ secs + " Stunden verwarnt!");                                     
-                                }else if(language == "en"){
-                                  message.channel.send("Your warn is lasting for further "+ secs + " hours!");                                     
-                                }
-                             }else{
-                              message.channel.send("Your warn is lasting for further "+ secs + " hours!");                                     
-                                                                                     
-                              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                             }
-                            });
-                        }
-                    }else{
-                      secs = parseInt(sec);
-                      con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                        if(err) throw err;
-                            if(rows.length >= 1){
-                              let language = rows[0].lang;
-                              if(language == "de"){
-                                message.channel.send("Du bist noch für "+ secs + " Minuten verwarnt!");                                     
-                              }else if(language == "en"){
-                                message.channel.send("Your warn is lasting for further "+ secs + " minutes!");                                     
-                              }
-                           }else{
-                            message.channel.send("Your warn is lasting for further "+ secs + " minutes!");                                     
-                                                                                   
-                            message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                           }
-                          });
-                      }
-                    }else{
-
-                      secs = parseInt(sec);
-                      con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                        if(err) throw err;
-                            if(rows.length >= 1){
-                              let language = rows[0].lang;
-                              if(language == "de"){
-                                message.channel.send("Du bist noch für "+ secs + " Sekunden verwarnt!");                                     
-                              }else if(language == "en"){
-                                message.channel.send("Your warn is lasting for further "+ secs + " Seconds!");                                     
-                              }
-                           }else{
-                            message.channel.send("Your warn is lasting for further "+ secs + " Seconds!");                                     
-                                                                                   
-                            message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                           }
-                          });
-                      
-                      }
-
-                    }
-                    
-                }else {
-                 
-            }
-        });
-      
-
-            break;
-            
-            
-            
-            default:
-                break;
-
-        }
-
-    }else if(message.channel.id === '810585353836429372' || message.channel.id === '811252428178980924' ){
-        let vv123v = Math.random() * 13;
-        let BlackJack1bis13 = parseInt(''+vv123v);
-        switch(args[0]){
-            case "blackjack":
-            
-            break;
-        }
-
-
-
-    }else if(message.channel.id === '806274946913271808'){
+        
+      }else if(message.channel.id === '806274946913271808'){
         let move =  message.guild.roles.cache.find((r) => r.id == "811587684460003348");
         switch(args[0]){
             
@@ -2267,9 +670,9 @@ if(xvv==1){
         console.log("code 1");
         
         
-  if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz" || message.member.roles.cache.find(r => r.name === "Mod") || message.member.roles.cache.find(r => r.name === "Moderator")){
+  if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810"  || message.member.roles.cache.find(r => r.name.toUpperCase() === "MOD") || message.member.roles.cache.find(r => r.nametoUpperCase() === "MODERATOR")){
   
-        if(args[1].toUpperCase() == "DE" || args[1].toUpperCase() == "DEUTSCH" ){
+        if(args[1].toUpperCase() === "DE" || args[1].toUpperCase() === "DEUTSCH" ){
           
           
         }
@@ -2280,9 +683,9 @@ if(xvv==1){
         console.log("code 1");
         
         
-  if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "Deniz" || message.member.roles.cache.find(r => r.name === "Mod") || message.member.roles.cache.find(r => r.name === "Moderator")){
+        if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810"  || message.member.roles.cache.find(r => r.name.toUpperCase() === "MOD") || message.member.roles.cache.find(r => r.nametoUpperCase() === "MODERATOR")){
   
-        if(args[1].toUpperCase() == "DE" || args[1].toUpperCase() == "DEUTSCH" ){
+        if(args[1].toUpperCase() === "DE" || args[1].toUpperCase() === "DEUTSCH" ){
           con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
             if(err) throw err;
                 if(rows.length >= 1){
@@ -2297,8 +700,23 @@ if(xvv==1){
                 con.query(sql)
                }
               });
-              message.channel.send('Super! Die Serversprache wurde auf Deutsch gestellt!').then(msg => msg.delete({timeout: deleteTime}));
-        }else if(args[1].toUpperCase() == "EN" || args[1].toUpperCase() == "ENGLISH" ){
+
+              if(message.guild.me.hasPermission("SEND_MESSAGES")) {
+
+                message.channel.send('Super! Die Serversprache wurde auf Deutsch gestellt!');
+
+              }else {
+                const randomChannel = message.guild.channels.cache.find(channel => 
+                  channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
+                  randomChannel.send('Super! Die Serversprache wurde auf Deutsch gestellt!');
+                  randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung SEND_MESSAGES im Server, <@"+message.guild.ownerID+">.");
+                                 
+
+              }
+
+
+              
+        }else if(args[1].toUpperCase() === "EN" || args[1].toUpperCase() === "ENGLISH" ){
           con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
             if(err) throw err;
                 if(rows.length >= 1){
@@ -2312,7 +730,20 @@ if(xvv==1){
                 con.query(sql)
                }
               });
-              message.channel.send('The Serverlanguage is now set to English!').then(msg => msg.delete({timeout: deleteTime}));
+              
+              if(message.guild.me.hasPermission("SEND_MESSAGES")) {
+
+                message.channel.send('The Serverlanguage is now set to English!');
+
+              }else {
+                const randomChannel = message.guild.channels.cache.find(channel => 
+                  channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
+                  randomChannel.send('The Serverlanguage is now set to English!');
+                  randomChannel.send("Sorry for disturb, but Jamal would like to get the permission SEND_MESSAGES, <@"+message.guild.ownerID+">.");
+                                 
+
+              }
+
         }else{
           message.channel.send("This Language is not supported! \nSupported Languages until now are: \nGerman - DE \nEnglish - EN");
         }
@@ -2321,8 +752,8 @@ if(xvv==1){
 
 case ""+Prefix+"LEVEL":
   
-if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "!Deniz" || message.member.roles.cache.find(r => r.name === "Mod") || message.member.roles.cache.find(r => r.name === "Moderator")){
-  if(args.length == 3){
+  if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810" || message.member.roles.cache.find(r => r.name.toUpperCase() === "MOD") || message.member.roles.cache.find(r => r.nametoUpperCase() === "MODERATOR")){
+    if(args.length === 3){
   con.query(`SELECT * FROM RollenFürLevel WHERE levelrang = '`+args[1]+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
     if(err) throw err;
        if(rows.length >= 1){
@@ -2334,91 +765,38 @@ if(message.member.hasPermission("ADMINISTRATOR") || message.author.username == "
         con.query(sql);
         sql = `INSERT INTO RollenFürLevel (rollen_id, levelrang, server_id) VALUES ('`+rolle.id+`', `+args[1]+`,'`+message.guild.id+`');`;
         con.query(sql)
-        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-          if(err) throw err;
-              if(rows.length >= 1){
-                let language = rows[0].lang;
-                if(language == "de"){
-                  message.channel.send("Perfekt! Jeder mit dem Level "+args[1]+" bekommt nun die Rolle <@&"+rolle.id+">.");
-                }else if(language == "en"){
-                  message.channel.send("Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.");
-                }
-             }else{
-              message.channel.send("Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.");
-              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-             }
-            });
-       }else{
-        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-          if(err) throw err;
-              if(rows.length >= 1){
-                let language = rows[0].lang;
-                if(language == "de"){
-                  message.channel.send("Bitte Pinge eine Rolle! \n(§level 5 @...).");
-                }else if(language == "en"){
-                  message.channel.send("Please mention a role! \n(§level 5 @...).");
-                }
-             }else{
-              message.channel.send("Please mention a role! \n(§level 5 @...).");
-              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-             }
-            });
-      }
+
+
+SpracheUndSendMessagePerms(0, "Perfekt! Jeder mit dem Level "+args[1]+" bekommt nun die Rolle <@&"+rolle.id+">.", "Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.")
+
+        
+ }else{
+   
+                SpracheUndSendMessagePerms(0, "Bitte Pinge eine Rolle! \n(§level 5 @...).", "Please mention a role! \n(§level 5 @...).");
+
+        }
       }else{
         if(message.mentions.roles.size == 1){
         let rolle = message.mentions.roles.first();
         
-  console.log(rolle.id);
         sql = `INSERT INTO RollenFürLevel (rollen_id, levelrang, server_id) VALUES ('`+rolle.id+`', `+args[1]+`,'`+message.guild.id+`');`;
         con.query(sql)
-        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-          if(err) throw err;
-              if(rows.length >= 1){
-                let language = rows[0].lang;
-                if(language == "de"){
-                  message.channel.send("Perfekt! Jeder mit dem Level "+args[1]+" bekommt nun die Rolle <@&"+rolle.id+">.");
-                }else if(language == "en"){
-                  message.channel.send("Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.");
-                }
-             }else{
-              message.channel.send("Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.");
-              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-             }
-            });
+        SpracheUndSendMessagePerms(0, "Perfekt! Jeder mit dem Level "+args[1]+" bekommt nun die Rolle <@&"+rolle.id+">.", "Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.")
+
        
        }else{
-        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-          if(err) throw err;
-              if(rows.length >= 1){
-                let language = rows[0].lang;
-                if(language == "de"){
-                  message.channel.send("Bitte Pinge eine Rolle! \n(§level 5 @...).");
-                }else if(language == "en"){
-                  message.channel.send("Please mention a role! \n(§level 5 @...).");
-                }
-             }else{
-              message.channel.send("Please mention a role! \n(§level 5 @...).");
-              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-             }
-            });
+
+
+        SpracheUndSendMessagePerms(0, "Bitte Pinge eine Rolle! \n(§level 5 @...).", "Please mention a role! \n(§level 5 @...).");
+
       }
        
     }
       });
     }else{
-      con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-        if(err) throw err;
-            if(rows.length >= 1){
-              let language = rows[0].lang;
-              if(language == "de"){
-                message.channel.send("Bitte wähle ein gültiges Level und Pinge eine Rolle! \n(§level 5 @...)");              }else if(language == "en"){
-                message.channel.send("Please select a valid Level and mention a role! \n(§level 5 @...)");              }
-           }else{
-            message.channel.send("Please select a valid Level and mention a role! \n(§level 5 @...)");            message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-           }
-          });
-      
-    }
+
+      SpracheUndSendMessagePerms(0, "Bitte wähle ein gültiges Level und Pinge eine Rolle! \n(§level 5 @...)", "Please select a valid Level and mention a role! \n(§level 5 @...)");
+ }
   }
 break;
 
@@ -2431,23 +809,8 @@ break;
 
                 }
 if(taggesUsa == null){
-  con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-    if(err) throw err;
-        if(rows.length >= 1){
-          let language = rows[0].lang;
-          if(language == "de"){
-            message.channel.send("User nicht gefunden. (Wenn du deine XP wissen, schreibe NUR §leveling!)").then(msg => msg.delete({timeout: deleteTime}));
-
-          }else if(language == "en"){
-            message.channel.send("User not found. (If you want to know your XP, you just need to type §leveling!)").then(msg => msg.delete({timeout: deleteTime}));
-
-          }
-       }else{
-        message.channel.send("User not found. (If you want to know your XP, you just need to type §leveling!)").then(msg => msg.delete({timeout: deleteTime}));
-
-        message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-       }
-      });
+  SpracheUndSendMessagePerms(0, "User nicht gefunden. (Wenn du deine XP wissen, schreibe NUR §leveling!)", "User not found. (If you want to know your XP, you just need to type §leveling!)");
+  
 }else{
                 let Level = 0;
             let Experience = 0;
@@ -2465,24 +828,12 @@ if(taggesUsa == null){
                       Experience = rows[0].xplevel;
                      }
                     });
-                    con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                      if(err) throw err;
-                          if(rows.length >= 1){
-                            let language = rows[0].lang;
-                            if(language == "de"){
-                              message.channel.send("Der Spieler <@"+taggesUsa.id+"> ist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
 
-                            }else if(language == "en"){
-                              message.channel.send("The User <@"+taggesUsa.id+"> is level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
+                    SpracheUndSendMessagePerms(0, "Der Spieler <@"+taggesUsa.id+"> ist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.",
+                    "The User <@"+taggesUsa.id+"> is level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.");
 
-                            }
-                         }else{
-                          message.channel.send("The User <@"+taggesUsa.id+"> is level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
+                   }
 
-                          message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                         }
-                        });
-                      }
               }else{
 
             
@@ -2502,26 +853,12 @@ if(taggesUsa == null){
                       Experience = rows[0].xplevel;
                      }
                     });
-                    con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                      if(err) throw err;
-                          if(rows.length >= 1){
-                            let language = rows[0].lang;
-                            if(language == "de"){
-                              message.channel.send("Du bist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
 
-                            }else if(language == "en"){
-                              message.channel.send("You're level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
-
-                            }
-                         }else{
-                          message.channel.send("You're level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
-
-                          message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                         }
-                        });
-                      }
+                    SpracheUndSendMessagePerms(0, "Du bist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.",
+                    "You're level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.");
+                 }
                     
-            }else if(rows.length == 1){
+            }else if(rows.length === 1){
               let Level = 0;
               let Experience = 0;
   
@@ -2538,23 +875,9 @@ if(taggesUsa == null){
                         Experience = rows[0].xplevel;
                        }
                       });
-                      con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                        if(err) throw err;
-                            if(rows.length >= 1){
-                              let language = rows[0].lang;
-                              if(language == "de"){
-                                message.channel.send("Du bist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
-  
-                              }else if(language == "en"){
-                                message.channel.send("You're level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
-  
-                              }
-                           }else{
-                            message.channel.send("You're level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.").then(msg => msg.delete({timeout: deleteTime}));
-  
-                            message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                           }
-                          });
+
+                      SpracheUndSendMessagePerms(0, "Du bist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.",
+                    "You're level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.");
 
                         }
 
@@ -2562,38 +885,23 @@ if(taggesUsa == null){
             
             break;
             case ""+Prefix+"HELP":
-              con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                if(err) throw err;
-                    if(rows.length >= 1){
-                      let language = rows[0].lang;
-                      if(language == "de"){
-                        message.channel.send("```PREFIX: § \n \n{} = Ping (optional), [] = Argumente (auch optional), () = Argumente (Eingabe erfordert) "+
+
+              SpracheUndSendMessagePerms(0, 
+                "```PREFIX: § \n \n{} = Ping (optional), [] = Argumente (auch optional), () = Argumente (Eingabe erfordert) "+
                         "\n \nlevel (LevelNr) (@role): Nur für Menschen mit der Rolle 'Moderator' oder als Admin verfügbar. \nStelle ein, ab welchem Level man welche Rolle bekommt (Beispiel: level 5 @Level5) \n \nleveling {@User}: Sieh, auf welchem Level du bist (oder jemand anderes.)"+
                         "\n \npp @{player}: Checke die Schw*nzlänge von... dir oder einem User "+
-                        " \n \nlang: Setze die Sprache auf deinem Server.```");
-
-                      }else if(language == "en"){
-                        message.channel.send("```PREFIX: §\n \n{} = Ping (optional), [] = Argument (also optional), () = Argument (needed) "+
+                        " \n \nlang: Setze die Sprache auf deinem Server.```",
+                "```PREFIX: §\n \n{} = Ping (optional), [] = Argument (also optional), () = Argument (needed) "+
                         "\n \nlevel: Only available for people with the role named 'moderator' or as admin. \nSetup with level a player will get which role (usage: level 5 @ {Level5RollePingen}) \n \nleveling {@user}: See what level you are (or someone else.)"+
                         "\n \npp {@user}: Check the length of a co*k of you or a user "+
                         " \n \nlang : Set the language of the bot on your server```");
 
-                      }
-                   }else{
-                    message.channel.send("```PREFIX: §\n \n{} = Ping (optional), [] = Argument (also optional), () = Argument (needed) "+
-                    "\n \nlevel: Only available for people with the role named 'moderator' or as admin. \nSetup with level a player will get which role (usage: level 5 @ {Level5RollePingen}) \n \nleveling {@user}: See what level you are (or someone else.)"+
-                    "\n \npp @{player}: Check the length of a co*k of you or a user "+
-                    "\n \nlang : Set the language of the bot on your server```");
 
-                    message.channel.send('(No Language set! "§lang" as an Administrator!)');
-                   }
-                  });
+
 
               break;
               case ""+Prefix+"JAMAL":
-                if(message.guild.me.hasPermission("MANAGE_MESSAGES")) {
-                  console.log("I have the Permission Administrator"); 
-                }
+                
                     
                     if(message.mentions.members.size >= 1){
                 const taggedUser = message.mentions.members.first();
@@ -2602,13 +910,7 @@ if(taggesUsa == null){
                message.channel.send("Super, <@"+message.author.id+"> 👍 👍 👍 👍");}
               break;
 
-              case ""+Prefix+"TEEST":
-                if(message.guild.me.hasPermission("MANAGE_MESSAGES")) {
-                  console.log("I have the Permission Administrator");
-                }else {
-                  console.log("I don't have Permission Administrator");
-                }
-          break;
+              
 
 
               case ""+Prefix+"LAUCH":
@@ -2624,17 +926,9 @@ if(taggesUsa == null){
 
                   let Gained = Math.floor(Math.random() * 100);
                   let XPneu = (parseInt(Gained));
-                  if(message.guild.me.hasPermission("MANAGE_MESSAGES")) {
+                  SpracheUndSendMessagePerms(0, "🥬Der User <@"+taggedUser.id+"> ist zu "+XPneu+"% ein Lauch.🥬",
+                  "🥬The User <@"+taggedUser.id+"> has a "+XPneu+"% possibility to be a leek.🥬");
 
-                    message.channel.send("🥬Der User <@"+taggedUser.id+"> ist zu "+XPneu+"% ein Lauch.🥬"); 
-
-                  }else {
-                    const availableChannel = message.guild.channels.cache.find(channel => 
-                      channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES")
-                    )
-
-                    availableChannel.send("test")
-                  }
                   
               //}
               }else {
@@ -2644,7 +938,9 @@ if(taggesUsa == null){
 
                 let Gained = Math.floor(Math.random() * 100);
                 let XPneu = (parseInt(Gained));
-               message.channel.send("🥬Du bist zu "+XPneu+"% ein Lauch.🥬");}
+                SpracheUndSendMessagePerms(0, "🥬Du bist zu "+XPneu+"% ein Lauch.🥬",
+                "🥬You have a "+XPneu+"% possibility to be a leek.🥬");
+              }
                 //}
               break;
 
