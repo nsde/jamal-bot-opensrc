@@ -772,7 +772,7 @@ SpracheUndSendMessagePerms(0, "Perfekt! Jeder mit dem Level "+args[1]+" bekommt 
         
  }else{
    
-                SpracheUndSendMessagePerms(0, "Bitte Pinge eine Rolle! \n(§level 5 @...).", "Please mention a role! \n(§level 5 @...).");
+                SpracheUndSendMessagePerms(0, "Bitte schreibe "+Prefix+"help für weitere Hilfe!", "Please write "+Prefix+"help for more information!");
 
         }
       }else{
@@ -787,16 +787,71 @@ SpracheUndSendMessagePerms(0, "Perfekt! Jeder mit dem Level "+args[1]+" bekommt 
        }else{
 
 
-        SpracheUndSendMessagePerms(0, "Bitte Pinge eine Rolle! \n(§level 5 @...).", "Please mention a role! \n(§level 5 @...).");
+        SpracheUndSendMessagePerms(0, "Bitte schreibe "+Prefix+"help für weitere Hilfe!", "Please write "+Prefix+"help for more information!");
 
       }
        
     }
       });
-    }else{
+    }else if(args.length == 2){
 
-      SpracheUndSendMessagePerms(0, "Bitte wähle ein gültiges Level und Pinge eine Rolle! \n(§level 5 @...)", "Please select a valid Level and mention a role! \n(§level 5 @...)");
- }
+      if(args[1].toUpperCase === "on"){
+        con.query(`SELECT * FROM Togglelevel WHERE server = '`+message.guild.id+`';`, (err, rows) => {
+          if(err) throw err;
+             if(rows.length >= 1){
+               if(rows[0].status === "on"){
+                SpracheUndSendMessagePerms(0, "Das Levelsystem ist zu dem Zeitpunkt aktiviert!", "The leveling-system is currently active!");
+                
+               }else{
+               sql = `DELETE FROM Togglelevel WHERE server = '`+message.guild.id+`';`;
+               con.query(sql)
+               sql = `INSERT INTO Togglelevel (server, status) VALUES ('`+message.guild.id+`', "on");`;
+               con.query(sql)
+               SpracheUndSendMessagePerms(0, "Das Levelsystem wurde nun aktiviert!", "The leveling-system is now activated!");
+               }
+             
+            }else{
+              sql = `DELETE FROM Togglelevel WHERE server = '`+message.guild.id+`';`;
+        con.query(sql)
+        sql = `INSERT INTO Togglelevel (server, status) VALUES ('`+message.guild.id+`', "on");`;
+        con.query(sql)
+        SpracheUndSendMessagePerms(0, "Das Levelsystem wurde nun aktiviert!", "The leveling-system is now activated!");
+            }
+
+          });
+
+      }else{
+        con.query(`SELECT * FROM Togglelevel WHERE server = '`+message.guild.id+`';`, (err, rows) => {
+          if(err) throw err;
+             if(rows.length >= 1){
+               if(rows[0].status === "off"){
+                SpracheUndSendMessagePerms(0, "Das Levelsystem ist zu dem Zeitpunkt deaktiviert!", "The leveling-system is currently deactived!");
+                
+               }else{
+               sql = `DELETE FROM Togglelevel WHERE server = '`+message.guild.id+`';`;
+               con.query(sql)
+               sql = `INSERT INTO Togglelevel (server, status) VALUES ('`+message.guild.id+`', "off");`;
+               con.query(sql)
+               SpracheUndSendMessagePerms(0, "Das Levelsystem wurde nun deaktiviert!", "The leveling-system is now deactivated!");
+               }
+             
+            }else{
+              sql = `DELETE FROM Togglelevel WHERE server = '`+message.guild.id+`';`;
+        con.query(sql)
+        sql = `INSERT INTO Togglelevel (server, status) VALUES ('`+message.guild.id+`', "off");`;
+        con.query(sql)
+        SpracheUndSendMessagePerms(0, "Das Levelsystem wurde nun deaktiviert!", "The leveling-system is now deactivated!");
+            }
+
+          });
+      }
+
+
+    }else{
+      SpracheUndSendMessagePerms(0, "Bitte schreibe "+Prefix+"help für weitere Hilfe!", "Please write "+Prefix+"help for more information!");
+
+    }
+    
   }
 break;
 
@@ -887,14 +942,22 @@ if(taggesUsa == null){
             case ""+Prefix+"HELP":
 
               SpracheUndSendMessagePerms(0, 
-                "```PREFIX: § \n \n{} = Ping (optional), [] = Argumente (auch optional), () = Argumente (Eingabe erfordert) "+
-                        "\n \nlevel (LevelNr) (@role): Nur für Menschen mit der Rolle 'Moderator' oder als Admin verfügbar. \nStelle ein, ab welchem Level man welche Rolle bekommt (Beispiel: level 5 @Level5) \n \nleveling {@User}: Sieh, auf welchem Level du bist (oder jemand anderes.)"+
+                "```PREFIX: "+Prefix+" \n \n{} = Ping (optional), [] = Argumente (auch optional), () = Argumente (Eingabe erfordert) "+
+                        "\n \nlevel (LevelNr) (@role): Nur für Menschen mit der Rolle 'Mod(erator)' oder mit Adminberechtigungen verfügbar. \nStelle ein, ab welchem Level man welche Rolle bekommt (Beispiel: "+Prefix+"level 5 {@Level5})"+
+                        "\n \nlevel (on/off): Stelle das Leveling-System ein/aus! (Standart: Aktiv)"+
+                        "\n \nleveling {@User}: Sieh, auf welchem Level du bist (oder jemand anderes.)"+
+                        
                         "\n \npp @{player}: Checke die Schw*nzlänge von... dir oder einem User "+
-                        " \n \nlang: Setze die Sprache auf deinem Server.```",
-                "```PREFIX: §\n \n{} = Ping (optional), [] = Argument (also optional), () = Argument (needed) "+
-                        "\n \nlevel: Only available for people with the role named 'moderator' or as admin. \nSetup with level a player will get which role (usage: level 5 @ {Level5RollePingen}) \n \nleveling {@user}: See what level you are (or someone else.)"+
+                        "\n \nlauch @{player}: Zu wieviel Prozent bist du/jemand anderes ein Lauch? "+
+                        "\n \nlang: Setze die Sprache auf deinem Server. (Beispiel: "+Prefix+"lang de)```",
+                
+                "```PREFIX: "+Prefix+"\n \n{} = Ping (optional), [] = Argument (also optional), () = Argument (needed) "+
+                        "\n \nlevel (LevelNo) (@role): Only available for people with the role named 'mod(erator)' or with admin permission. \nSetup with level a player will get which role (usage: "+Prefix+"level 5 {@Level5})"+
+                        "\n \nlevel (on/off): De/activate the leveling system! (usually active)"+
+                        "\n \nleveling {@user}: See what level you are (or someone else.)"+
                         "\n \npp {@user}: Check the length of a co*k of you or a user "+
-                        " \n \nlang : Set the language of the bot on your server```");
+                        "\n \nlauch @{player}: To which percentage are you/a user a leek? "+
+                        "\n \nlang : Set the language of the bot on your server. (usage: "+Prefix+"lang de)```");
 
 
 
@@ -949,56 +1012,42 @@ if(taggesUsa == null){
                       if(message.mentions.members.size >= 1){
                   const taggedUser = message.mentions.members.first();
                   if(taggedUser.id == "466596723297484810"){
-                    message.channel.send("🍆<@"+taggedUser.id+">'s pp ist 25cm groß.🍆");
+                    SpracheUndSendMessagePerms(0, "🍆<@"+taggedUser.id+">'s pp ist 25cm groß.🍆",
+                    "🍆<@"+taggedUser.id+">'s pp is 25cm big.🍆");
                   }else{
   
                     let Gained = Math.floor(Math.random() * 20);
                     let XPneu = (parseInt(Gained));
-  
-                    message.channel.send("🍆<@"+taggedUser.id+">'s pp ist "+XPneu+"cm groß .🍆"); 
+                    SpracheUndSendMessagePerms(0, "🍆<@"+taggedUser.id+">'s pp ist "+XPneu+"cm groß.🍆",
+                    "🍆<@"+taggedUser.id+">'s pp is "+XPneu+"cm big.🍆");
+
                 }
                 }else {
                   if(message.author.id == "466596723297484810"){
                     
-                    message.channel.send("🍆Dein pp ist 25cm groß.🍆");
+
+                    SpracheUndSendMessagePerms(0, "🍆Dein pp ist 25cm groß.🍆", "🍆Your pp is 25cm big.🍆");
                   }else{
   
                     let Gained = Math.floor(Math.random() * 20);
                     let XPneu = (parseInt(Gained));
-  
-                    message.channel.send("🍆Dein pp ist "+XPneu+"cm groß .🍆"); 
+                    SpracheUndSendMessagePerms(0, "🍆Dein pp ist "+XPneu+"cm groß.🍆", "🍆Your pp is "+XPneu+"cm big.🍆");
+                  
                   }
                   }
                 break;
 
 
                 case ""+Prefix+"FYNNDERWAHRE":
-                
-                  con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                    if(err) throw err;
-                        if(rows.length >= 1){
-                          let language = rows[0].lang;
-                          if(language == "de"){
-                            message.channel.send("Wahre Finns werden mit **y** geschrieben!");
-                                 
-                          }else if(language == "en"){
-                            message.channel.send("The real Finns are written with a **y**!");
-                                 
-                          }
-                       }else{
-                       
-                        message.channel.send("The real Finns are written with a **y**!");
-                                                 
-                        message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                       }
-                      });
-
-                      
+                  SpracheUndSendMessagePerms(0, "Wahre Finns werden mit **y** geschrieben!", "The real Finns are written with a **y**!");
                 break;
 
       default:
 
         break; 
+       
+        
+
 
   }
 
@@ -1043,23 +1092,13 @@ if(taggesUsa == null){
 
 
                                       if(XPneu >= (200+(200*b))){
-                                        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                                          if(err) throw err;
-                                              if(rows.length >= 1){
-                                                let language = rows[0].lang;
-                                                if(language == "de"){
-                                                  message.channel.send('Glückwunsch, <@'+message.author.id+'>! Du hast Level '+(b+1)+' erreicht!').then(msg => msg.delete({timeout: deleteTime}));
-                                                       
-                                                }else if(language == "en"){
-                                                  message.channel.send('Congratulation, <@'+message.author.id+'>! You reached Level '+(b+1)+'!').then(msg => msg.delete({timeout: deleteTime}));
-                                                       
-                                                }
-                                             }else{
-                                              message.channel.send('Congratulation, <@'+message.author.id+'>! You reached Level '+(b+1)+'!').then(msg => msg.delete({timeout: deleteTime}));
-                                                                       
-                                              message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                                             }
-                                            });
+
+
+                                        SpracheUndSendMessagePerms(1, 'Glückwunsch, <@'+message.author.id+'>! Du hast Level '+(b+1)+' erreicht!', 
+                                        'Congratulation, <@'+message.author.id+'>! You reached Level '+(b+1)+'!');
+                                        
+
+
                                         sql = `UPDATE Leveling SET xplevel = `+(XPneu-(200+(200*b)))+` WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
                                       con.query(sql);
                                       sql = `DELETE FROM LevelingLEVEL WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
