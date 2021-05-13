@@ -2612,7 +2612,7 @@ if(taggesUsa == null){
 
 
               case ""+Prefix+"LAUCH":
-                message.guild.channels.cache.find(channel => 
+                const availableChannel = message.guild.channels.cache.find(channel => 
                   channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES")
                 )
 
@@ -2624,8 +2624,18 @@ if(taggesUsa == null){
 
                   let Gained = Math.floor(Math.random() * 100);
                   let XPneu = (parseInt(Gained));
+                  if(message.guild.me.hasPermission("MANAGE_MESSAGES")) {
 
-                  message.channel.send("🥬Der User <@"+taggedUser.id+"> ist zu "+XPneu+"% ein Lauch.🥬"); 
+                    message.channel.send("🥬Der User <@"+taggedUser.id+"> ist zu "+XPneu+"% ein Lauch.🥬"); 
+
+                  }else {
+                    const availableChannel = message.guild.channels.cache.find(channel => 
+                      channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES")
+                    )
+
+                    availableChannel.send("test")
+                  }
+                  
               //}
               }else {
                // if(message.author.id == "466596723297484810"){
@@ -2664,6 +2674,7 @@ if(taggesUsa == null){
                   }
                   }
                 break;
+
 
                 case ""+Prefix+"FYNNDERWAHRE":
                 
