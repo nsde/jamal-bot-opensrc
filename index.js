@@ -942,7 +942,7 @@ if(taggesUsa == null){
             case ""+Prefix+"HELP":
 
               SpracheUndSendMessagePerms(0, 
-                "```PREFIX: "+Prefix+" \n \n{} = Ping (optional), [] = Argumente (auch optional), () = Argumente (Eingabe erfordert) "+
+                "```PREFIX: "+Prefix+" \n \n{} = Ping , [] = Argumente (auch optional), () = Argumente (Eingabe erfordert) "+
                         "\n \nlevel (LevelNr) (@role): Nur für Menschen mit der Rolle 'Mod(erator)' oder mit Adminberechtigungen verfügbar. \nStelle ein, ab welchem Level man welche Rolle bekommt (Beispiel: "+Prefix+"level 5 {@Level5})"+
                         "\n \nlevel (on/off): Stelle das Leveling-System ein/aus! (Standart: Aktiv)"+
                         "\n \nleveling {@User}: Sieh, auf welchem Level du bist (oder jemand anderes.)"+
@@ -951,7 +951,7 @@ if(taggesUsa == null){
                         "\n \nlauch @{player}: Zu wieviel Prozent bist du/jemand anderes ein Lauch? "+
                         "\n \nlang: Setze die Sprache auf deinem Server. (Beispiel: "+Prefix+"lang de)```",
                 
-                "```PREFIX: "+Prefix+"\n \n{} = Ping (optional), [] = Argument (also optional), () = Argument (needed) "+
+                "```PREFIX: "+Prefix+"\n \n{} = Ping, [] = Argument (also optional), () = Argument (needed) "+
                         "\n \nlevel (LevelNo) (@role): Only available for people with the role named 'mod(erator)' or with admin permission. \nSetup with level a player will get which role (usage: "+Prefix+"level 5 {@Level5})"+
                         "\n \nlevel (on/off): De/activate the leveling system! (usually active)"+
                         "\n \nleveling {@user}: See what level you are (or someone else.)"+
