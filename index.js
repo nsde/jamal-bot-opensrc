@@ -778,7 +778,7 @@ if(taggesUsa == null){
                         "\n \n~...level (LevelNr) (@role):Stelle ein, ab welchem Level man welche Rolle bekommt (Beispiel: "+Prefix+"level 5 {@Level5})"+
                         "\n~...level (on/off): Stelle das Leveling-System ein/aus! (Standart: Aktiv)"+
                         "\n...leveling {@User}: Sieh, auf welchem Level du bist (oder jemand anderes.)"+
-                        "\n~...counting (set|[Nummer]): Setze diesen Channel zum Counting Channel deines Servers oder setze den Counting-Fortschritt \n(ab 1 MIO müsste @Deniz#5879 kontaktiert werden). "+
+                        "\n~...counting (set/off|[Nummer]): Setze diesen Channel zum Counting Channel deines Servers oder setze den Counting-Fortschritt \n(ab 1 MIO müsste @Deniz#5879 kontaktiert werden). "+
                        
                         "\n~...clearchat (Anzahl): Lösche eine gewisse Anzahl an Nachrichten in einem Channel. "+
                         
@@ -792,7 +792,7 @@ if(taggesUsa == null){
                         "\n \n~...level (LevelNo) (@role): Setup with level a player will get which role (usage: "+Prefix+"level 5 {@Level5})"+
                         "\n~...level (on/off): De/activate the leveling system! (usually active)"+
                         "\n...leveling {@user}: See what level you are (or someone else.)"+
-                        "\n~...counting (set|[number]): St this channel to your Counting Channel in this Servers or set the Counting-Progress \n(You need to contact @Deniz#5879 to set the Progress over 1 mio). "+
+                        "\n~...counting (set/off|[number]): Set this channel to your Counting Channel in this Servers or set the Counting-Progress \n(You need to contact @Deniz#5879 to set the Progress over 1 mio). "+
                         "\n~...clearchat (number): Delete a specific amount of messages in a channel. "+
                         "\n~...lang : Set the language of the bot on your server. (usage: "+Prefix+"lang de)"+
                         "\n \nJOKE COMMANDS:"+
