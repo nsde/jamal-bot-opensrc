@@ -5,6 +5,7 @@ const PREFIX = "De!";
 const token = "ODA3MzczOTgyNDExNTIyMDgw.YB3DnQ.Zjk82JnKFOY65DxMuZDmo33zhzg";
 
 const mysql = require("mysql");
+const { format } = require("path");
 "Code 5";
 var version = '1.3.1';
 
@@ -63,7 +64,6 @@ var con = mysql.createConnection({
 con.connect(err => {
     if(err) throw err;
     console.log("Connected To Database!");
-    con.query("SHOW TABLES", console.log);
 
 
 });
@@ -71,191 +71,15 @@ let sql;
 
 
 
-/*con.on('error', function(err) {
-  console.log(err.code);
-  con.connect(err => {
-    if(err) throw err;
-    console.log("Connected To Database!");
-    con.query("SHOW TABLES", console.log);
-
-
-});
-});*/
-
-
 
 bot.on("ready", () => {
     console.log('Der Bot ist nun aktiv')
-    
-    con.query(`SELECT * FROM Counting WHERE server = '566311931174977536'`, (err, rows) => {
-      if(err) throw err;
-      var add = rows[0].nummer2;
-console.log(add);
-       f = ''+add;
-      // f = ''+4254; 
-       console.log(f);
-
-    });
-    if(1 < 70){
-      //let deepthroater =  message.guild.roles.cache.find((r) => r.id == "811308167312310384");
-      AlleRollen.setItem("1", "811308167312310384");
-    //     let deepthroat =  message.guild.roles.cache.find((r) => r.id == "810867968669122592");
-         AlleRollen.setItem("2", "810867968669122592");
-    //     let saftig =  message.guild.roles.cache.find((r) => r.id == "810867745138147339");
-         AlleRollen.setItem("3", "810867745138147339");
-    //     let Konsument =  message.guild.roles.cache.find((r) => r.id == "806249624477892628");
-         AlleRollen.setItem("4", "806249624477892628");
-    //     let DJ =  message.guild.roles.cache.find((r) => r.id == "805468116376879105");
-         AlleRollen.setItem("5", "805468116376879105");
-    //     let godzillaarmy =  message.guild.roles.cache.find((r) => r.id == "804687585389576255");
-         AlleRollen.setItem("6", "804687585389576255");
-    //     let monkearmy =  message.guild.roles.cache.find((r) => r.id == "804687429273255936");
-         AlleRollen.setItem("7", "804687429273255936");
-    //     let Zivilist =  message.guild.roles.cache.find((r) => r.id == "738166654579769398");
-         AlleRollen.setItem("8", "738166654579769398");
-    //     let influencer =  message.guild.roles.cache.find((r) => r.id == "808747963005927453");
-         AlleRollen.setItem("9", "808747963005927453");
-    //     let Streamer =  message.guild.roles.cache.find((r) => r.id == "738166085756518472");
-         AlleRollen.setItem("10", "738166085756518472");
-    //     let Zitatrat =  message.guild.roles.cache.find((r) => r.id == "772866877520609330");
-         AlleRollen.setItem("11", "772866877520609330");
-    //     let Julian =  message.guild.roles.cache.find((r) => r.id == "796783125802778635");
-         AlleRollen.setItem("12", "796783125802778635");
-    //     let monke =  message.guild.roles.cache.find((r) => r.id == "803938408924840026");
-         AlleRollen.setItem("13", "803938408924840026");
-    //     let nosiris1  =  message.guild.roles.cache.find((r) => r.id == "738166493891788870");
-         AlleRollen.setItem("14", "738166493891788870");
-    //     let osiris2 =  message.guild.roles.cache.find((r) => r.id == "738166576100016158");
-         AlleRollen.setItem("15", "738166576100016158");
-    //     let penner =  message.guild.roles.cache.find((r) => r.id == "772796199270744094");
-         AlleRollen.setItem("16", "772796199270744094");
-    //     let junkie =  message.guild.roles.cache.find((r) => r.id == "803939687881900042");
-         AlleRollen.setItem("17", "803939687881900042");
-    //     let geierr =  message.guild.roles.cache.find((r) => r.id == "738165766750339118");
-         AlleRollen.setItem("18", "738165766750339118");
-    //     let bruhplayer =  message.guild.roles.cache.find((r) => r.id == "738168309450801214");
-    //     AlleRollen.setItem("19", "738168309450801214");
-    //     let advancedplayer =  message.guild.roles.cache.find((r) => r.id == "738167850820304947");
-     //    AlleRollen.setItem("20", "738167850820304947");
-     //  let schwitzer =  message.guild.roles.cache.find((r) => r.id == "738165647904735253");
-         AlleRollen.setItem("21", "738165647904735253");
-   //      let versuchkanin =  message.guild.roles.cache.find((r) => r.id == "738165457600643102");
-         AlleRollen.setItem("22", "738165457600643102");
-   //      let goodplayer =  message.guild.roles.cache.find((r) => r.id == "738167848450654311");
-         AlleRollen.setItem("23", "738167848450654311");
-   //      let simp =  message.guild.roles.cache.find((r) => r.id == "807347397545295893");
-         AlleRollen.setItem("24", "807347397545295893");
-   //      let egoist =  message.guild.roles.cache.find((r) => r.id == "809844245916811315");
-         AlleRollen.setItem("25", "809844245916811315");
-   //      let krasserdude =  message.guild.roles.cache.find((r) => r.id == "725644608817594369");
-         AlleRollen.setItem("26", "725644608817594369");
-   //      let proplayer =  message.guild.roles.cache.find((r) => r.id == "738167647845220373");
-         AlleRollen.setItem("27", "738167647845220373");
-   //      let epic =  message.guild.roles.cache.find((r) => r.id == "738167478969958540");
-         AlleRollen.setItem("28", "738167478969958540");
-   //      let ccreator =  message.guild.roles.cache.find((r) => r.id == "738167207250493512");
-         AlleRollen.setItem("29", "738167207250493512");
-   //      let jamal =  message.guild.roles.cache.find((r) => r.id == "738165327208382526");
-         AlleRollen.setItem("30", "738165327208382526");
-   //      let zitatneuling =  message.guild.roles.cache.find((r) => r.id == "771746486534144001");
-         AlleRollen.setItem("31", "771746486534144001");
-   //      let milchmann =  message.guild.roles.cache.find((r) => r.id == "810644243272958032");
-         AlleRollen.setItem("32", "810644243272958032");
-   //      let häschen =  message.guild.roles.cache.find((r) => r.id == "810898112176455750");
-         AlleRollen.setItem("33", "810898112176455750");
-// 
- //        let skilledcreat =  message.guild.roles.cache.find((r) => r.id == "738167382236987393");
-         AlleRollen.setItem("34", "738167382236987393");
- //        let zitatlehr =  message.guild.roles.cache.find((r) => r.id == "771747194481934358");
-         AlleRollen.setItem("35", "771747194481934358");
- //        let entertainer =  message.guild.roles.cache.find((r) => r.id == "772469144876220417");
-         AlleRollen.setItem("36", "772469144876220417");
- //        let schwarzk =  message.guild.roles.cache.find((r) => r.id == "780444449455996988");
-         AlleRollen.setItem("37", "780444449455996988");
- //        let vortex =  message.guild.roles.cache.find((r) => r.id == "807323291760197652");
-         AlleRollen.setItem("38", "807323291760197652");
- //        let ultIrgend =  message.guild.roles.cache.find((r) => r.id == "738164668975153202");
-         AlleRollen.setItem("39", "738164668975153202");
-         
-//         let hacker =  message.guild.roles.cache.find((r) => r.id == "810462641541742593");
-         AlleRollen.setItem("40", "810462641541742593");
-//         let zitatmeist =  message.guild.roles.cache.find((r) => r.id == "771747967375114260");
-         AlleRollen.setItem("41", "771747967375114260");
-//         let zodiac =  message.guild.roles.cache.find((r) => r.id == "738165238926671882");
-         AlleRollen.setItem("42", "738165238926671882");
-//         let lost =  message.guild.roles.cache.find((r) => r.id == "807322175589318708");
-         AlleRollen.setItem("43", "807322175589318708");
-//         let banane =  message.guild.roles.cache.find((r) => r.id == "809844601505972264");
-         AlleRollen.setItem("44", "809844601505972264");
-//         let unsym =  message.guild.roles.cache.find((r) => r.id == "807322604439732244");
-         AlleRollen.setItem("45", "807322604439732244");
-//         let cringe =  message.guild.roles.cache.find((r) => r.id == "803940379509391410");
-         AlleRollen.setItem("46", "803940379509391410");
-//         let gestLeg =  message.guild.roles.cache.find((r) => r.id == "803938930906365962");
-         AlleRollen.setItem("47", "803938930906365962");
-//         let lebenLeg =  message.guild.roles.cache.find((r) => r.id == "725644917417967627");
-         AlleRollen.setItem("48", "725644917417967627");
-//         let zuhälter =  message.guild.roles.cache.find((r) => r.id == "772469685940649996");
-         AlleRollen.setItem("49", "772469685940649996");
-//         let dealer =  message.guild.roles.cache.find((r) => r.id == "807324385404387338");
-         AlleRollen.setItem("50", "807324385404387338");
-//         let psycho =  message.guild.roles.cache.find((r) => r.id == "772468900327063572");
-         AlleRollen.setItem("51", "772468900327063572");
-//         let soziopath =  message.guild.roles.cache.find((r) => r.id == "807323676869525535");
-         AlleRollen.setItem("52", "807323676869525535");
-//         let verified =  message.guild.roles.cache.find((r) => r.id == "803941502237671434");
-         AlleRollen.setItem("53", "803941502237671434");
-         
- //        let stripper =  message.guild.roles.cache.find((r) => r.id == "809843408025157632");
-         AlleRollen.setItem("54", "809843408025157632");
- //        let zitatlegende =  message.guild.roles.cache.find((r) => r.id == "771748685154353193");
-         AlleRollen.setItem("55", "771748685154353193");
- //        let judge =  message.guild.roles.cache.find((r) => r.id == "807618754665381918");
-         AlleRollen.setItem("56", "807618754665381918");
-        AlleRollen.setItem("57", "771623021025689610");
- //        let manager =  message.guild.roles.cache.find((r) => r.id == "807323649434452041");
-         AlleRollen.setItem("58", "807323649434452041");
- //        let sup =  message.guild.roles.cache.find((r) => r.id == "807323015481524275");
-         AlleRollen.setItem("59", "807323015481524275");
- //        let elite =  message.guild.roles.cache.find((r) => r.id == "803940877130399785");
-         AlleRollen.setItem("60", "803940877130399785");
- //        let veteran =  message.guild.roles.cache.find((r) => r.id == "808689728764510269");
-         AlleRollen.setItem("61", "808689728764510269");
- //        let contentcreat =  message.guild.roles.cache.find((r) => r.id == "808690081778106368");
-         AlleRollen.setItem("62", "808690081778106368");
- //        let respectedMemb =  message.guild.roles.cache.find((r) => r.id == "808694261062303754");
-         AlleRollen.setItem("63", "808694261062303754");
- //        let bl =  message.guild.roles.cache.find((r) => r.id == "808694672636903434");
-         AlleRollen.setItem("64", "808694672636903434");
-          AlleRollen.setItem("20", "808694870491136051");
-         AlleRollen.setItem("19", "808695151081685063");
-  }
     
     bot.user.setActivity('Type §help for help', {type: 'STREAMING'}).catch(console.error)
 
 })
 
 
-/*bot.on('messageDelete', messageDelete => {
-  
-  console.log("4");
-  if(messageDelete.author.bot == false){
-    
-    console.log("5");
-  if(messageDelete.channel.id == '807326959679176724'){
-    
-    console.log("6");
-  let channel = messageDelete.channel;
-  var a = parseInt(f);
-  var b = a-1;
-  var c = b+'';
-  if(messageDelete.content == c){
-  channel.send("<@"+messageDelete.author.id+ "> => "+messageDelete.content); 
-  }
-  }
-}
-
-});*/
 
 bot.on('message', async message =>{
 
@@ -292,7 +116,7 @@ bot.on('message', async message =>{
             message.channel.send(englischh);
             }  
             
-            message.channel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+            message.channel.send('(No Language set! "'+Prefix+'lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
            }
           });
 
@@ -315,7 +139,7 @@ bot.on('message', async message =>{
              
               randomChannel.send("Sorry for disturb, but Jamal would like to get the permission SEND_MESSAGES in all channel, <@"+message.guild.ownerID+">.");
               
-              randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+              randomChannel.send('(No Language set! "'+Prefix+'lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
              }
             });
 
@@ -326,145 +150,7 @@ bot.on('message', async message =>{
   var SET = "";
     
     let args = message.content.split(" ");
-   if(message.channel.id === '807326959679176724'){
-        
-
-                       
-                        switch(args[0]){
-                            
-                            case f:
-
-                                    if(message.author.tag != lastUser.tag){
-                                        
-                                       // if(myTable.getItem(message.author.tag) >= 5){
-                                       //     message.delete({ timeout: 1 })
-                                       //     message.author.send("Du bist verwarnt! Du kannst nicht mehr in #counting schreiben. Bitte melde dich bei @Deniz#5879");
-                                       // }else{
-                                
-                                            
-                                
-                                
-                                        con.query(`SELECT * FROM Counting WHERE server = '`+message.guild.id+`'`, (err, rows) => {
-                                        if(err) throw err;
-                                        
-                                
-                                
-                                            
-                                    
-                                        
-                    
-                                        let nummer = rows[0].nummer2;
-                                            
-                                        if(f == "4000" || f == "5000" || f == "6000"|| f == "7000"|| f == "8000"|| f == "9000"
-                                        || f == "10000"|| f == "11000"|| f == "12000"|| f == "13000"|| f == "14000"|| f == "15000"
-                                        || f == "20000"|| f == "25000"|| f == "30000"|| f == "40000"|| f == "50000"|| f == "60000"|| f == "69420"){
-                                            message.pin();
-                                        }
-                                        var test = args[0].split('');
-                      for(var o = 0; o < 10 ; o++) {
-                        let t = o+1;
- 
-
-}
-                                            g = parseInt(f, 10)+1;
-                                            f = ''+g;
-                                            
-                                            console.log(""+f);
-                                            sql = `UPDATE Counting SET nummer2 = `+f+` WHERE server = '`+message.guild.id+`'`;
-                                             lastUser = message.author;
-                                             lastUser = message.author;
-                                             con.query(sql);
-                                
-                                
-                                });
-                                   
-                                    //sql = `UPDATE nummber set nummber = `+a+` `;
-                                    
-                                        
-                                }else{
-
-                                  if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
-                                  message.delete({ timeout: 1 });
-                  
-                                }else {
-                                  const randomChannel = message.guild.channels.cache.find(channel => 
-                                    channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
-                  
-                                    con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                                      if(err) throw err;
-                                          if(rows.length >= 1){
-                                            let language = rows[0].lang;
-                                            if(language == "de"){
-                                              randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-                                                   
-                                            }else if(language == "en"){
-                                              randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-                                                   
-                                            }
-                                         }else{
-                                         
-                                          randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-                  
-                                          randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                                         }
-                                        });
-                  
-                                }
-                              }
-
-
-                                    break;
-                                
-                    
-                    
-                                    default:
-                                      
-                                        if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
-
-                 message.delete({ timeout: 1 });
-
-               }else {
-                 const randomChannel = message.guild.channels.cache.find(channel => 
-                  channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
-
-                  con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                    if(err) throw err;
-                        if(rows.length >= 1){
-                          let language = rows[0].lang;
-                          if(language == "de"){
-                            randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-                                 
-                          }else if(language == "en"){
-                            randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-                                 
-                          }
-                       }else{
-                       
-                        randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-
-                        randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                       }
-                      });
-
-              
-                                        
-                                
-
-
-
-                        
-                    }
-                    
-                  break;
-                  }
-                    
-                
-        
-                 
-            
-    
-        
-      }else if(message.channel.id === '806274946913271808'){
+    if(message.channel.id === '806274946913271808'){
         let move =  message.guild.roles.cache.find((r) => r.id == "811587684460003348");
         switch(args[0]){
             
@@ -670,7 +356,7 @@ if(xvv==1){
     switch(args[0].toUpperCase()){
       case ""+Prefix+"COUNTING":
   if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810"  || message.member.roles.cache.find(r => r.name.toUpperCase() === "MOD") || message.member.roles.cache.find(r => r.nametoUpperCase() === "MODERATOR")){
-    if(args[0].toUpperCase === "SET"){
+    if(args[1].toUpperCase() === "SET"){
 SpracheUndSendMessagePerms(1, "Super! Dies ist nun der Counting Channel!", "Perfect, this is now the counting channel!")
 
 con.query(`SELECT * FROM CountingChannel WHERE server = '`+message.guild.id+`';`, (err, rows) => {
@@ -689,23 +375,81 @@ con.query(`SELECT * FROM CountingChannel WHERE server = '`+message.guild.id+`';`
                }
               });
     }else{
- let newNumber = parseInt(args[1]);
- if(newNumber != null){
+      
+ if(BigInt(args[1]) != null){
+  let newNumber = parseInt(args[1]);
+  if(newNumber <= 1000000 || message.member.id === "466596723297484810"){
+
+   con.query(`SELECT * FROM Counting WHERE server = '`+message.guild.id+`'`, (err, rows) => {
+                 if(err) throw err;
+                 
+         
+                 if(rows.length >= 1){
+
+  sql = `DELETE FROM Counting WHERE server = '`+message.guild.id+`'`;
+                                             
+  con.query(sql);
+
+  sql = `INSERT INTO Counting (nummer2, server) VALUES ('`+newNumber+`', '`+message.guild.id+`');`;
+   
+   con.query(sql);
+  }else{
+    sql = `INSERT INTO Counting (nummer2, server) VALUES ('`+newNumber+`', '`+message.guild.id+`');`;
+   
+    con.query(sql);
+
+
+  }
 
 
 
+                 });
+
+SpracheUndSendMessagePerms(1, "Der Counting-Fortschritt ist nun auf "+newNumber, "The Counting-Progress is set to "+newNumber);
+}else{
+  SpracheUndSendMessagePerms(0, "Diese Zahl ist zu groß! Bitte wenden sie sich an @Deniz#5879!", 
+  "This number is too big , please contact @Deniz#5879!");
+}
  }
 
 
     }
-        
+    if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
+
+      message.delete({ timeout: 1 });
+
+    }else {
+      const randomChannel = message.guild.channels.cache.find(channel => 
+       channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
+
+       con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+         if(err) throw err;
+             if(rows.length >= 1){
+               let language = rows[0].lang;
+               if(language == "de"){
+                 randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+                      
+               }else if(language == "en"){
+                 randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+                      
+               }
+            }else{
+            
+             randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+
+             randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+            }
+           });
+ }   
+    
+
       }
       break;
 
       case ""+Prefix+"LANG":
         
         
-        if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810"  || message.member.roles.cache.find(r => r.name.toUpperCase() === "MOD") || message.member.roles.cache.find(r => r.nametoUpperCase() === "MODERATOR")){
+        if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810"  || message.member.roles.cache.find(r => r.name.toUpperCase() === "MOD") || message.member.roles.cache.find(r => r.toUpperCase() === "MODERATOR")){
   
         if(args[1].toUpperCase() === "DE" || args[1].toUpperCase() === "DEUTSCH" ){
           con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
@@ -775,7 +519,7 @@ con.query(`SELECT * FROM CountingChannel WHERE server = '`+message.guild.id+`';`
 
 case ""+Prefix+"LEVEL":
   
-  if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810" || message.member.roles.cache.find(r => r.name.toUpperCase() === "MOD") || message.member.roles.cache.find(r => r.nametoUpperCase() === "MODERATOR")){
+  if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810" || message.member.roles.cache.find(r => r.name.toUpperCase() === "MOD") || message.member.roles.cache.find(r => r.toUpperCase() === "MODERATOR")){
     if(args.length === 3){
   con.query(`SELECT * FROM RollenFürLevel WHERE levelrang = '`+args[1]+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
     if(err) throw err;
@@ -979,22 +723,33 @@ if(taggesUsa == null){
             case ""+Prefix+"HELP":
 
               SpracheUndSendMessagePerms(0, 
-                "```PREFIX: "+Prefix+" \n \n{} = Ping , [] = Argumente (auch optional), () = Argumente (Eingabe erfordert) "+
-                        "\n \nlevel (LevelNr) (@role): Nur für Menschen mit der Rolle 'Mod(erator)' oder mit Adminberechtigungen verfügbar. \nStelle ein, ab welchem Level man welche Rolle bekommt (Beispiel: "+Prefix+"level 5 {@Level5})"+
-                        "\n \nlevel (on/off): Stelle das Leveling-System ein/aus! (Standart: Aktiv)"+
-                        "\n \nleveling {@User}: Sieh, auf welchem Level du bist (oder jemand anderes.)"+
+                "```PREFIX: "+Prefix+" \n \n{} = Ping , [] = Argumente (auch optional), () = Argumente (Eingabe erfordert), ~: Für Admins oder User mit einer Rolle namens Mod(erator) "+
+                        "\n \n~...level (LevelNr) (@role):Stelle ein, ab welchem Level man welche Rolle bekommt (Beispiel: "+Prefix+"level 5 {@Level5})"+
+                        "\n~...level (on/off): Stelle das Leveling-System ein/aus! (Standart: Aktiv)"+
+                        "\n...leveling {@User}: Sieh, auf welchem Level du bist (oder jemand anderes.)"+
+                        "\n~...counting (set|[Nummer]): Setze diesen Channel zum Counting Channel deines Servers oder setze den Counting-Fortschritt \n(ab 1 MIO müsste @Deniz#5879 kontaktiert werden). "+
+                       
+                        "\n~...clearchat (Anzahl): Lösche eine gewisse Anzahl an Nachrichten in einem Channel. "+
                         
-                        "\n \npp @{player}: Checke die Schw*nzlänge von... dir oder einem User "+
-                        "\n \nlauch @{player}: Zu wieviel Prozent bist du/jemand anderes ein Lauch? "+
-                        "\n \nlang: Setze die Sprache auf deinem Server. (Beispiel: "+Prefix+"lang de)```",
+                        "\n~...lang: Setze die Sprache auf deinem Server. (Beispiel: "+Prefix+"lang de)"+
+                        
+                        "\n \nJOKE COMMANDS:"+
+                        "\n \n...pp @{player}: Checke die Schw*nzlänge von... dir oder einem User "+
+                        "\n...lauch @{player}: Zu wieviel Prozent bist du/jemand anderes ein Lauch?``` ",
                 
-                "```PREFIX: "+Prefix+"\n \n{} = Ping, [] = Argument (also optional), () = Argument (needed) "+
-                        "\n \nlevel (LevelNo) (@role): Only available for people with the role named 'mod(erator)' or with admin permission. \nSetup with level a player will get which role (usage: "+Prefix+"level 5 {@Level5})"+
-                        "\n \nlevel (on/off): De/activate the leveling system! (usually active)"+
-                        "\n \nleveling {@user}: See what level you are (or someone else.)"+
-                        "\n \npp {@user}: Check the length of a co*k of you or a user "+
-                        "\n \nlauch @{player}: To which percentage are you/a user a leek? "+
-                        "\n \nlang : Set the language of the bot on your server. (usage: "+Prefix+"lang de)```");
+                "```PREFIX: "+Prefix+"\n \n{} = Ping, [] = Argument (also optional), () = Argument (needed), ~: for Admins or User with a role named Mod(erator)  "+
+                        "\n \n~...level (LevelNo) (@role): Setup with level a player will get which role (usage: "+Prefix+"level 5 {@Level5})"+
+                        "\n~...level (on/off): De/activate the leveling system! (usually active)"+
+                        "\n...leveling {@user}: See what level you are (or someone else.)"+
+                        "\n~...counting (set|[number]): St this channel to your Counting Channel in this Servers or set the Counting-Progress \n(You need to contact @Deniz#5879 to set the Progress over 1 mio). "+
+                        "\n~...clearchat (number): Delete a specific amount of messages in a channel. "+
+                        "\n~...lang : Set the language of the bot on your server. (usage: "+Prefix+"lang de)"+
+                        "\n \nJOKE COMMANDS:"+
+                       
+                        "\n \n...pp {@user}: Check the length of a co*k of you or a user "+
+                        
+                        " \n...lauch @{player}: To which percentage are you/a user a leek?``` "
+                        );
 
 
 
@@ -1009,9 +764,6 @@ if(taggesUsa == null){
               }else {
                message.channel.send("Super, <@"+message.author.id+"> 👍 👍 👍 👍");}
               break;
-
-              
-
 
               case ""+Prefix+"LAUCH":
                 
@@ -1072,11 +824,48 @@ if(taggesUsa == null){
                   }
                 break;
 
-
                 case ""+Prefix+"FYNNDERWAHRE":
                   SpracheUndSendMessagePerms(0, "Wahre Finns werden mit **y** geschrieben!", "The real Finns are written with a **y**!");
                 break;
+                case ""+Prefix+"CLEARCHAT":
+  
+                  if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810" || message.member.roles.cache.find(r => r.name.toUpperCase() === "MOD") || message.member.roles.cache.find(r => r.toUpperCase() === "MODERATOR")){
+                    if(args.length === 2 && isInt(args[1])){
+                    if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
+let a = parseInt(args[1])+1;
+let messages = await message.channel.messages.fetch({ limit: a}) // Fetch last 100 messages
 
+message.channel.bulkDelete(messages, true);
+                    }else {
+                      const randomChannel = message.guild.channels.cache.find(channel => 
+                       channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
+                
+                       con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                         if(err) throw err;
+                             if(rows.length >= 1){
+                               let language = rows[0].lang;
+                               if(language == "de"){
+                                 randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+                                      
+                               }else if(language == "en"){
+                                 randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+                                      
+                               }
+                            }else{
+                            
+                             randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+                
+                             randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                            }
+                           });
+                          }
+                 }else{
+
+                  SpracheUndSendMessagePerms(0, "Nutze Clearchat [nummer]!", "Use Clearchat [number]!")
+                 }
+
+                  }
+                    break;                
       default:
 
         break; 
@@ -1085,8 +874,179 @@ if(taggesUsa == null){
 
 
   }
+  
+//counting anfang
+  if(message.author.tag != lastUser.tag){
+          con.query(`SELECT * FROM CountingChannel WHERE server = '`+message.guild.id+`';`, (err, rows3) => {
+       if(err) throw err;
+           if(rows3.length >= 1){
+             if(rows3[0].channel_id === message.channel.id){
+               con.query(`SELECT * FROM Counting WHERE server = '`+message.guild.id+`'`, (err, rows) => {
+                 if(err) throw err;
+                 
+         
+                 if(rows.length >= 1){
+                   let AktuelleNr = rows[0].nummer2;
+                   
 
+                   if(BigInt(AktuelleNr) != null){ 
 
+                    let g1 = BigInt(AktuelleNr).toString();
+let g = parseInt(g1)+1;   
+
+                    if(args[0] === ""+AktuelleNr+""){
+
+                     
+                     f = ''+g;
+                     
+                     sql = `DELETE FROM Counting WHERE server = '`+message.guild.id+`'`;
+                      
+                     con.query(sql);
+
+                     sql = `INSERT INTO Counting (nummer2, server) VALUES ('`+f+`', '`+message.guild.id+`');`;
+                      
+                      lastUser = message.author;
+                      con.query(sql);
+                    }else {
+                      
+                     if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
+
+                       message.delete({ timeout: 1 });
+      
+                     }else {
+                       const randomChannel = message.guild.channels.cache.find(channel => 
+                        channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
+      
+                        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                          if(err) throw err;
+                              if(rows.length >= 1){
+                                let language = rows[0].lang;
+                                if(language == "de"){
+                                  randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+                                       
+                                }else if(language == "en"){
+                                  randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+                                       
+                                }
+                             }else{
+                             
+                              randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+      
+                              randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                             }
+                            });
+      
+                    }
+                   }
+                  }else{
+                    if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
+  
+                      message.delete({ timeout: 1 });
+     
+                    }else {
+                      const randomChannel = message.guild.channels.cache.find(channel => 
+                       channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
+     
+                       con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                         if(err) throw err;
+                             if(rows.length >= 1){
+                               let language = rows[0].lang;
+                               if(language == "de"){
+                                 randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+                                      
+                               }else if(language == "en"){
+                                 randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+                                      
+                               }
+                            }else{
+                            
+                             randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+     
+                             randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                            }
+                           });
+     
+                   
+                          }
+                    sql = `INSERT INTO Counting (nummer2, server) VALUES ('1', '`+message.guild.id+`');`;
+                        
+                        con.query(sql);
+                   }
+
+                 }else{
+                  if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
+
+                    message.delete({ timeout: 1 });
+   
+                  }else {
+                    const randomChannel = message.guild.channels.cache.find(channel => 
+                     channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
+   
+                     con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                       if(err) throw err;
+                           if(rows.length >= 1){
+                             let language = rows[0].lang;
+                             if(language == "de"){
+                               randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+                                    
+                             }else if(language == "en"){
+                               randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+                                    
+                             }
+                          }else{
+                          
+                           randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+   
+                           randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                          }
+                         });
+   
+                 
+                        }
+                  sql = `INSERT INTO Counting (nummer2, server) VALUES ('1', '`+message.guild.id+`');`;
+                      
+                      con.query(sql);
+                 }
+         
+         });
+             }
+            }
+         });
+
+}else{
+
+if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
+message.delete({ timeout: 1 });
+
+}else {
+const randomChannel = message.guild.channels.cache.find(channel => 
+ channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
+
+ con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+   if(err) throw err;
+       if(rows.length >= 1){
+         let language = rows[0].lang;
+         if(language == "de"){
+           randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+                
+         }else if(language == "en"){
+           randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+                
+         }
+      }else{
+      
+       randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+
+       randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+      }
+     });
+
+}
+}
+
+//counting ende
+
+//leveing anfang
       if(!message.author.bot){
         let b1 = 0;
 
