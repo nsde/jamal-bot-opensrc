@@ -73,15 +73,17 @@ let sql;
 
 
 bot.on("ready", () => {
+  
     console.log('Der Bot ist nun aktiv')
+
     
-    bot.user.setActivity('Type §help for help', {type: 'STREAMING'}).catch(console.error)
+    bot.user.setActivity('Type '+Prefix+'help for help', {type: 'STREAMING'}).catch(console.error)
 
 })
 
 
 bot.on("guildCreate", guild => {
-  
+  console.log("Hallo");
   con.query(`SELECT * FROM Servers WHERE server = '`+guild.id+`';`, (err, rows) => {
     if(err) throw err;
     
@@ -100,6 +102,7 @@ bot.on('message', async message =>{
 
   function SpracheUndSendMessagePerms(frage, deutschh, englischh) {
     if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
+     +
       con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
         if(err) throw err;
         
@@ -115,7 +118,7 @@ bot.on('message', async message =>{
                 message.channel.send(deutschh);
                 
                 }
-                     
+                  
               }else if(language == "en"){
                 if(frage == 1){
                   message.channel.send(englischh).then(msg => msg.delete({timeout: deleteTime}));
@@ -171,7 +174,7 @@ bot.on('message', async message =>{
             
             case "=move":
                 console.log("Code 2");
-                if(message.member.roles.cache.has(move.id) || message.author.username == "!Đeniz") {
+                if(message.member.roles.cache.has(move.id) || message.author.username == "Deniz") {
                     
                 console.log("Code 3");
                     if(message.mentions.members){
@@ -185,10 +188,7 @@ bot.on('message', async message =>{
                 
             case "=unmove":
                 
-                console.log("Code 4");
-                if(message.member.roles.cache.has(move.id) || message.author.username == "!Đeniz") {
-                    
-                console.log("Code 5");
+                if(message.member.roles.cache.has(move.id) || message.author.username == "Deniz") {
                     
             var ab = message.member.voice.channelID;
             const taggedUser2 = message.mentions.members.first();
@@ -372,6 +372,7 @@ if(xvv==1){
       case ""+Prefix+"COUNTING":
   if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810"  || message.member.roles.cache.find(r => r.name.toUpperCase() === "MOD") || message.member.roles.cache.find(r => r.nametoUpperCase() === "MODERATOR")){
     if(args[1].toUpperCase() === "SET"){
+      
 SpracheUndSendMessagePerms(1, "Super! Dies ist nun der Counting Channel!", "Perfect, this is now the counting channel!")
 
 con.query(`SELECT * FROM CountingChannel WHERE server = '`+message.guild.id+`';`, (err, rows) => {
@@ -420,7 +421,18 @@ con.query(`SELECT * FROM CountingChannel WHERE server = '`+message.guild.id+`';`
 
                  });
 
+                 con.query(`SELECT * FROM CountingChannel WHERE server = '`+message.guild.id+`';`, (err, rows3) => {
+                  if(err) throw err;
+                      if(rows3.length >= 1){
+                        if(rows3[0].channel_id === message.channel.id){
+          
+//SpracheUndSendMessagePerms(0, "Der Counting-Fortschritt ist nun auf "+newNumber, "The Counting-Progress is set to "+newNumber);
+                        }else{
+          
 SpracheUndSendMessagePerms(1, "Der Counting-Fortschritt ist nun auf "+newNumber, "The Counting-Progress is set to "+newNumber);
+                        }
+                      }
+                    });
 }else{
   SpracheUndSendMessagePerms(0, "Diese Zahl ist zu groß! Bitte wenden sie sich an @Deniz#5879!", 
   "This number is too big , please contact @Deniz#5879!");
@@ -429,6 +441,13 @@ SpracheUndSendMessagePerms(1, "Der Counting-Fortschritt ist nun auf "+newNumber,
 
 
     }
+
+    con.query(`SELECT * FROM CountingChannel WHERE server = '`+message.guild.id+`';`, (err, rows3) => {
+      if(err) throw err;
+          if(rows3.length >= 1){
+            if(rows3[0].channel_id === message.channel.id){
+
+            }else {}
     if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
 
       message.delete({ timeout: 1 });
@@ -455,8 +474,11 @@ SpracheUndSendMessagePerms(1, "Der Counting-Fortschritt ist nun auf "+newNumber,
              randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
             }
            });
+           
  }   
-    
+}
+
+});
 
       }
       break;
@@ -482,7 +504,6 @@ SpracheUndSendMessagePerms(1, "Der Counting-Fortschritt ist nun auf "+newNumber,
                }
               });
 
-              console.log("code 1");
               if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
 
                 message.channel.send('Super! Die Serversprache wurde auf Deutsch gestellt!');
@@ -891,7 +912,8 @@ message.channel.bulkDelete(messages, true);
   }
   
 //counting anfang
-  if(message.author.tag != lastUser.tag){
+
+  if(message.author.id != lastUser){
           con.query(`SELECT * FROM CountingChannel WHERE server = '`+message.guild.id+`';`, (err, rows3) => {
        if(err) throw err;
            if(rows3.length >= 1){
@@ -907,7 +929,7 @@ message.channel.bulkDelete(messages, true);
                    if(BigInt(AktuelleNr) != null){ 
 
                     let g1 = BigInt(AktuelleNr).toString();
-let g = parseInt(g1)+1;   
+                         let g = parseInt(g1)+1;   
 
                     if(args[0] === ""+AktuelleNr+""){
 
@@ -920,7 +942,7 @@ let g = parseInt(g1)+1;
 
                      sql = `INSERT INTO Counting (nummer2, server) VALUES ('`+f+`', '`+message.guild.id+`');`;
                       
-                      lastUser = message.author;
+                      lastUser = message.author.id;
                       con.query(sql);
                     }else {
                       
@@ -1057,6 +1079,7 @@ const randomChannel = message.guild.channels.cache.find(channel =>
      });
 
 }
+
 }
 
 //counting ende
