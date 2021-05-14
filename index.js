@@ -85,8 +85,8 @@ bot.on("guildCreate", guild => {
   con.query(`SELECT * FROM Servers WHERE server = '`+guild.id+`';`, (err, rows) => {
     if(err) throw err;
     
-        if(rows.length <= 0){
-          
+        if(rows.length >= 1){
+        }else{
           sql = `INSERT INTO Servers (server) VALUES ('`+guild.id+`');`;
                       
           
