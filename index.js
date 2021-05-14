@@ -390,7 +390,22 @@ con.query(`SELECT * FROM CountingChannel WHERE server = '`+message.guild.id+`';`
                   con.query(sql)
                }
               });
-    }else{
+    }else if(args[1].toUpperCase() === "OFF"){
+      
+      SpracheUndSendMessagePerms(1, "Der Counting-Channel ist aus!", "The counting channel is off!")
+      
+      con.query(`SELECT * FROM CountingChannel WHERE server = '`+message.guild.id+`';`, (err, rows) => {
+                  if(err) throw err;
+      
+                      if(rows.length >= 1){
+                        sql = `DELETE FROM CountingChannel WHERE server = '`+message.guild.id+`';`;
+                        con.query(sql);
+                        
+                        //
+                        
+                     }
+                    });
+          }else{
       
  if(BigInt(args[1]) != null){
   let newNumber = parseInt(args[1]);
@@ -913,7 +928,6 @@ message.channel.bulkDelete(messages, true);
   
 //counting anfang
 
-  if(message.author.id != lastUser){
           con.query(`SELECT * FROM CountingChannel WHERE server = '`+message.guild.id+`';`, (err, rows3) => {
        if(err) throw err;
            if(rows3.length >= 1){
@@ -1050,37 +1064,7 @@ message.channel.bulkDelete(messages, true);
             }
          });
 
-}else{
 
-if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
-message.delete({ timeout: 1 });
-
-}else {
-const randomChannel = message.guild.channels.cache.find(channel => 
- channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
-
- con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-   if(err) throw err;
-       if(rows.length >= 1){
-         let language = rows[0].lang;
-         if(language == "de"){
-           randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-                
-         }else if(language == "en"){
-           randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-                
-         }
-      }else{
-      
-       randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-
-       randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-      }
-     });
-
-}
-
-}
 
 //counting ende
 
