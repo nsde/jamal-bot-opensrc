@@ -80,6 +80,21 @@ bot.on("ready", () => {
 })
 
 
+bot.on("guildCreate", guild => {
+  
+  con.query(`SELECT * FROM Servers WHERE server = '`+guild.id+`';`, (err, rows) => {
+    if(err) throw err;
+    
+        if(rows.length <= 0){
+          
+          sql = `INSERT INTO Servers (server) VALUES ('`+guild.id+`');`;
+                      
+          
+          con.query(sql);
+       }
+      });
+
+  });
 
 bot.on('message', async message =>{
 
@@ -723,7 +738,7 @@ if(taggesUsa == null){
             case ""+Prefix+"HELP":
 
               SpracheUndSendMessagePerms(0, 
-                "```PREFIX: "+Prefix+" \n \n{} = Ping , [] = Argumente (auch optional), () = Argumente (Eingabe erfordert), ~: Für Admins oder User mit einer Rolle namens Mod(erator) "+
+                "```PREFIX: "+Prefix+" \n \n{} = Ping , [] = Argumente (auch optional), () = Argumente (Eingabe erfordert), ~: Für User mit Admin-Perms oder User mit einer Rolle namens Mod(erator) "+
                         "\n \n~...level (LevelNr) (@role):Stelle ein, ab welchem Level man welche Rolle bekommt (Beispiel: "+Prefix+"level 5 {@Level5})"+
                         "\n~...level (on/off): Stelle das Leveling-System ein/aus! (Standart: Aktiv)"+
                         "\n...leveling {@User}: Sieh, auf welchem Level du bist (oder jemand anderes.)"+
@@ -737,7 +752,7 @@ if(taggesUsa == null){
                         "\n \n...pp @{player}: Checke die Schw*nzlänge von... dir oder einem User "+
                         "\n...lauch @{player}: Zu wieviel Prozent bist du/jemand anderes ein Lauch?``` ",
                 
-                "```PREFIX: "+Prefix+"\n \n{} = Ping, [] = Argument (also optional), () = Argument (needed), ~: for Admins or User with a role named Mod(erator)  "+
+                "```PREFIX: "+Prefix+"\n \n{} = Ping, [] = Argument (also optional), () = Argument (needed), ~: for user with Admins-perms or User with a role named Mod(erator)  "+
                         "\n \n~...level (LevelNo) (@role): Setup with level a player will get which role (usage: "+Prefix+"level 5 {@Level5})"+
                         "\n~...level (on/off): De/activate the leveling system! (usually active)"+
                         "\n...leveling {@user}: See what level you are (or someone else.)"+
