@@ -260,18 +260,21 @@ console.log(add);
 bot.on('message', async message =>{
 
   function SpracheUndSendMessagePerms(frage, deutschh, englischh) {
-    if(message.guild.me.hasPermission("SEND_MESSAGES")) {
-
+    if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
       con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
         if(err) throw err;
+        
             if(rows.length >= 1){
+              
               let language = rows[0].lang;
               if(language == "de"){
+                
                 if(frage == 1){
                   
                 message.channel.send(deutschh).then(msg => msg.delete({timeout: deleteTime}));
                 }else{
                 message.channel.send(deutschh);
+                
                 }
                      
               }else if(language == "en"){
@@ -302,15 +305,15 @@ bot.on('message', async message =>{
               if(rows.length >= 1){
                 let language = rows[0].lang;
                 if(language == "de"){
-                  randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung SEND_MESSAGES in Server, <@"+message.guild.ownerID+">.");
+                  randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung SEND_MESSAGES in allen Channeln, <@"+message.guild.ownerID+">.");
                        
                 }else if(language == "en"){
-                  randomChannel.send("Sorry for disturb, but Jamal would like to get the permission SEND_MESSAGES in this Server, <@"+message.guild.ownerID+">.");
+                  randomChannel.send("Sorry for disturb, but Jamal would like to get the permission SEND_MESSAGES in all channel, <@"+message.guild.ownerID+">.");
                        
                 }
              }else{
              
-              randomChannel.send("Sorry for disturb, but Jamal would like to get the permission SEND_MESSAGES in this Server, <@"+message.guild.ownerID+">.");
+              randomChannel.send("Sorry for disturb, but Jamal would like to get the permission SEND_MESSAGES in all channel, <@"+message.guild.ownerID+">.");
               
               randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
              }
@@ -380,8 +383,7 @@ bot.on('message', async message =>{
                                         
                                 }else{
 
-                                  if(message.guild.me.hasPermission("MANAGE_MESSAGES")) {
-
+                                  if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
                                   message.delete({ timeout: 1 });
                   
                                 }else {
@@ -417,7 +419,7 @@ bot.on('message', async message =>{
                     
                                     default:
                                       
-                                        if(message.guild.me.hasPermission("MANAGE_MESSAGES")) {
+                                        if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
 
                  message.delete({ timeout: 1 });
 
@@ -667,20 +669,40 @@ if(xvv==1){
     
     switch(args[0].toUpperCase()){
       case ""+Prefix+"COUNTING":
-        console.log("code 1");
-        
-        
   if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810"  || message.member.roles.cache.find(r => r.name.toUpperCase() === "MOD") || message.member.roles.cache.find(r => r.nametoUpperCase() === "MODERATOR")){
-  
-        if(args[1].toUpperCase() === "DE" || args[1].toUpperCase() === "DEUTSCH" ){
-          
-          
-        }
+    if(args[0].toUpperCase === "SET"){
+SpracheUndSendMessagePerms(1, "Super! Dies ist nun der Counting Channel!", "Perfect, this is now the counting channel!")
+
+con.query(`SELECT * FROM CountingChannel WHERE server = '`+message.guild.id+`';`, (err, rows) => {
+            if(err) throw err;
+
+                if(rows.length >= 1){
+                  sql = `DELETE FROM CountingChannel WHERE server = '`+message.guild.id+`';`;
+                  con.query(sql);
+                  sql = `INSERT INTO CountingChannel (server, channel_id) VALUES ('`+message.guild.id+`', '`+message.channel.id+`');`;
+                  con.query(sql)
+                  //
+                  
+               }else{
+                sql = `INSERT INTO CountingChannel (server, channel_id) VALUES ('`+message.guild.id+`', '`+message.channel.id+`');`;
+                  con.query(sql)
+               }
+              });
+    }else{
+ let newNumber = parseInt(args[1]);
+ if(newNumber != null){
+
+
+
+ }
+
+
+    }
+        
       }
       break;
 
       case ""+Prefix+"LANG":
-        console.log("code 1");
         
         
         if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810"  || message.member.roles.cache.find(r => r.name.toUpperCase() === "MOD") || message.member.roles.cache.find(r => r.nametoUpperCase() === "MODERATOR")){
@@ -701,15 +723,17 @@ if(xvv==1){
                }
               });
 
-              if(message.guild.me.hasPermission("SEND_MESSAGES")) {
+              console.log("code 1");
+              if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
 
                 message.channel.send('Super! Die Serversprache wurde auf Deutsch gestellt!');
 
               }else {
                 const randomChannel = message.guild.channels.cache.find(channel => 
                   channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
+                  console.log(randomChannel);
                   randomChannel.send('Super! Die Serversprache wurde auf Deutsch gestellt!');
-                  randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung SEND_MESSAGES im Server, <@"+message.guild.ownerID+">.");
+                  randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung SEND_MESSAGES in allen Channeln, <@"+message.guild.ownerID+">.");
                                  
 
               }
@@ -731,15 +755,14 @@ if(xvv==1){
                }
               });
               
-              if(message.guild.me.hasPermission("SEND_MESSAGES")) {
-
+              if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
                 message.channel.send('The Serverlanguage is now set to English!');
 
               }else {
                 const randomChannel = message.guild.channels.cache.find(channel => 
                   channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
                   randomChannel.send('The Serverlanguage is now set to English!');
-                  randomChannel.send("Sorry for disturb, but Jamal would like to get the permission SEND_MESSAGES, <@"+message.guild.ownerID+">.");
+                  randomChannel.send("Sorry for disturb, but Jamal would like to get the permission SEND_MESSAGES in all channel, <@"+message.guild.ownerID+">.");
                                  
 
               }
@@ -793,9 +816,8 @@ SpracheUndSendMessagePerms(0, "Perfekt! Jeder mit dem Level "+args[1]+" bekommt 
        
     }
       });
-    }else if(args.length == 2){
-
-      if(args[1].toUpperCase === "on"){
+    }else if(args.length === 2){
+      if(args[1].toUpperCase() === "ON"){
         con.query(`SELECT * FROM Togglelevel WHERE server = '`+message.guild.id+`';`, (err, rows) => {
           if(err) throw err;
              if(rows.length >= 1){
@@ -820,7 +842,7 @@ SpracheUndSendMessagePerms(0, "Perfekt! Jeder mit dem Level "+args[1]+" bekommt 
 
           });
 
-      }else{
+      }else if(args[1].toUpperCase() === "OFF"){
         con.query(`SELECT * FROM Togglelevel WHERE server = '`+message.guild.id+`';`, (err, rows) => {
           if(err) throw err;
              if(rows.length >= 1){
@@ -858,6 +880,9 @@ break;
           case ""+Prefix+"LEVELING":
             if(args.length == 2){
               if(message.mentions.members.size == 1){
+                
+
+                
                 let taggesUsa = message.mentions.members.first();
                 if(taggesUsa == null){
                   taggesUsa = bot.users.find(user => user.username == args[1]);
@@ -869,49 +894,35 @@ if(taggesUsa == null){
 }else{
                 let Level = 0;
             let Experience = 0;
-
+ 
+                
             con.query(`SELECT * FROM LevelingLEVEL WHERE player_id = '`+taggesUsa.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows2) => {
               if(err) throw err;
                  if(rows2.length >= 1){
                   Level = rows2[0].levelvoll;
+                  
+                  
                  }
-
+                 
                 });
                 con.query(`SELECT * FROM Leveling WHERE player_id = '`+taggesUsa.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
                   if(err) throw err;
                       if(rows.length >= 1){
                       Experience = rows[0].xplevel;
+                     
                      }
                     });
-
-                    SpracheUndSendMessagePerms(0, "Der Spieler <@"+taggesUsa.id+"> ist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.",
-                    "The User <@"+taggesUsa.id+"> is level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.");
-
-                   }
-
-              }else{
-
-            
-            let Level = 0;
-            let Experience = 0;
-
-            con.query(`SELECT * FROM LevelingLEVEL WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows2) => {
-              if(err) throw err;
-                 if(rows2.length >= 1){
-                  Level = rows2[0].levelvoll;
-                 }
-
-                });
-                con.query(`SELECT * FROM Leveling WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
-                  if(err) throw err;
-                      if(rows.length >= 1){
-                      Experience = rows[0].xplevel;
-                     }
-                    });
-
-                    SpracheUndSendMessagePerms(0, "Du bist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.",
-                    "You're level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.");
-                 }
+                    
+                    con.query(`SELECT * FROM Leveling WHERE player_id = '`+taggesUsa.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
+                      if(err) throw err;
+                      SpracheUndSendMessagePerms(0, "Der Spieler <@"+taggesUsa.id+"> ist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.",
+                      "The User <@"+taggesUsa.id+"> is level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.");
+                      
+                    
+                  });
+                  
+              }
+                       }
                     
             }else if(rows.length === 1){
               let Level = 0;
@@ -924,21 +935,47 @@ if(taggesUsa == null){
                    }
   
                   });
+                  
                   con.query(`SELECT * FROM Leveling WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
                     if(err) throw err;
                         if(rows.length >= 1){
                         Experience = rows[0].xplevel;
                        }
                       });
-
+                      
                       SpracheUndSendMessagePerms(0, "Du bist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.",
                     "You're level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.");
 
-                        }
+                        }else{
 
+                          let Level = 0;
+                          let Experience = 0;
+               console.log("code 1");
+                              
+                          con.query(`SELECT * FROM LevelingLEVEL WHERE player_id = '`+taggesUsa.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows2) => {
+                            if(err) throw err;
+                               if(rows2.length >= 1){
+                                Level = rows2[0].levelvoll;
+                                console.log(Level);
+                                
+                               }
+              
+                              });
+                              
+                              con.query(`SELECT * FROM Leveling WHERE player_id = '`+taggesUsa.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
+                                if(err) throw err;
+                                    if(rows.length >= 1){
+                                    Experience = rows[0].xplevel;
+                                    console.log(Experience);
+                                   }
+                                  });
+                                  
+              
+                                  SpracheUndSendMessagePerms(0, "Der Spieler <@"+taggesUsa.id+"> ist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.",
+                                  "The User <@"+taggesUsa.id+"> is level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.");
+                                }          
 
-            
-            break;
+   break;
             case ""+Prefix+"HELP":
 
               SpracheUndSendMessagePerms(0, 
@@ -977,9 +1014,7 @@ if(taggesUsa == null){
 
 
               case ""+Prefix+"LAUCH":
-                const availableChannel = message.guild.channels.cache.find(channel => 
-                  channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES")
-                )
+                
 
                     if(message.mentions.members.size >= 1){
                 const taggedUser = message.mentions.members.first();
@@ -1054,6 +1089,16 @@ if(taggesUsa == null){
 
       if(!message.author.bot){
         let b1 = 0;
+
+        con.query(`SELECT * FROM Togglelevel WHERE server = '`+message.guild.id+`';`, (err, rows) => {
+          if(err) throw err;
+             if(rows.length >= 1){
+               if(rows[0].status === "off"){
+                
+               }else{
+              
+
+
         con.query(`SELECT * FROM Leveling WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
           if(err) throw err;
                       
@@ -1158,19 +1203,19 @@ if(taggesUsa == null){
                               if (LevelRolle != null && !message.member.roles.cache.has(LevelRolle)) {
                               message.member.roles.add(LevelRolle);
                               }
-                              if(b >= 5){
-                                let LevelRolle2 = message.guild.roles.cache.find((r) => r.id == "808752092927623179");
-                              if (LevelRolle2 != null && !message.member.roles.cache.has(LevelRolle2)) {
-                              message.member.roles.add(LevelRolle2);
-                              }
-                              }
+                             
                             }
 
                           });
 
                         }
                         
-              
+                      }
+                    }else {
+                      sql = `INSERT INTO Togglelevel (server, status) VALUES ('`+message.guild.id+`', "on");`;
+                      con.query(sql);
+                    }
+                    });
               
       }
 
