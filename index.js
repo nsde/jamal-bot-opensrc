@@ -15,7 +15,7 @@ var f;
 var verwarnungen2;
 var verwarnungen;
 var vb;
-var deleteTime = 20000;
+var deleteTime = 30000;
 let CooldownLevel = 45000;
 var vb2;
 var Prefix = "§";
@@ -186,10 +186,10 @@ bot.on('message', async message =>{
 
         }
     }
-
   var SET = "";
     let args = message.content.split(" ");
     
+
 
     if(message.channel.id === '806274946913271808'){
         let move =  message.guild.roles.cache.find((r) => r.id == "811587684460003348");
@@ -935,7 +935,7 @@ if(taggesUsa == null){
                           if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
                            status = "1";
                                                     }
-                          SpracheUndSendMessagePerms("0", "Bitte Pinge den Channel, in dem dieser Embed reingesendet werden soll, <@"+message.author.id+">!", "Please mention a channel, where this Embed should be sent to, <@"+message.author.id+">!");
+                          SpracheUndSendMessagePerms("1", "Bitte Pinge den Channel, in dem dieser Embed reingesendet werden soll, <@"+message.author.id+">!", "Please mention a channel, where this Embed should be sent to, <@"+message.author.id+">!");
                           
 
                         }
@@ -946,6 +946,44 @@ if(taggesUsa == null){
 
 
                 break;
+                case ""+Prefix+"MOD":
+                  
+                  if(message.mentions.roles.size == 1){
+
+                    
+
+
+                  }else if(args.length === 2 && args[1].toUpperCase() === "ROLES"){ 
+
+                    console.log("3");
+                    con.query(`SELECT * FROM Moderation WHERE server = '`+message.guild.id+`';`, (err, rows3) => {
+                      if(err) throw err;
+                          if(rows3.length >= 1){
+                            let ab = "";
+                            for(let a = 0; a < rows3.length; a++){
+                              ab = ab + "<@&"+rows3[a].role+"> \n";
+                            }
+                             
+                            SpracheUndSendMessagePerms("0", "Folgende Rollen haben die Berechtigungen für die Moderations-Commands: \n"+ab,
+                             "Following roles have the permission to use the Moderation-Commands: \n"+ab)
+
+                          }else {
+                            
+                console.log("4");
+                    SpracheUndSendMessagePerms("0", "Es sind keine Moderationsrollen eingestellt!", "There are no Moderation-roles saved!")
+
+
+
+                          }
+                        });
+
+                  }else{
+                    SpracheUndSendMessagePerms("0", "Bitte markiere nur eine Rolle, um diese als Moderations-Rolle hinzuzufügen!",
+                    "Please mention a role, to add it to the Moderation-roles!")
+                  }
+
+
+            break;
 
                     default:
 
@@ -1193,11 +1231,11 @@ if(taggesUsa == null){
                   if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
                     status = "2";
                   }
-                SpracheUndSendMessagePerms("0", "Perfekt! Was soll nun als Titel dort stehen, <@"+message.author.id+">?", "Perfect! What should the title be, <@"+message.author.id+">?")
+                SpracheUndSendMessagePerms("1", "Perfekt! Was soll nun als Titel dort stehen, <@"+message.author.id+">?", "Perfect! What should the title be, <@"+message.author.id+">?")
                 }else{
 
                   DeleteMessage(2);
-                  SpracheUndSendMessagePerms("0", "Embed-Generation gecancelled! Bitte Pinge nächstes mal einfach nur einen Channel, <@"+message.author.id+">!",
+                  SpracheUndSendMessagePerms("1", "Embed-Generation gecancelled! Bitte Pinge nächstes mal einfach nur einen Channel, <@"+message.author.id+">!",
                   "Embed-Generation cancelled! Please mention only a channel next time, <@"+message.author.id+">!");
 
                   sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND player_id = '`+message.author.id+`' AND channelsend_id = "`+message.channel.id+`";`;
@@ -1206,7 +1244,7 @@ if(taggesUsa == null){
                 }
               }else{
                 DeleteMessage(2);
-                SpracheUndSendMessagePerms("0", "Embed-Generation gecancelled! Bitte Pinge nächstes mal einfach nur einen Channel, <@"+message.author.id+">!",
+                SpracheUndSendMessagePerms("1", "Embed-Generation gecancelled! Bitte Pinge nächstes mal einfach nur einen Channel, <@"+message.author.id+">!",
                 "Embed-Generation cancelled! Please mention only a channel next time, <@"+message.author.id+">!");
                 
   sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND player_id = '`+message.author.id+`' AND channelsend_id = "`+message.channel.id+`";`;
@@ -1222,7 +1260,7 @@ if(taggesUsa == null){
                if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
                 status = "3";
               }
-                SpracheUndSendMessagePerms("0", "Alles klar! Jetzt musst du nur noch eingeben, was der Text sein soll, <@"+message.author.id+">!",
+                SpracheUndSendMessagePerms("1", "Alles klar! Jetzt musst du nur noch eingeben, was der Text sein soll, <@"+message.author.id+">!",
                 "All right! Now, in this last step, you need to write the text, <@"+message.author.id+">!")
               
               }else if(status2 === "3"){
@@ -1230,6 +1268,8 @@ if(taggesUsa == null){
                   title = title + args[a] + " ";
                 }
                 DeleteMessage(7);
+                
+
                 status = "4";
                }
 
