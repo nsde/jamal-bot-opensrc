@@ -5,7 +5,7 @@ const PREFIX = "De!";
 const token = "ODA3MzczOTgyNDExNTIyMDgw.YB3DnQ.Zjk82JnKFOY65DxMuZDmo33zhzg";
 
 const mysql = require("mysql");
-const { format } = require("path");
+const { format, parse } = require("path");
 "Code 5";
 var version = '1.3.1';
 
@@ -100,9 +100,21 @@ bot.on("guildCreate", guild => {
 
 bot.on('message', async message =>{
 
+
+  let status = "0";
+  let title = "";
+
+
   function SpracheUndSendMessagePerms(frage, deutschh, englischh) {
+    
     if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
-     +
+      if(frage === 2){
+        status = "1";
+      }else if(frage === 3){
+      status = "2";
+      }else if(frage === 4){
+        status = "3";
+        }
       con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
         if(err) throw err;
         
@@ -163,11 +175,28 @@ bot.on('message', async message =>{
 
     }
   }
-    
+
+    function DeleteMessage(anzahl){
+
+      if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
+
+        let a = parseInt(anzahl);
+let messages = await message.channel.messages.fetch({ limit: a})
+
+message.channel.bulkDelete(messages, true);
+
+      }else {
+
+        SpracheUndSendMessagePerms(0, "Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.",
+        "Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+
+        }
+    }
 
   var SET = "";
-    
     let args = message.content.split(" ");
+    
+console.log(args);
     if(message.channel.id === '806274946913271808'){
         let move =  message.guild.roles.cache.find((r) => r.id == "811587684460003348");
         switch(args[0]){
@@ -793,7 +822,7 @@ if(taggesUsa == null){
                         "\n~...level (on/off): De/activate the leveling system! (usually active)"+
                         "\n...leveling {@user}: See what level you are (or someone else.)"+
                         "\n~...counting (set/off|[number]): Set this channel to your Counting Channel in this Servers or set the Counting-Progress \n(You need to contact @Deniz#5879 to set the Progress over 1 mio). "+
-                        "\n~...clearchat (number): Delete a specific amount of messages in a channel. "+
+                        "\n~...clearchat (amount): Delete a specific amount of messages in a channel. "+
                         "\n~...lang : Set the language of the bot on your server. (usage: "+Prefix+"lang de)"+
                         "\n \nJOKE COMMANDS:"+
                        
@@ -882,42 +911,40 @@ if(taggesUsa == null){
   
                   if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810" || message.member.roles.cache.find(r => r.name.toUpperCase() === "MOD") || message.member.roles.cache.find(r => r.toUpperCase() === "MODERATOR")){
                     if(args.length === 2 && isInt(args[1])){
-                    if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
-let a = parseInt(args[1])+1;
-let messages = await message.channel.messages.fetch({ limit: a}) // Fetch last 100 messages
+                      let a = parseInt(args[1])+1;
+                      DeleteMessage(a);
 
-message.channel.bulkDelete(messages, true);
-                    }else {
-                      const randomChannel = message.guild.channels.cache.find(channel => 
-                       channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
-                
-                       con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                         if(err) throw err;
-                             if(rows.length >= 1){
-                               let language = rows[0].lang;
-                               if(language == "de"){
-                                 randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-                                      
-                               }else if(language == "en"){
-                                 randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-                                      
-                               }
-                            }else{
-                            
-                             randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-                
-                             randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                            }
-                           });
-                          }
                  }else{
 
-                  SpracheUndSendMessagePerms(0, "Nutze Clearchat [nummer]!", "Use Clearchat [number]!")
+                  SpracheUndSendMessagePerms(0, "Nutze Clearchat [Anzahl]!", "Use Clearchat [amount]!")
                  }
 
                   }
                     break;                
-      default:
+     
+                    case ""+Prefix+"EMBED":
+                
+                      if(args.length == 1){
+                        con.query(`SELECT * FROM EmbedGen WHERE server = '`+message.guild.id+`' AND channelsend_id = '`+message.channel.id+`';`, (err, rows3) => {
+                          if(err) throw err;
+                              if(rows3.length >= 1){
+
+                        }else{
+
+
+                          SpracheUndSendMessagePerms(2, "Bitte Pinge den Channel, in dem dieser Embed reingesendet werden soll!", "Please mention a channel, where this Embed should be sent to!");
+                          
+
+                        }
+                      
+                    });
+
+                  }
+
+
+                break;
+
+                    default:
 
         break; 
        
@@ -961,34 +988,8 @@ message.channel.bulkDelete(messages, true);
                       con.query(sql);
                     }else {
                       
-                     if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
+                      DeleteMessage(0);
 
-                       message.delete({ timeout: 1 });
-      
-                     }else {
-                       const randomChannel = message.guild.channels.cache.find(channel => 
-                        channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
-      
-                        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                          if(err) throw err;
-                              if(rows.length >= 1){
-                                let language = rows[0].lang;
-                                if(language == "de"){
-                                  randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-                                       
-                                }else if(language == "en"){
-                                  randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-                                       
-                                }
-                             }else{
-                             
-                              randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-      
-                              randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                             }
-                            });
-      
-                    }
                    }
                   }else{
                     if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
@@ -1026,35 +1027,8 @@ message.channel.bulkDelete(messages, true);
                    }
 
                  }else{
-                  if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
+                  DeleteMessage(0);
 
-                    message.delete({ timeout: 1 });
-   
-                  }else {
-                    const randomChannel = message.guild.channels.cache.find(channel => 
-                     channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
-   
-                     con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                       if(err) throw err;
-                           if(rows.length >= 1){
-                             let language = rows[0].lang;
-                             if(language == "de"){
-                               randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-                                    
-                             }else if(language == "en"){
-                               randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-                                    
-                             }
-                          }else{
-                          
-                           randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-   
-                           randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                          }
-                         });
-   
-                 
-                        }
                   sql = `INSERT INTO Counting (nummer2, server) VALUES ('1', '`+message.guild.id+`');`;
                       
                       con.query(sql);
@@ -1062,35 +1036,7 @@ message.channel.bulkDelete(messages, true);
                 
          });
              }else{
-              if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
-
-                message.delete({ timeout: 1 });
-
-              }else {
-                const randomChannel = message.guild.channels.cache.find(channel => 
-                 channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
-
-                 con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
-                   if(err) throw err;
-                       if(rows.length >= 1){
-                         let language = rows[0].lang;
-                         if(language == "de"){
-                           randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-                                
-                         }else if(language == "en"){
-                           randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-                                
-                         }
-                      }else{
-                      
-                       randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
-
-                       randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
-                      }
-                     });
-
-             
-                    }
+              DeleteMessage(0);
              }
             }
           }
@@ -1234,7 +1180,151 @@ message.channel.bulkDelete(messages, true);
       }
 
       
+      con.query(`SELECT * FROM EmbedGen WHERE server = '`+message.guild.id+`' AND channelsend_id = '`+message.channel.id+`';`, (err, rows3) => {
+        if(err) throw err;
+            if(rows3.length >= 1){
+              let status2 = rows3[0].status;
+              if(status2 === "1"){
+                if(args.length === 1){
+                if(message.mentions.channels.size === 1){
+                 
+                SpracheUndSendMessagePerms(3, "Perfekt! Was soll nun als Titel dort stehen?", "Perfect! What should the title be?")
+                }else{
+
+                  DeleteMessage(2);
+                  SpracheUndSendMessagePerms(0, "Embed-Generation gecancelled! Bitte Pinge nächstes mal einfach nur einen Channel!",
+                  "Embed-Generation cancelled! Please mention only a channel next time!");
+
+                  sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND channelsend_id = "`+message.channel.id+`";`;
+                      
+                  con.query(sql);
+                }
+              }else{
+                DeleteMessage(2);
+                SpracheUndSendMessagePerms(0, "Embed-Generation gecancelled! Bitte Pinge nächstes mal einfach nur einen Channel!",
+                "Embed-Generation cancelled! Please mention only a channel next time!");
+                
+  sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND channelsend_id = "`+message.channel.id+`";`;
+                      
+  con.query(sql);
+              }
+              
+              }else if(status2 === "2"){
+               for(let a = 1; a <= args.length; a++){
+                 title = title + args[a] + " ";
+               }
+                SpracheUndSendMessagePerms(4, "Alles klar! Jetzt musst du nur noch eingeben, was der Text sein soll!",
+                "All right! Now, in this last step, you need to write the text!")
+              
+              }else if(status2 === "3"){
+                for(let a = 1; a <= args.length; a++){
+                  title = title + args[a] + " ";
+                }
+                DeleteMessage(7);
+                status = "4";
+               }
+
+      }
+    
+  });
+
+
+
+if(status === "1"){
+  
+  sql = `INSERT INTO EmbedGen (server, status, channelsend_id) VALUES ('`+message.guild.id+`', '1', '`+message.channel.id+`');`;
+  con.query(sql);
+}else if(status === "2"){
+
+  
+  sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND channelsend_id = "`+message.channel.id+`";`;
+                      
+  con.query(sql);
+  let channelid = message.mentions.channels.first().id;
+  sql = `INSERT INTO EmbedGen (server, status, channelsend_id, channel_id) VALUES ('`+message.guild.id+`', '2', '`+message.channel.id+`', '`+channelid+`');`;
+  con.query(sql);
+}else if(status === "3"){
+
+  
+  con.query(`SELECT * FROM EmbedGen WHERE server = '`+message.guild.id+`' AND channelsend_id = '`+message.channel.id+`';`, (err, rows3) => {
+    if(err) throw err;
+        if(rows3.length >= 1){
+let channelidd = rows3[0].channel_id;
+
+sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND channelsend_id = "`+message.channel.id+`";`;
+                      
+con.query(sql);
+          sql = `INSERT INTO EmbedGen (server, status, channelsend_id, channel_id, title) VALUES ('`+message.guild.id+`', '3', '`+message.channel.id+`', '`+channelidd+`', '`+title+`');`;
+          con.query(sql);
+        }
+      });
+}else if(status === "4"){
+
+  
+  con.query(`SELECT * FROM EmbedGen WHERE server = '`+message.guild.id+`' AND channelsend_id = '`+message.channel.id+`';`, (err, rows3) => {
+    if(err) throw err;
+        if(rows3.length >= 1){
+let channelidd = rows3[0].channel_id;
+let titlee = rows3[0].title;
+
+
+const exampleEmbed = new Discord.MessageEmbed()
+	.setTitle(titlee)
+	.setDescription(title)
+  
+	.setFooter('Created by user <@'+message.author.id+'>');
+
+  
+    if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
       
+      con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+        if(err) throw err;
+        
+            if(rows.length >= 1){
+              let channel = message.guild.channels.cache.get(channelidd)
+                channel.send(exampleEmbed);
+            }else{
+           
+              let channel = message.guild.channels.cache.get(channelidd)
+                channel.send(exampleEmbed);
+                channel.send('(No Language set! "'+Prefix+'lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+           }
+          });
+
+    }else {
+      const randomChannel = message.guild.channels.cache.find(channel => 
+        channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
+
+        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+          if(err) throw err;
+              if(rows.length >= 1){
+                let language = rows[0].lang;
+                if(language == "de"){
+                  randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung SEND_MESSAGES in allen Channeln, <@"+message.guild.ownerID+">.");
+                       
+                }else if(language == "en"){
+                  randomChannel.send("Sorry for disturb, but Jamal would like to get the permission SEND_MESSAGES in all channel, <@"+message.guild.ownerID+">.");
+                       
+                }
+             }else{
+             
+              randomChannel.send("Sorry for disturb, but Jamal would like to get the permission SEND_MESSAGES in all channel, <@"+message.guild.ownerID+">.");
+              
+              randomChannel.send('(No Language set! "'+Prefix+'lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+             }
+            });
+
+    
+  }
+
+sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND channelsend_id = "`+message.channel.id+`";`;
+                      
+con.query(sql);
+
+        }
+      });
+}
+
 
 });
 
