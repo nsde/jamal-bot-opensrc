@@ -1,5 +1,6 @@
 'use strict';
 const Discord = require("discord.js");
+const { stat } = require("fs");
 const bot = new Discord.Client();
 const PREFIX = "De!";
 const token = "ODA3MzczOTgyNDExNTIyMDgw.YB3DnQ.Zjk82JnKFOY65DxMuZDmo33zhzg";
@@ -108,13 +109,7 @@ bot.on('message', async message =>{
   function SpracheUndSendMessagePerms(frage, deutschh, englischh) {
     
     if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
-      if(frage === 2){
-        status = "1";
-      }else if(frage === 3){
-      status = "2";
-      }else if(frage === 4){
-        status = "3";
-        }
+      
       con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
         if(err) throw err;
         
@@ -123,7 +118,7 @@ bot.on('message', async message =>{
               let language = rows[0].lang;
               if(language == "de"){
                 
-                if(frage == 1){
+                if(frage == "1"){
                   
                 message.channel.send(deutschh).then(msg => msg.delete({timeout: deleteTime}));
                 }else{
@@ -132,7 +127,7 @@ bot.on('message', async message =>{
                 }
                   
               }else if(language == "en"){
-                if(frage == 1){
+                if(frage == "1"){
                   message.channel.send(englischh).then(msg => msg.delete({timeout: deleteTime}));
                 }else{
                 message.channel.send(englischh);
@@ -140,7 +135,7 @@ bot.on('message', async message =>{
               }
            }else{
            
-            if(frage == 1){
+            if(frage == "1"){
               message.channel.send(englischh).then(msg => msg.delete({timeout: deleteTime}));
             }else{
             message.channel.send(englischh);
@@ -181,13 +176,12 @@ bot.on('message', async message =>{
       if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
 
         let a = parseInt(anzahl);
-let messages = await message.channel.messages.fetch({ limit: a})
-
-message.channel.bulkDelete(messages, true);
+        
+        message.channel.bulkDelete(a);
 
       }else {
 
-        SpracheUndSendMessagePerms(0, "Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.",
+        SpracheUndSendMessagePerms("0", "Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.",
         "Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
 
         }
@@ -196,7 +190,7 @@ message.channel.bulkDelete(messages, true);
   var SET = "";
     let args = message.content.split(" ");
     
-console.log(args);
+
     if(message.channel.id === '806274946913271808'){
         let move =  message.guild.roles.cache.find((r) => r.id == "811587684460003348");
         switch(args[0]){
@@ -402,7 +396,7 @@ if(xvv==1){
   if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810"  || message.member.roles.cache.find(r => r.name.toUpperCase() === "MOD") || message.member.roles.cache.find(r => r.nametoUpperCase() === "MODERATOR")){
     if(args[1].toUpperCase() === "SET"){
       
-SpracheUndSendMessagePerms(1, "Super! Dies ist nun der Counting Channel!", "Perfect, this is now the counting channel!")
+SpracheUndSendMessagePerms("1", "Super! Dies ist nun der Counting Channel!", "Perfect, this is now the counting channel!")
 
 con.query(`SELECT * FROM CountingChannel WHERE server = '`+message.guild.id+`';`, (err, rows) => {
             if(err) throw err;
@@ -421,7 +415,7 @@ con.query(`SELECT * FROM CountingChannel WHERE server = '`+message.guild.id+`';`
               });
     }else if(args[1].toUpperCase() === "OFF"){
       
-      SpracheUndSendMessagePerms(1, "Der Counting-Channel ist aus!", "The counting channel is off!")
+      SpracheUndSendMessagePerms("1", "Der Counting-Channel ist aus!", "The counting channel is off!")
       
       con.query(`SELECT * FROM CountingChannel WHERE server = '`+message.guild.id+`';`, (err, rows) => {
                   if(err) throw err;
@@ -473,12 +467,12 @@ con.query(`SELECT * FROM CountingChannel WHERE server = '`+message.guild.id+`';`
 //SpracheUndSendMessagePerms(0, "Der Counting-Fortschritt ist nun auf "+newNumber, "The Counting-Progress is set to "+newNumber);
                         }else{
           
-SpracheUndSendMessagePerms(1, "Der Counting-Fortschritt ist nun auf "+newNumber, "The Counting-Progress is set to "+newNumber);
+SpracheUndSendMessagePerms("1", "Der Counting-Fortschritt ist nun auf "+newNumber, "The Counting-Progress is set to "+newNumber);
                         }
                       }
                     });
 }else{
-  SpracheUndSendMessagePerms(0, "Diese Zahl ist zu groß! Bitte wenden sie sich an @Deniz#5879!", 
+  SpracheUndSendMessagePerms("0", "Diese Zahl ist zu groß! Bitte wenden sie sich an @Deniz#5879!", 
   "This number is too big , please contact @Deniz#5879!");
 }
  }
@@ -614,12 +608,12 @@ case ""+Prefix+"LEVEL":
         con.query(sql)
 
 
-SpracheUndSendMessagePerms(0, "Perfekt! Jeder mit dem Level "+args[1]+" bekommt nun die Rolle <@&"+rolle.id+">.", "Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.")
+SpracheUndSendMessagePerms("0", "Perfekt! Jeder mit dem Level "+args[1]+" bekommt nun die Rolle <@&"+rolle.id+">.", "Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.")
 
         
  }else{
    
-                SpracheUndSendMessagePerms(0, "Bitte schreibe "+Prefix+"help für weitere Hilfe!", "Please write "+Prefix+"help for more information!");
+                SpracheUndSendMessagePerms("0", "Bitte schreibe "+Prefix+"help für weitere Hilfe!", "Please write "+Prefix+"help for more information!");
 
         }
       }else{
@@ -628,13 +622,13 @@ SpracheUndSendMessagePerms(0, "Perfekt! Jeder mit dem Level "+args[1]+" bekommt 
         
         sql = `INSERT INTO RollenFürLevel (rollen_id, levelrang, server_id) VALUES ('`+rolle.id+`', `+args[1]+`,'`+message.guild.id+`');`;
         con.query(sql)
-        SpracheUndSendMessagePerms(0, "Perfekt! Jeder mit dem Level "+args[1]+" bekommt nun die Rolle <@&"+rolle.id+">.", "Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.")
+        SpracheUndSendMessagePerms("0", "Perfekt! Jeder mit dem Level "+args[1]+" bekommt nun die Rolle <@&"+rolle.id+">.", "Perfekt! Now everyone with the Level "+args[1]+" will get the Role <@&"+rolle.id+">.")
 
        
        }else{
 
 
-        SpracheUndSendMessagePerms(0, "Bitte schreibe "+Prefix+"help für weitere Hilfe!", "Please write "+Prefix+"help for more information!");
+        SpracheUndSendMessagePerms("0", "Bitte schreibe "+Prefix+"help für weitere Hilfe!", "Please write "+Prefix+"help for more information!");
 
       }
        
@@ -646,14 +640,14 @@ SpracheUndSendMessagePerms(0, "Perfekt! Jeder mit dem Level "+args[1]+" bekommt 
           if(err) throw err;
              if(rows.length >= 1){
                if(rows[0].status === "on"){
-                SpracheUndSendMessagePerms(0, "Das Levelsystem ist zu dem Zeitpunkt aktiviert!", "The leveling-system is currently active!");
+                SpracheUndSendMessagePerms("0", "Das Levelsystem ist zu dem Zeitpunkt aktiviert!", "The leveling-system is currently active!");
                 
                }else{
                sql = `DELETE FROM Togglelevel WHERE server = '`+message.guild.id+`';`;
                con.query(sql)
                sql = `INSERT INTO Togglelevel (server, status) VALUES ('`+message.guild.id+`', "on");`;
                con.query(sql)
-               SpracheUndSendMessagePerms(0, "Das Levelsystem wurde nun aktiviert!", "The leveling-system is now activated!");
+               SpracheUndSendMessagePerms("0", "Das Levelsystem wurde nun aktiviert!", "The leveling-system is now activated!");
                }
              
             }else{
@@ -661,7 +655,7 @@ SpracheUndSendMessagePerms(0, "Perfekt! Jeder mit dem Level "+args[1]+" bekommt 
         con.query(sql)
         sql = `INSERT INTO Togglelevel (server, status) VALUES ('`+message.guild.id+`', "on");`;
         con.query(sql)
-        SpracheUndSendMessagePerms(0, "Das Levelsystem wurde nun aktiviert!", "The leveling-system is now activated!");
+        SpracheUndSendMessagePerms("0", "Das Levelsystem wurde nun aktiviert!", "The leveling-system is now activated!");
             }
 
           });
@@ -671,14 +665,14 @@ SpracheUndSendMessagePerms(0, "Perfekt! Jeder mit dem Level "+args[1]+" bekommt 
           if(err) throw err;
              if(rows.length >= 1){
                if(rows[0].status === "off"){
-                SpracheUndSendMessagePerms(0, "Das Levelsystem ist zu dem Zeitpunkt deaktiviert!", "The leveling-system is currently deactived!");
+                SpracheUndSendMessagePerms("0", "Das Levelsystem ist zu dem Zeitpunkt deaktiviert!", "The leveling-system is currently deactived!");
                 
                }else{
                sql = `DELETE FROM Togglelevel WHERE server = '`+message.guild.id+`';`;
                con.query(sql)
                sql = `INSERT INTO Togglelevel (server, status) VALUES ('`+message.guild.id+`', "off");`;
                con.query(sql)
-               SpracheUndSendMessagePerms(0, "Das Levelsystem wurde nun deaktiviert!", "The leveling-system is now deactivated!");
+               SpracheUndSendMessagePerms("0", "Das Levelsystem wurde nun deaktiviert!", "The leveling-system is now deactivated!");
                }
              
             }else{
@@ -686,7 +680,7 @@ SpracheUndSendMessagePerms(0, "Perfekt! Jeder mit dem Level "+args[1]+" bekommt 
         con.query(sql)
         sql = `INSERT INTO Togglelevel (server, status) VALUES ('`+message.guild.id+`', "off");`;
         con.query(sql)
-        SpracheUndSendMessagePerms(0, "Das Levelsystem wurde nun deaktiviert!", "The leveling-system is now deactivated!");
+        SpracheUndSendMessagePerms("0", "Das Levelsystem wurde nun deaktiviert!", "The leveling-system is now deactivated!");
             }
 
           });
@@ -694,7 +688,7 @@ SpracheUndSendMessagePerms(0, "Perfekt! Jeder mit dem Level "+args[1]+" bekommt 
 
 
     }else{
-      SpracheUndSendMessagePerms(0, "Bitte schreibe "+Prefix+"help für weitere Hilfe!", "Please write "+Prefix+"help for more information!");
+      SpracheUndSendMessagePerms("0", "Bitte schreibe "+Prefix+"help für weitere Hilfe!", "Please write "+Prefix+"help for more information!");
 
     }
     
@@ -713,7 +707,7 @@ break;
 
                 }
 if(taggesUsa == null){
-  SpracheUndSendMessagePerms(0, "User nicht gefunden. (Wenn du deine XP wissen, schreibe NUR §leveling!)", "User not found. (If you want to know your XP, you just need to type §leveling!)");
+  SpracheUndSendMessagePerms("0", "User nicht gefunden. (Wenn du deine XP wissen, schreibe NUR §leveling!)", "User not found. (If you want to know your XP, you just need to type §leveling!)");
   
 }else{
                 let Level = 0;
@@ -739,7 +733,7 @@ if(taggesUsa == null){
                     
                     con.query(`SELECT * FROM Leveling WHERE player_id = '`+taggesUsa.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
                       if(err) throw err;
-                      SpracheUndSendMessagePerms(0, "Der Spieler <@"+taggesUsa.id+"> ist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.",
+                      SpracheUndSendMessagePerms("0", "Der Spieler <@"+taggesUsa.id+"> ist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.",
                       "The User <@"+taggesUsa.id+"> is level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.");
                       
                     
@@ -767,7 +761,7 @@ if(taggesUsa == null){
                        }
                       });
                       
-                      SpracheUndSendMessagePerms(0, "Du bist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.",
+                      SpracheUndSendMessagePerms("0", "Du bist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.",
                     "You're level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.");
 
                         }else{
@@ -795,14 +789,14 @@ if(taggesUsa == null){
                                   });
                                   
               
-                                  SpracheUndSendMessagePerms(0, "Der Spieler <@"+taggesUsa.id+"> ist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.",
+                                  SpracheUndSendMessagePerms("0", "Der Spieler <@"+taggesUsa.id+"> ist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.",
                                   "The User <@"+taggesUsa.id+"> is level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.");
                                 }          
 
    break;
             case ""+Prefix+"HELP":
 
-              SpracheUndSendMessagePerms(0, 
+              SpracheUndSendMessagePerms("0", 
                 "```PREFIX: "+Prefix+" \n \n{} = Ping , [] = Argumente (auch optional), () = Argumente (Eingabe erfordert), ~: Für User mit Admin-Perms oder User mit einer Rolle namens Mod(erator) "+
                         "\n \n~...level (LevelNr) (@role):Stelle ein, ab welchem Level man welche Rolle bekommt (Beispiel: "+Prefix+"level 5 {@Level5})"+
                         "\n~...level (on/off): Stelle das Leveling-System ein/aus! (Standart: Aktiv)"+
@@ -812,7 +806,8 @@ if(taggesUsa == null){
                         "\n~...clearchat (Anzahl): Lösche eine gewisse Anzahl an Nachrichten in einem Channel. "+
                         
                         "\n~...lang: Setze die Sprache auf deinem Server. (Beispiel: "+Prefix+"lang de)"+
-                        
+                        "\n...embed: Erstelle ein Custom Embed! (Folge die Schritte, die dir der Bot sagt!)"+
+
                         "\n \nJOKE COMMANDS:"+
                         "\n \n...pp @{player}: Checke die Schw*nzlänge von... dir oder einem User "+
                         "\n...lauch @{player}: Zu wieviel Prozent bist du/jemand anderes ein Lauch?``` ",
@@ -824,6 +819,7 @@ if(taggesUsa == null){
                         "\n~...counting (set/off|[number]): Set this channel to your Counting Channel in this Servers or set the Counting-Progress \n(You need to contact @Deniz#5879 to set the Progress over 1 mio). "+
                         "\n~...clearchat (amount): Delete a specific amount of messages in a channel. "+
                         "\n~...lang : Set the language of the bot on your server. (usage: "+Prefix+"lang de)"+
+                        "\n...embed: Create a Custom Embed! (Follow the steps the bot is saying to you!)"+
                         "\n \nJOKE COMMANDS:"+
                        
                         "\n \n...pp {@user}: Check the length of a co*k of you or a user "+
@@ -856,7 +852,7 @@ if(taggesUsa == null){
 
                   let Gained = Math.floor(Math.random() * 100);
                   let XPneu = (parseInt(Gained));
-                  SpracheUndSendMessagePerms(0, "🥬Der User <@"+taggedUser.id+"> ist zu "+XPneu+"% ein Lauch.🥬",
+                  SpracheUndSendMessagePerms("0", "🥬Der User <@"+taggedUser.id+"> ist zu "+XPneu+"% ein Lauch.🥬",
                   "🥬The User <@"+taggedUser.id+"> has a "+XPneu+"% possibility to be a leek.🥬");
 
                   
@@ -868,7 +864,7 @@ if(taggesUsa == null){
 
                 let Gained = Math.floor(Math.random() * 100);
                 let XPneu = (parseInt(Gained));
-                SpracheUndSendMessagePerms(0, "🥬Du bist zu "+XPneu+"% ein Lauch.🥬",
+                SpracheUndSendMessagePerms("0", "🥬Du bist zu "+XPneu+"% ein Lauch.🥬",
                 "🥬You have a "+XPneu+"% possibility to be a leek.🥬");
               }
                 //}
@@ -879,13 +875,13 @@ if(taggesUsa == null){
                       if(message.mentions.members.size >= 1){
                   const taggedUser = message.mentions.members.first();
                   if(taggedUser.id == "466596723297484810"){
-                    SpracheUndSendMessagePerms(0, "🍆<@"+taggedUser.id+">'s pp ist 25cm groß.🍆",
+                    SpracheUndSendMessagePerms("0", "🍆<@"+taggedUser.id+">'s pp ist 25cm groß.🍆",
                     "🍆<@"+taggedUser.id+">'s pp is 25cm big.🍆");
                   }else{
   
                     let Gained = Math.floor(Math.random() * 20);
                     let XPneu = (parseInt(Gained));
-                    SpracheUndSendMessagePerms(0, "🍆<@"+taggedUser.id+">'s pp ist "+XPneu+"cm groß.🍆",
+                    SpracheUndSendMessagePerms("0", "🍆<@"+taggedUser.id+">'s pp ist "+XPneu+"cm groß.🍆",
                     "🍆<@"+taggedUser.id+">'s pp is "+XPneu+"cm big.🍆");
 
                 }
@@ -893,30 +889,35 @@ if(taggesUsa == null){
                   if(message.author.id == "466596723297484810"){
                     
 
-                    SpracheUndSendMessagePerms(0, "🍆Dein pp ist 25cm groß.🍆", "🍆Your pp is 25cm big.🍆");
+                    SpracheUndSendMessagePerms("0", "🍆Dein pp ist 25cm groß.🍆", "🍆Your pp is 25cm big.🍆");
                   }else{
   
                     let Gained = Math.floor(Math.random() * 20);
                     let XPneu = (parseInt(Gained));
-                    SpracheUndSendMessagePerms(0, "🍆Dein pp ist "+XPneu+"cm groß.🍆", "🍆Your pp is "+XPneu+"cm big.🍆");
+                    SpracheUndSendMessagePerms("0", "🍆Dein pp ist "+XPneu+"cm groß.🍆", "🍆Your pp is "+XPneu+"cm big.🍆");
                   
                   }
                   }
                 break;
 
                 case ""+Prefix+"FYNNDERWAHRE":
-                  SpracheUndSendMessagePerms(0, "Wahre Finns werden mit **y** geschrieben!", "The real Finns are written with a **y**!");
+                  SpracheUndSendMessagePerms("0", "Wahre Finns werden mit **y** geschrieben!", "The real Finns are written with a **y**!");
                 break;
                 case ""+Prefix+"CLEARCHAT":
   
                   if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810" || message.member.roles.cache.find(r => r.name.toUpperCase() === "MOD") || message.member.roles.cache.find(r => r.toUpperCase() === "MODERATOR")){
                     if(args.length === 2 && isInt(args[1])){
                       let a = parseInt(args[1])+1;
+                      if(a >= 1 && a <= 99){
                       DeleteMessage(a);
+                      }else{
+                        SpracheUndSendMessagePerms("0", "Bitte wähle eine Zahl zwischen 1 und 99!", "Please select a number between 1 and 99!")
+                      }
+
 
                  }else{
 
-                  SpracheUndSendMessagePerms(0, "Nutze Clearchat [Anzahl]!", "Use Clearchat [amount]!")
+                  SpracheUndSendMessagePerms("0", "Nutze Clearchat [Anzahl]!", "Use Clearchat [amount]!")
                  }
 
                   }
@@ -925,14 +926,16 @@ if(taggesUsa == null){
                     case ""+Prefix+"EMBED":
                 
                       if(args.length == 1){
-                        con.query(`SELECT * FROM EmbedGen WHERE server = '`+message.guild.id+`' AND channelsend_id = '`+message.channel.id+`';`, (err, rows3) => {
+                        con.query(`SELECT * FROM EmbedGen WHERE server = '`+message.guild.id+`' AND player_id = '`+message.author.id+`' AND channelsend_id = '`+message.channel.id+`';`, (err, rows3) => {
                           if(err) throw err;
                               if(rows3.length >= 1){
 
                         }else{
 
-
-                          SpracheUndSendMessagePerms(2, "Bitte Pinge den Channel, in dem dieser Embed reingesendet werden soll!", "Please mention a channel, where this Embed should be sent to!");
+                          if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
+                           status = "1";
+                                                    }
+                          SpracheUndSendMessagePerms("0", "Bitte Pinge den Channel, in dem dieser Embed reingesendet werden soll, <@"+message.author.id+">!", "Please mention a channel, where this Embed should be sent to, <@"+message.author.id+">!");
                           
 
                         }
@@ -1179,45 +1182,51 @@ if(taggesUsa == null){
               
       }
 
-      
-      con.query(`SELECT * FROM EmbedGen WHERE server = '`+message.guild.id+`' AND channelsend_id = '`+message.channel.id+`';`, (err, rows3) => {
+      if(!message.author.bot){
+      con.query(`SELECT * FROM EmbedGen WHERE server = '`+message.guild.id+`' AND player_id = '`+message.author.id+`' AND channelsend_id = '`+message.channel.id+`';`, (err, rows3) => {
         if(err) throw err;
             if(rows3.length >= 1){
               let status2 = rows3[0].status;
               if(status2 === "1"){
                 if(args.length === 1){
                 if(message.mentions.channels.size === 1){
-                 
-                SpracheUndSendMessagePerms(3, "Perfekt! Was soll nun als Titel dort stehen?", "Perfect! What should the title be?")
+                  if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
+                    status = "2";
+                  }
+                SpracheUndSendMessagePerms("0", "Perfekt! Was soll nun als Titel dort stehen, <@"+message.author.id+">?", "Perfect! What should the title be, <@"+message.author.id+">?")
                 }else{
 
                   DeleteMessage(2);
-                  SpracheUndSendMessagePerms(0, "Embed-Generation gecancelled! Bitte Pinge nächstes mal einfach nur einen Channel!",
-                  "Embed-Generation cancelled! Please mention only a channel next time!");
+                  SpracheUndSendMessagePerms("0", "Embed-Generation gecancelled! Bitte Pinge nächstes mal einfach nur einen Channel, <@"+message.author.id+">!",
+                  "Embed-Generation cancelled! Please mention only a channel next time, <@"+message.author.id+">!");
 
-                  sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND channelsend_id = "`+message.channel.id+`";`;
+                  sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND player_id = '`+message.author.id+`' AND channelsend_id = "`+message.channel.id+`";`;
                       
                   con.query(sql);
                 }
               }else{
                 DeleteMessage(2);
-                SpracheUndSendMessagePerms(0, "Embed-Generation gecancelled! Bitte Pinge nächstes mal einfach nur einen Channel!",
-                "Embed-Generation cancelled! Please mention only a channel next time!");
+                SpracheUndSendMessagePerms("0", "Embed-Generation gecancelled! Bitte Pinge nächstes mal einfach nur einen Channel, <@"+message.author.id+">!",
+                "Embed-Generation cancelled! Please mention only a channel next time, <@"+message.author.id+">!");
                 
-  sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND channelsend_id = "`+message.channel.id+`";`;
+  sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND player_id = '`+message.author.id+`' AND channelsend_id = "`+message.channel.id+`";`;
                       
   con.query(sql);
               }
               
               }else if(status2 === "2"){
-               for(let a = 1; a <= args.length; a++){
+               for(let a = 0; a < args.length; a++){
                  title = title + args[a] + " ";
                }
-                SpracheUndSendMessagePerms(4, "Alles klar! Jetzt musst du nur noch eingeben, was der Text sein soll!",
-                "All right! Now, in this last step, you need to write the text!")
+
+               if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
+                status = "3";
+              }
+                SpracheUndSendMessagePerms("0", "Alles klar! Jetzt musst du nur noch eingeben, was der Text sein soll, <@"+message.author.id+">!",
+                "All right! Now, in this last step, you need to write the text, <@"+message.author.id+">!")
               
               }else if(status2 === "3"){
-                for(let a = 1; a <= args.length; a++){
+                for(let a = 0; a < args.length; a++){
                   title = title + args[a] + " ";
                 }
                 DeleteMessage(7);
@@ -1227,41 +1236,43 @@ if(taggesUsa == null){
       }
     
   });
+}
 
-
-
+con.query(`SELECT * FROM EmbedGen WHERE server = '`+message.guild.id+`' AND player_id = '`+message.author.id+`' AND channelsend_id = '`+message.channel.id+`';`, (err, rows3) => {
+  if(err) throw err;
+  
 if(status === "1"){
   
-  sql = `INSERT INTO EmbedGen (server, status, channelsend_id) VALUES ('`+message.guild.id+`', '1', '`+message.channel.id+`');`;
+  sql = `INSERT INTO EmbedGen (server, status, player_id, channelsend_id) VALUES ('`+message.guild.id+`', '1','`+message.author.id+`' , '`+message.channel.id+`');`;
   con.query(sql);
 }else if(status === "2"){
 
   
-  sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND channelsend_id = "`+message.channel.id+`";`;
+  sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND player_id = '`+message.author.id+`' AND channelsend_id = "`+message.channel.id+`";`;
                       
   con.query(sql);
   let channelid = message.mentions.channels.first().id;
-  sql = `INSERT INTO EmbedGen (server, status, channelsend_id, channel_id) VALUES ('`+message.guild.id+`', '2', '`+message.channel.id+`', '`+channelid+`');`;
+  sql = `INSERT INTO EmbedGen (server, status,player_id, channelsend_id, channel_id) VALUES ('`+message.guild.id+`', '2','`+message.author.id+`' , '`+message.channel.id+`', '`+channelid+`');`;
   con.query(sql);
 }else if(status === "3"){
 
   
-  con.query(`SELECT * FROM EmbedGen WHERE server = '`+message.guild.id+`' AND channelsend_id = '`+message.channel.id+`';`, (err, rows3) => {
+  con.query(`SELECT * FROM EmbedGen WHERE server = '`+message.guild.id+`' AND player_id = '`+message.author.id+`' AND channelsend_id = '`+message.channel.id+`';`, (err, rows3) => {
     if(err) throw err;
         if(rows3.length >= 1){
 let channelidd = rows3[0].channel_id;
 
-sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND channelsend_id = "`+message.channel.id+`";`;
+sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND player_id = '`+message.author.id+`'  AND channelsend_id = "`+message.channel.id+`";`;
                       
 con.query(sql);
-          sql = `INSERT INTO EmbedGen (server, status, channelsend_id, channel_id, title) VALUES ('`+message.guild.id+`', '3', '`+message.channel.id+`', '`+channelidd+`', '`+title+`');`;
+          sql = `INSERT INTO EmbedGen (server, status, player_id, channelsend_id, channel_id, title) VALUES ('`+message.guild.id+`', '3','`+message.author.id+`', '`+message.channel.id+`', '`+channelidd+`', '`+title+`');`;
           con.query(sql);
         }
       });
 }else if(status === "4"){
 
   
-  con.query(`SELECT * FROM EmbedGen WHERE server = '`+message.guild.id+`' AND channelsend_id = '`+message.channel.id+`';`, (err, rows3) => {
+  con.query(`SELECT * FROM EmbedGen WHERE server = '`+message.guild.id+`' AND player_id = '`+message.author.id+`' AND channelsend_id = '`+message.channel.id+`';`, (err, rows3) => {
     if(err) throw err;
         if(rows3.length >= 1){
 let channelidd = rows3[0].channel_id;
@@ -1269,10 +1280,11 @@ let titlee = rows3[0].title;
 
 
 const exampleEmbed = new Discord.MessageEmbed()
+.setColor('#ff0000')
 	.setTitle(titlee)
 	.setDescription(title)
   
-	.setFooter('Created by user <@'+message.author.id+'>');
+	.setFooter('Created by '+message.author.tag);
 
   
     if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
@@ -1282,9 +1294,9 @@ const exampleEmbed = new Discord.MessageEmbed()
         
             if(rows.length >= 1){
               let channel = message.guild.channels.cache.get(channelidd)
+              
                 channel.send(exampleEmbed);
             }else{
-           
               let channel = message.guild.channels.cache.get(channelidd)
                 channel.send(exampleEmbed);
                 channel.send('(No Language set! "'+Prefix+'lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
@@ -1317,7 +1329,7 @@ const exampleEmbed = new Discord.MessageEmbed()
     
   }
 
-sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND channelsend_id = "`+message.channel.id+`";`;
+sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND player_id = '`+message.author.id+`' AND channelsend_id = "`+message.channel.id+`";`;
                       
 con.query(sql);
 
@@ -1325,9 +1337,9 @@ con.query(sql);
       });
 }
 
-
 });
 
+});
 bot.on('messageReactionAdd', async (reaction, user) => {
   if (reaction.partial) { //this whole section just checks if the reaction is partial
       try {
