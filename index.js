@@ -16,7 +16,7 @@ var verwarnungen2;
 var verwarnungen;
 var vb;
 var deleteTime = 30000;
-let CooldownLevel = 45000;
+let CooldownLevel = 15000;
 var vb2;
 var Prefix = "§";
 
@@ -30,16 +30,22 @@ function isInt(value) {
   return !isNaN(value) && (function(x) { return (x | 0) === x; })(parseFloat(value))
 }
 
+function destroyBot(channel) {
+  // send channel a message that you're resetting bot [optional]
+  channel.send('Resetting...')
+  .then(msg => bot.destroy());
+}
+
 function resetBot(channel) {
   // send channel a message that you're resetting bot [optional]
   channel.send('Resetting...')
-  .then(msg => client.destroy())
-  .then(() => client.login(token));
+  .then(msg => bot.destroy())
+  .then(() => bot.login(token));
 }
 
 class HashTable {
 
-    table = new Array(300)
+    table = new Array(100)
     hastString
 setItem = (key, value) => {
     
@@ -49,6 +55,10 @@ setItem = (key, value) => {
 getItem = (key) => {
     
     return this.table[key];
+};
+getArray = (irgendwas) => {
+    
+  return this.table.length;
 };
 }
 
@@ -102,9 +112,62 @@ bot.on("guildCreate", guild => {
 bot.on('message', async message =>{
 
 
+
+      
+
   let status = "0";
   let title = "";
+  let modrechte = false;
 
+
+function TestRechte(){
+
+  if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810" || message.guild.owner.id === message.author.id ){
+      modrechte= true;
+                    
+  }else {
+    con.query(`SELECT * FROM Moderation WHERE server = '`+message.guild.id+`';`, (err, rows3) => {
+    if(err) throw err;
+    console.log("1");
+        if(rows3.length >= 1){
+          let a2 = 1;
+          for(let a = 0; a < rows3.length; a++){
+            
+            let myRole = message.guild.roles.cache.get(rows3[a].role);
+
+            console.log(myRole.id);
+            for(let num = 0; num <= 100 ; num++){
+              
+              if (message.member.roles.cache.has(myRole.id)) {
+                
+            if(a2 === 1){
+              a2 = 2;
+              
+    modrechte = true;
+            }
+          }
+          }
+
+
+  
+           }
+           console.log(a2);
+
+if(a2 === 1){
+  modrechte = false;
+}
+
+        }else{
+          modrechte = false;
+        }
+
+
+
+
+      });
+
+    }
+}
 
   function SpracheUndSendMessagePerms(frage, deutschh, englischh) {
     
@@ -393,7 +456,13 @@ if(xvv==1){
     
     switch(args[0].toUpperCase()){
       case ""+Prefix+"COUNTING":
-  if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810"  || message.member.roles.cache.find(r => r.name.toUpperCase() === "MOD") || message.member.roles.cache.find(r => r.nametoUpperCase() === "MODERATOR")){
+        TestRechte();
+        con.query(`SELECT * FROM Moderation;`, (err, rows3) => {
+          if(err) throw err;
+
+        if(modrechte == true){
+        
+          if(args.length >= 2){
     if(args[1].toUpperCase() === "SET"){
       
 SpracheUndSendMessagePerms("1", "Super! Dies ist nun der Counting Channel!", "Perfect, this is now the counting channel!")
@@ -519,13 +588,19 @@ SpracheUndSendMessagePerms("1", "Der Counting-Fortschritt ist nun auf "+newNumbe
 });
 
       }
+    }
+  });
       break;
 
       case ""+Prefix+"LANG":
         
         
-        if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810"  || message.member.roles.cache.find(r => r.name.toUpperCase() === "MOD") || message.member.roles.cache.find(r => r.toUpperCase() === "MODERATOR")){
-  
+        TestRechte();
+                    con.query(`SELECT * FROM Moderation;`, (err, rows3) => {
+                      if(err) throw err;
+
+                    if(modrechte == true){
+                    
         if(args[1].toUpperCase() === "DE" || args[1].toUpperCase() === "DEUTSCH" ){
           con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
             if(err) throw err;
@@ -589,6 +664,7 @@ SpracheUndSendMessagePerms("1", "Der Counting-Fortschritt ist nun auf "+newNumbe
           message.channel.send("This Language is not supported! \nSupported Languages until now are: \nGerman - DE \nEnglish - EN");
         }
         }
+      });
       break;
 
 case ""+Prefix+"LEVEL":
@@ -797,11 +873,13 @@ if(taggesUsa == null){
             case ""+Prefix+"HELP":
 
               SpracheUndSendMessagePerms("0", 
-                "```PREFIX: "+Prefix+" \n \n{} = Ping , [] = Argumente (auch optional), () = Argumente (Eingabe erfordert), ~: Für User mit Admin-Perms oder User mit einer Rolle namens Mod(erator) "+
+                "```PREFIX: "+Prefix+" \n \n{} = Ping , [] = Argumente (auch optional), () = Argumente (Eingabe erfordert), ~: Für User mit Admin-Perms oder Mod-Perms ("+Prefix+"mod roles)! "+
+                "\n \n~...mod (add/remove) {@role}: Füge ein Rolle hinzu, welche die ~-Commands bedienen können, oder entferne eine Rolle! "+
+                "\n...mod roles: Lasse dir anzeigen, welche Rollen die Rechte auf ~-Commands haben! "+
                         "\n \n~...level (LevelNr) (@role):Stelle ein, ab welchem Level man welche Rolle bekommt (Beispiel: "+Prefix+"level 5 {@Level5})"+
                         "\n~...level (on/off): Stelle das Leveling-System ein/aus! (Standart: Aktiv)"+
                         "\n...leveling {@User}: Sieh, auf welchem Level du bist (oder jemand anderes.)"+
-                        "\n~...counting (set/off|[Nummer]): Setze diesen Channel zum Counting Channel deines Servers oder setze den Counting-Fortschritt \n(ab 1 MIO müsste @Deniz#5879 kontaktiert werden). "+
+                        "\n \n~...counting (set/off|[Nummer]): Setze diesen Channel zum Counting Channel deines Servers oder setze den Counting-Fortschritt \n(ab 1 MIO müsste @Deniz#5879 kontaktiert werden). "+
                        
                         "\n~...clearchat (Anzahl): Lösche eine gewisse Anzahl an Nachrichten in einem Channel. "+
                         
@@ -812,11 +890,13 @@ if(taggesUsa == null){
                         "\n \n...pp @{player}: Checke die Schw*nzlänge von... dir oder einem User "+
                         "\n...lauch @{player}: Zu wieviel Prozent bist du/jemand anderes ein Lauch?``` ",
                 
-                "```PREFIX: "+Prefix+"\n \n{} = Ping, [] = Argument (also optional), () = Argument (needed), ~: for user with Admins-perms or User with a role named Mod(erator)  "+
+                "```PREFIX: "+Prefix+"\n \n{} = Ping, [] = Argument (also optional), () = Argument (needed), ~: for user with Admins-perms or Mod-Perms ("+Prefix+"mod roles)!  "+
+                "\n \n~...mod (add/remove) {@role}: Add a role, which has the permission to execute the ~-Commands, or remove this role! "+
+                "\n...mod roles: Show, which roles have the permission to execute the ~-Commands!"+
                         "\n \n~...level (LevelNo) (@role): Setup with level a player will get which role (usage: "+Prefix+"level 5 {@Level5})"+
                         "\n~...level (on/off): De/activate the leveling system! (usually active)"+
                         "\n...leveling {@user}: See what level you are (or someone else.)"+
-                        "\n~...counting (set/off|[number]): Set this channel to your Counting Channel in this Servers or set the Counting-Progress \n(You need to contact @Deniz#5879 to set the Progress over 1 mio). "+
+                        "\n \n~...counting (set/off|[number]): Set this channel to your Counting Channel in this Servers or set the Counting-Progress \n(You need to contact @Deniz#5879 to set the Progress over 1 mio). "+
                         "\n~...clearchat (amount): Delete a specific amount of messages in a channel. "+
                         "\n~...lang : Set the language of the bot on your server. (usage: "+Prefix+"lang de)"+
                         "\n...embed: Create a Custom Embed! (Follow the steps the bot is saying to you!)"+
@@ -899,14 +979,26 @@ if(taggesUsa == null){
                   }
                   }
                 break;
+               
+               
+                case ""+Prefix+"RESET":
+                  if(message.author.id == "466596723297484810"){
+                   
+                  client.destroy();
+                  }
+            break;
 
                 case ""+Prefix+"FYNNDERWAHRE":
                   SpracheUndSendMessagePerms("0", "Wahre Finns werden mit **y** geschrieben!", "The real Finns are written with a **y**!");
                 break;
                 case ""+Prefix+"CLEARCHAT":
   
-                  if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810" || message.member.roles.cache.find(r => r.name.toUpperCase() === "MOD") || message.member.roles.cache.find(r => r.toUpperCase() === "MODERATOR")){
-                    if(args.length === 2 && isInt(args[1])){
+                  TestRechte();
+                    con.query(`SELECT * FROM Moderation;`, (err, rows3) => {
+                      if(err) throw err;
+
+                    if(modrechte == true){
+                     if(args.length === 2 && isInt(args[1])){
                       let a = parseInt(args[1])+1;
                       if(a >= 1 && a <= 99){
                       DeleteMessage(a);
@@ -921,6 +1013,7 @@ if(taggesUsa == null){
                  }
 
                   }
+                });
                     break;                
      
                     case ""+Prefix+"EMBED":
@@ -948,14 +1041,63 @@ if(taggesUsa == null){
                 break;
                 case ""+Prefix+"MOD":
                   
-                  if(message.mentions.roles.size == 1){
+                  if(message.mentions.roles.size == 1 && args[1].toUpperCase() === "ADD"){
+
+                    TestRechte();
+                    con.query(`SELECT * FROM Moderation;`, (err, rows3) => {
+                      if(err) throw err;
+
+                    if(modrechte == true){
+                    
+                    let modrole = message.mentions.roles.first();
+                    
+                    con.query(`SELECT * FROM Moderation WHERE server = '`+message.guild.id+`' AND role = '`+modrole.id+`';`, (err, rows3) => {
+                      if(err) throw err;
+                          if(rows3.length >= 1){
+                            SpracheUndSendMessagePerms("1", "Diese Rolle ist schon eine Moderations-Rolle!", "This roles is alrady added as a moderation role!")
+                            
+                          }else {
+                            sql = `INSERT INTO Moderation (server, role) VALUES ('`+message.guild.id+`', '`+modrole.id+`');`;
+                      
+                            con.query(sql);
+                            SpracheUndSendMessagePerms("1", "Perfekt! Diese Rolle kann nun auf die Mod-Commands von Jamal zugreifen!", 
+                            "Perfect! This role is now allowed to use the moderation-commands of Jamal!")
+                            }
+                        });
+                      }
+
+                    });
+                  }else if(message.mentions.roles.size == 1 && args[1].toUpperCase() === "REMOVE"){
 
                     
+                    TestRechte();
+                    con.query(`SELECT * FROM Moderation;`, (err, rows3) => {
+                      if(err) throw err;
+
+                    if(modrechte == true){
+                    
+                    let modrole2 = message.mentions.roles.first();
+                    
+                    con.query(`SELECT * FROM Moderation WHERE server = '`+message.guild.id+`' AND role = '`+modrole2.id+`';`, (err, rows3) => {
+                      if(err) throw err;
+                          if(rows3.length >= 1){
+                            sql = `DELETE FROM Moderation WHERE server = '`+message.guild.id+`' AND role = '`+modrole2.id+`';`;
+                      
+                            con.query(sql);
+                            SpracheUndSendMessagePerms("1", "Diese Rolle wurde nun von den Moderations-Rollen entfernt!", 
+                            "This role is now removed of the moderation-roles!");
+                          }else {
+                            SpracheUndSendMessagePerms("1", "Diese Rolle ist nicht eingespeichert!",
+                            "This role ist not saved as a Moderation-Role!");
+                            
+                            }
+                        });
+                      }
+                    });
 
 
                   }else if(args.length === 2 && args[1].toUpperCase() === "ROLES"){ 
 
-                    console.log("3");
                     con.query(`SELECT * FROM Moderation WHERE server = '`+message.guild.id+`';`, (err, rows3) => {
                       if(err) throw err;
                           if(rows3.length >= 1){
@@ -1000,7 +1142,7 @@ if(taggesUsa == null){
        if(err) throw err;
            if(rows3.length >= 1){
              if(rows3[0].channel_id === message.channel.id){
-               if(lastUser === message.author.id){
+               if(!(lastUser === message.author.id)){
                con.query(`SELECT * FROM Counting WHERE server = '`+message.guild.id+`'`, (err, rows) => {
                  if(err) throw err;
                  
@@ -1013,6 +1155,7 @@ if(taggesUsa == null){
 
                     let g1 = BigInt(AktuelleNr).toString();
                          let g = parseInt(g1)+1;   
+
 
                     if(args[0] === ""+AktuelleNr+""){
 
@@ -1027,6 +1170,35 @@ if(taggesUsa == null){
                       
                       lastUser = message.author.id;
                       con.query(sql);
+
+                      if((message.channel.permissionsFor(bot.user).has("MANAGE_CHANNELS"))) {
+                        message.channel.setTopic("Aktuelle Zahl: "+f);
+                        }else{
+                            const randomChannel = message.guild.channels.cache.find(channel => 
+                            channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
+          
+                            con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
+                              if(err) throw err;
+                                  if(rows.length >= 1){
+                                    let language = rows[0].lang;
+                                    if(language == "de"){
+                                      randomChannel.send("Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_CHANNELS, <@"+message.guild.ownerID+">.");
+                                           
+                                    }else if(language == "en"){
+                                      randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_CHANNELS, <@"+message.guild.ownerID+">.");
+                                           
+                                    }
+                                 }else{
+                                 
+                                  randomChannel.send("Sorry for disturb, but Jamal would like to get the permission MANAGE_CHANNELS, <@"+message.guild.ownerID+">.");
+          
+                                  randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
+                                 }
+                                });
+  
+  
+                        }
+
                     }else {
                       
                       DeleteMessage(1);
@@ -1036,7 +1208,9 @@ if(taggesUsa == null){
                     if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
   
                       message.delete({ timeout: 1 });
-     
+
+                     
+
                     }else {
                       const randomChannel = message.guild.channels.cache.find(channel => 
                        channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
@@ -1228,11 +1402,23 @@ if(taggesUsa == null){
               if(status2 === "1"){
                 if(args.length === 1){
                 if(message.mentions.channels.size === 1){
-                  if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
-                    status = "2";
+                  let channelid3 = message.mentions.channels.first();
+                  if(channelid3.permissionsFor(message.author).has("SEND_MESSAGES")){
+                    if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
+                      status = "2";
+                    }
+                    
+                  SpracheUndSendMessagePerms("1", "Perfekt! Was soll nun als Titel dort stehen, <@"+message.author.id+">?", "Perfect! What should the title be, <@"+message.author.id+">?")
+                  
+                    
+                  }else{
+                    SpracheUndSendMessagePerms("1", "Entschuldige, aber du musst einen Channel pingen, in dem du Rechte hast, reinzuschreiben!",
+                    "I am sorry, but you need to mention a channel, where you have the permission to send messages!");
+                    
                   }
-                SpracheUndSendMessagePerms("1", "Perfekt! Was soll nun als Titel dort stehen, <@"+message.author.id+">?", "Perfect! What should the title be, <@"+message.author.id+">?")
-                }else{
+
+
+                  }else{
 
                   DeleteMessage(2);
                   SpracheUndSendMessagePerms("1", "Embed-Generation gecancelled! Bitte Pinge nächstes mal einfach nur einen Channel, <@"+message.author.id+">!",
@@ -1380,6 +1566,12 @@ con.query(sql);
 });
 
 });
+
+
+
+
+
+
 bot.on('messageReactionAdd', async (reaction, user) => {
   if (reaction.partial) { //this whole section just checks if the reaction is partial
       try {
