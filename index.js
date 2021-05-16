@@ -1029,7 +1029,7 @@ if(taggesUsa == null){
                       con.query(sql);
                     }else {
                       
-                      DeleteMessage(0);
+                      DeleteMessage(1);
 
                    }
                   }else{
@@ -1068,7 +1068,7 @@ if(taggesUsa == null){
                    }
 
                  }else{
-                  DeleteMessage(0);
+                  DeleteMessage(1);
 
                   sql = `INSERT INTO Counting (nummer2, server) VALUES ('1', '`+message.guild.id+`');`;
                       
@@ -1077,7 +1077,7 @@ if(taggesUsa == null){
                 
          });
              }else{
-              DeleteMessage(0);
+              DeleteMessage(1);
              }
             }
           }
