@@ -7,17 +7,14 @@ const token = "ODA3MzczOTgyNDExNTIyMDgw.YB3DnQ.Zjk82JnKFOY65DxMuZDmo33zhzg";
 
 const mysql = require("mysql");
 const { format, parse } = require("path");
+const { unregisterCustomQueryHandler } = require("puppeteer");
 "Code 5";
 var version = '1.3.1';
 
 let lastUser = Discord.User = '';
 var f;
-var verwarnungen2;
-var verwarnungen;
-var vb;
 var deleteTime = 30000;
 let CooldownLevel = 15000;
-var vb2;
 var Prefix = "§";
 var levelingAmount = 200;
 
@@ -31,18 +28,6 @@ function isInt(value) {
   return !isNaN(value) && (function(x) { return (x | 0) === x; })(parseFloat(value))
 }
 
-function destroyBot(channel) {
-  // send channel a message that you're resetting bot [optional]
-  channel.send('Resetting...')
-  .then(msg => bot.destroy());
-}
-
-function resetBot(channel) {
-  // send channel a message that you're resetting bot [optional]
-  channel.send('Resetting...')
-  .then(msg => bot.destroy())
-  .then(() => bot.login(token));
-}
 
 class HashTable {
 
@@ -123,7 +108,7 @@ bot.on('message', async message =>{
 
 function TestRechte(){
 
-  if(message.member.hasPermission("ADMINISTRATOR") || message.member.id === "466596723297484810" || message.guild.owner.id === message.author.id ){
+  if(message.member.hasPermission("ADMINISTRATOR") /*|| message.member.id === "466596723297484810"*/ || message.guild.owner.id === message.author.id ){
       modrechte= true;
                     
   }else {
@@ -136,9 +121,9 @@ function TestRechte(){
             
             let myRole = message.guild.roles.cache.get(rows3[a].role);
 
-            console.log(myRole.id);
+            if(myRole != undefined){
             for(let num = 0; num <= 100 ; num++){
-              
+              //console.log(myRole.id);
               if (message.member.roles.cache.has(myRole.id)) {
                 
             if(a2 === 1){
@@ -148,7 +133,7 @@ function TestRechte(){
             }
           }
           }
-
+        }
 
   
            }
@@ -212,7 +197,7 @@ if(a2 === 1){
     }else {
       const randomChannel = message.guild.channels.cache.find(channel => 
         channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
-
+if(randomChannel != undefined){
         con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
           if(err) throw err;
               if(rows.length >= 1){
@@ -234,6 +219,7 @@ if(a2 === 1){
 
     }
   }
+}
 
     function DeleteMessage(anzahl){
 
@@ -1106,6 +1092,7 @@ if(taggesUsa == null){
                             for(let a = 0; a < rows3.length; a++){
                               ab = ab + "<@&"+rows3[a].role+"> \n";
                             }
+                            
                              
                             SpracheUndSendMessagePerms("0", "Folgende Rollen haben die Berechtigungen für die Moderations-Commands: \n"+ab,
                              "Following roles have the permission to use the Moderation-Commands: \n"+ab)
@@ -1177,7 +1164,7 @@ if(taggesUsa == null){
                         }else{
                             const randomChannel = message.guild.channels.cache.find(channel => 
                             channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
-          
+                            if(randomChannel != undefined){
                             con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
                               if(err) throw err;
                                   if(rows.length >= 1){
@@ -1196,7 +1183,7 @@ if(taggesUsa == null){
                                   randomChannel.send('(No Language set! "§lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
                                  }
                                 });
-  
+                              }
   
                         }
 
@@ -1215,7 +1202,7 @@ if(taggesUsa == null){
                     }else {
                       const randomChannel = message.guild.channels.cache.find(channel => 
                        channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
-     
+                       if(randomChannel != undefined){
                        con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
                          if(err) throw err;
                              if(rows.length >= 1){
@@ -1235,7 +1222,7 @@ if(taggesUsa == null){
                             }
                            });
      
-                   
+                          }
                           }
                     sql = `INSERT INTO Counting (nummer2, server) VALUES ('1', '`+message.guild.id+`');`;
                         
@@ -1533,7 +1520,7 @@ const exampleEmbed = new Discord.MessageEmbed()
     }else {
       const randomChannel = message.guild.channels.cache.find(channel => 
         channel.type === "text" && channel.permissionsFor(bot.user).has("SEND_MESSAGES") && channel.permissionsFor(bot.user).has("VIEW_CHANNEL"));
-
+        if(randomChannel != undefined){
         con.query(`SELECT * FROM SpracheServer WHERE server_id = '`+message.guild.id+`';`, (err, rows) => {
           if(err) throw err;
               if(rows.length >= 1){
@@ -1552,7 +1539,7 @@ const exampleEmbed = new Discord.MessageEmbed()
               randomChannel.send('(No Language set! "'+Prefix+'lang" as an Administrator!)').then(msg => msg.delete({timeout: deleteTime}));
              }
             });
-
+          }
     
   }
 
