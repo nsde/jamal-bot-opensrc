@@ -19,6 +19,7 @@ var deleteTime = 30000;
 let CooldownLevel = 15000;
 var vb2;
 var Prefix = "§";
+var levelingAmount = 100;
 
 
 
@@ -252,7 +253,7 @@ if(a2 === 1){
   var SET = "";
     let args = message.content.split(" ");
     
-
+    if(!message.author.bot){
 
     if(message.channel.id === '806274946913271808'){
         let move =  message.guild.roles.cache.find((r) => r.id == "811587684460003348");
@@ -809,8 +810,8 @@ if(taggesUsa == null){
                     
                     con.query(`SELECT * FROM Leveling WHERE player_id = '`+taggesUsa.id+`' AND server_id LIKE '`+message.guild.id+`';`, (err, rows) => {
                       if(err) throw err;
-                      SpracheUndSendMessagePerms("0", "Der Spieler <@"+taggesUsa.id+"> ist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.",
-                      "The User <@"+taggesUsa.id+"> is level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.");
+                      SpracheUndSendMessagePerms("0", "Der Spieler <@"+taggesUsa.id+"> ist Level "+Level+" mit "+Experience+"/"+(levelingAmount+(levelingAmount*Level))+" XP.",
+                      "The User <@"+taggesUsa.id+"> is level "+Level+" with "+Experience+"/"+(levelingAmount+(levelingAmount*Level))+" XP.");
                       
                     
                   });
@@ -837,8 +838,8 @@ if(taggesUsa == null){
                        }
                       });
                       
-                      SpracheUndSendMessagePerms("0", "Du bist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.",
-                    "You're level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.");
+                      SpracheUndSendMessagePerms("0", "Du bist Level "+Level+" mit "+Experience+"/"+(levelingAmount+(levelingAmount*Level))+" XP.",
+                    "You're level "+Level+" with "+Experience+"/"+(levelingAmount+(levelingAmount*Level))+" XP.");
 
                         }else{
 
@@ -865,8 +866,8 @@ if(taggesUsa == null){
                                   });
                                   
               
-                                  SpracheUndSendMessagePerms("0", "Der Spieler <@"+taggesUsa.id+"> ist Level "+Level+" mit "+Experience+"/"+(200+(200*Level))+" XP.",
-                                  "The User <@"+taggesUsa.id+"> is level "+Level+" with "+Experience+"/"+(200+(200*Level))+" XP.");
+                                  SpracheUndSendMessagePerms("0", "Der Spieler <@"+taggesUsa.id+"> ist Level "+Level+" mit "+Experience+"/"+(levelingAmount+(levelingAmount*Level))+" XP.",
+                                  "The User <@"+taggesUsa.id+"> is level "+Level+" with "+Experience+"/"+(levelingAmount+(levelingAmount*Level))+" XP.");
                                 }          
 
    break;
@@ -1135,7 +1136,7 @@ if(taggesUsa == null){
 
 
   }
-  
+}
 //counting anfang
 
           con.query(`SELECT * FROM CountingChannel WHERE server = '`+message.guild.id+`';`, (err, rows3) => {
@@ -1311,7 +1312,7 @@ if(taggesUsa == null){
                                       b1 = b;
 
 
-                                      if(XPneu >= (200+(200*b))){
+                                      if(XPneu >= (levelingAmount+(levelingAmount*b))){
 
 
                                         SpracheUndSendMessagePerms(1, 'Glückwunsch, <@'+message.author.id+'>! Du hast Level '+(b+1)+' erreicht!', 
@@ -1319,7 +1320,7 @@ if(taggesUsa == null){
                                         
 
 
-                                        sql = `UPDATE Leveling SET xplevel = `+(XPneu-(200+(200*b)))+` WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
+                                        sql = `UPDATE Leveling SET xplevel = `+(XPneu-(levelingAmount+(levelingAmount*b)))+` WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
                                       con.query(sql);
                                       sql = `DELETE FROM LevelingLEVEL WHERE player_id = '`+message.author.id+`' AND server_id LIKE '`+message.guild.id+`';`;
                                       con.query(sql);
@@ -1420,7 +1421,7 @@ if(taggesUsa == null){
 
                   }else{
 
-                  DeleteMessage(2);
+                  DeleteMessage(3);
                   SpracheUndSendMessagePerms("1", "Embed-Generation gecancelled! Bitte Pinge nächstes mal einfach nur einen Channel, <@"+message.author.id+">!",
                   "Embed-Generation cancelled! Please mention only a channel next time, <@"+message.author.id+">!");
 
