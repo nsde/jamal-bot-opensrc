@@ -19,7 +19,7 @@ var deleteTime = 30000;
 let CooldownLevel = 15000;
 var vb2;
 var Prefix = "§";
-var levelingAmount = 100;
+var levelingAmount = 200;
 
 
 
