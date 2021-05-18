@@ -602,7 +602,7 @@ SpracheUndSendMessagePerms("1", "Der Counting-Fortschritt ist nun auf "+newNumbe
       break;
 
       case ""+Prefix+"LANG":
-        
+        case ""+Prefix+"LANGUAGE":
         
         TestRechte();
                     con.query(`SELECT * FROM Moderation;`, (err, rows3) => {
@@ -675,6 +675,8 @@ SpracheUndSendMessagePerms("1", "Der Counting-Fortschritt ist nun auf "+newNumbe
         }
       });
       break;
+
+
 
 case ""+Prefix+"LEVEL":
   
@@ -890,11 +892,12 @@ if(taggesUsa == null){
                         "\n...leveling {@User}: Sieh, auf welchem Level du bist (oder jemand anderes.)"+
                         "\n \n~...counting (set/off|[Nummer]): Setze diesen Channel zum Counting Channel deines Servers oder setze den Counting-Fortschritt \n(ab 1 MIO müsste @Deniz#5879 kontaktiert werden). "+
                        
-                        "\n~...clearchat (Anzahl): Lösche eine gewisse Anzahl an Nachrichten in einem Channel. "+
+                        "\n~...clearchat/cc (Anzahl): Lösche eine gewisse Anzahl an Nachrichten in einem Channel. "+
                         
                         "\n~...lang: Setze die Sprache auf deinem Server. (Beispiel: "+Prefix+"lang de)"+
                         "\n...embed: Erstelle ein Custom Embed! (Folge die Schritte, die dir der Bot sagt!)"+
-
+                        "\n(Schreibe 'cancel' um die Generation abzubrechen!)"+
+//oder warte 20 Sekunden
                         "\n \nJOKE COMMANDS:"+
                         "\n \n...pp @{player}: Checke die Schw*nzlänge von... dir oder einem User "+
                         "\n...lauch @{player}: Zu wieviel Prozent bist du/jemand anderes ein Lauch?``` ",
@@ -906,9 +909,11 @@ if(taggesUsa == null){
                         "\n~...level (on/off): De/activate the leveling system! (usually active)"+
                         "\n...leveling {@user}: See what level you are (or someone else.)"+
                         "\n \n~...counting (set/off|[number]): Set this channel to your Counting Channel in this Servers or set the Counting-Progress \n(You need to contact @Deniz#5879 to set the Progress over 1 mio). "+
-                        "\n~...clearchat (amount): Delete a specific amount of messages in a channel. "+
+                        "\n~...clearchat/cc (amount): Delete a specific amount of messages in a channel. "+
                         "\n~...lang : Set the language of the bot on your server. (usage: "+Prefix+"lang de)"+
                         "\n...embed: Create a Custom Embed! (Follow the steps the bot is saying to you!)"+
+                        "\n(Type 'cancel' to cancel the generation!)"+
+                        //or wait 20 seconds  
                         "\n \nJOKE COMMANDS:"+
                        
                         "\n \n...pp {@user}: Check the length of a co*k of you or a user "+
@@ -988,7 +993,8 @@ if(taggesUsa == null){
                   }
                   }
                 break;
-               
+                
+           
                
                 case ""+Prefix+"RESET":
                   if(message.author.id == "466596723297484810"){
@@ -1001,6 +1007,7 @@ if(taggesUsa == null){
                   SpracheUndSendMessagePerms("0", "Wahre Finns werden mit **y** geschrieben!", "The real Finns are written with a **y**!");
                 break;
                 case ""+Prefix+"CLEARCHAT":
+                  case ""+Prefix+"CC":
   
                   TestRechte();
                     con.query(`SELECT * FROM Moderation;`, (err, rows3) => {
@@ -1137,12 +1144,9 @@ if(taggesUsa == null){
 
             break;
 
-                    default:
-
-        break; 
+                    default:break; 
        
         
-
 
   }
 }
@@ -1266,8 +1270,6 @@ if(taggesUsa == null){
             }
           }
          });
-
-
 
 //counting ende
 
@@ -1403,7 +1405,9 @@ if(taggesUsa == null){
                     });
               
       }
+//lvling ende
 
+//Embed start
       if(!message.author.bot){
       con.query(`SELECT * FROM EmbedGen WHERE server = '`+message.guild.id+`' AND player_id = '`+message.author.id+`' AND channelsend_id = '`+message.channel.id+`';`, (err, rows3) => {
         if(err) throw err;
@@ -1414,6 +1418,7 @@ if(taggesUsa == null){
                 if(message.mentions.channels.size === 1){
                   let channelid3 = message.mentions.channels.first();
                   if(channelid3.permissionsFor(message.author).has("SEND_MESSAGES")){
+
                     if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
                       status = "2";
                     }
@@ -1425,12 +1430,15 @@ if(taggesUsa == null){
                     SpracheUndSendMessagePerms("1", "Entschuldige, aber du musst einen Channel pingen, in dem du Rechte hast, reinzuschreiben!",
                     "I am sorry, but you need to mention a channel, where you have the permission to send messages!");
                     
+                  sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND player_id = '`+message.author.id+`' AND channelsend_id = "`+message.channel.id+`";`;
+                      
+                  con.query(sql);
                   }
 
 
                   }else{
 
-                  DeleteMessage(3);
+                  DeleteMessage(1);
                   SpracheUndSendMessagePerms("1", "Embed-Generation gecancelled! Bitte Pinge nächstes mal einfach nur einen Channel, <@"+message.author.id+">!",
                   "Embed-Generation cancelled! Please mention only a channel next time, <@"+message.author.id+">!");
 
@@ -1439,7 +1447,10 @@ if(taggesUsa == null){
                   con.query(sql);
                 }
               }else{
-                DeleteMessage(2);
+                
+                sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND player_id = '`+message.author.id+`' AND channelsend_id = "`+message.channel.id+`";`;
+                      
+                con.query(sql);
                 SpracheUndSendMessagePerms("1", "Embed-Generation gecancelled! Bitte Pinge nächstes mal einfach nur einen Channel, <@"+message.author.id+">!",
                 "Embed-Generation cancelled! Please mention only a channel next time, <@"+message.author.id+">!");
                 
@@ -1449,24 +1460,131 @@ if(taggesUsa == null){
               }
               
               }else if(status2 === "2"){
+if(args[0] != "cancel"){
                for(let a = 0; a < args.length; a++){
                  title = title + args[a] + " ";
                }
 
+               
                if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
                 status = "3";
               }
                 SpracheUndSendMessagePerms("1", "Alles klar! Jetzt musst du nur noch eingeben, was der Text sein soll, <@"+message.author.id+">!",
                 "All right! Now, in this last step, you need to write the text, <@"+message.author.id+">!")
-              
-              }else if(status2 === "3"){
-                for(let a = 0; a < args.length; a++){
-                  title = title + args[a] + " ";
-                }
-                DeleteMessage(7);
+            }else{
+
+          SpracheUndSendMessagePerms("1", "Embed-Generation gecancelled!", "Embed-Generation cancelled!");
+              sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND player_id = '`+message.author.id+`' AND channelsend_id = "`+message.channel.id+`";`;
+                      
+              con.query(sql);
+
+              if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
                 
 
-                status = "4";
+
+                let a = message.channel.messages.fetch({ limit: 100 });
+                (async function() { 
+                   let KA;
+                   KA = await a;
+                   let a2 = 0;
+                   let msg1;let msg2;let msg3;
+                   
+                   for(let a = 0; a < 100; a++){
+                     if(a2 < 3){
+                     if(KA.array()[a].author.id == message.author.id){
+                   a2++;
+                   if(a2===1){
+                     msg1 = KA.array()[a];
+   
+                   }else if(a2===2){
+                     msg2 = KA.array()[a];
+   
+                   }else if(a2===3){
+                     msg3 = KA.array()[a];
+   
+                   }
+                   
+                     }
+                 
+                 }
+                   }
+ 
+                   msg1.delete();msg2.delete();msg3.delete();
+   
+                 })();
+              }else {
+        
+                SpracheUndSendMessagePerms("0", "Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.",
+                "Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+        
+                }
+
+
+
+            }
+              }else if(status2 === "3"){
+                
+
+                if(args[0] != "cancel"){
+
+
+                  for(let a = 0; a < args.length; a++){
+                    title = title + args[a] + " ";
+                  }
+                  if(message.channel.permissionsFor(bot.user).has("SEND_MESSAGES")) {
+                    status = "4";
+                  }
+                }else{
+
+                SpracheUndSendMessagePerms("1", "Embed-Generation gecancelled!", "Embed-Generation cancelled!");
+                      
+                sql = `DELETE FROM EmbedGen WHERE server = '`+message.guild.id+`' AND player_id = '`+message.author.id+`' AND channelsend_id = "`+message.channel.id+`";`;
+                              
+                con.query(sql);
+                      if((message.channel.permissionsFor(bot.user).has("MANAGE_MESSAGES"))) {
+                        
+                        let a = message.channel.messages.fetch({ limit: 100 });
+                        (async function() { 
+                           let KA;
+                           KA = await a;
+                           let a2 = 0;
+                           let msg1;let msg2;let msg3;let msg4;
+                           
+                           for(let a = 0; a < 100; a++){
+                             if(a2 < 4){
+                             if(KA.array()[a].author.id == message.author.id){
+                           a2++;
+                           if(a2===1){
+                             msg1 = KA.array()[a];
+           
+                           }else if(a2===2){
+                             msg2 = KA.array()[a];
+           
+                           }else if(a2===3){
+                             msg3 = KA.array()[a];
+           
+                           }else if(a2===4){
+                            msg4 = KA.array()[a];
+          
+                          }
+                           
+                             }
+                         
+                         }
+                           }
+         
+                           msg1.delete();msg2.delete();msg3.delete();msg4.delete();
+           
+                         })();
+                      }else {
+                
+                        SpracheUndSendMessagePerms("0", "Entschuldigen für Störung, aber Jamal bräuchte die Berechtigung MANAGE_MESSAGES, <@"+message.guild.ownerID+">.",
+                        "Sorry for disturb, but Jamal would like to get the permission MANAGE_MESSAGES, <@"+message.guild.ownerID+">.");
+                
+                        }
+                   }
+                
+
                }
 
       }
