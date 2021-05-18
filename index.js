@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 const { stat } = require("fs");
 const bot = new Discord.Client();
 const PREFIX = "De!";
-const token = "ODA3MzczOTgyNDExNTIyMDgw.YB3DnQ.Zjk82JnKFOY65DxMuZDmo33zhzg";
+const token = "PRIVATE";
 
 const puppeteer = require("puppeteer");
 const mysql = require("mysql");
@@ -54,10 +54,10 @@ const myTable = new HashTable();
 const AlleRollen = new HashTable();
 
 var con = mysql.createConnection({
-       host: "db4free.net",
-       user: "denizcakmak",
-       password: "Deniz11&9",
-       database: "jamalbot"
+       host: "PRIVATE",
+       user: "PRIVATE",
+       password: "PRIVATE",
+       database: "PRIVATE"
 });
 
 con.connect(err => {
