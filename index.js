@@ -5,9 +5,11 @@ const bot = new Discord.Client();
 const PREFIX = "De!";
 const token = "ODA3MzczOTgyNDExNTIyMDgw.YB3DnQ.Zjk82JnKFOY65DxMuZDmo33zhzg";
 
+const puppeteer = require("puppeteer");
 const mysql = require("mysql");
 const { format, parse } = require("path");
 const { unregisterCustomQueryHandler } = require("puppeteer");
+const { type } = require("os");
 "Code 5";
 var version = '1.3.1';
 
@@ -98,7 +100,21 @@ bot.on("guildCreate", guild => {
 bot.on('message', async message =>{
 
 
-
+  con.query(`SELECT * FROM Moderation WHERE server = '`+message.guild.id+`';`, (err, rows3) => {
+    if(err) throw err;
+        if(rows3.length >= 1){
+          for(let a = 0; a < rows3.length; a++){
+            let myRole = message.guild.roles.cache.get(rows3[a].role);
+          if(myRole != undefined){
+         }else if(typeof rows3[a].role === 'string' && rows3[a].role != undefined){
+          sql = `DELETE FROM Moderation WHERE server = '`+message.guild.id+`' AND role = '`+rows3[a].role+`'`;
+                      
+          con.query(sql);
+          console.log(rows3[a].role)
+        }
+}
+}
+});
       
 
   let status = "0";
@@ -108,7 +124,7 @@ bot.on('message', async message =>{
 
 function TestRechte(){
 
-  if(message.member.hasPermission("ADMINISTRATOR") /*|| message.member.id === "466596723297484810"*/ || message.guild.owner.id === message.author.id ){
+  if(message.member.hasPermission("ADMINISTRATOR") /*|| message.member.id === "466596723297484810"*/ || message.guild.ownerID === message.author.id ){
       modrechte= true;
                     
   }else {
@@ -122,8 +138,9 @@ function TestRechte(){
             let myRole = message.guild.roles.cache.get(rows3[a].role);
 
             if(myRole != undefined){
+              console.log(myRole.id);
             for(let num = 0; num <= 100 ; num++){
-              //console.log(myRole.id);
+              
               if (message.member.roles.cache.has(myRole.id)) {
                 
             if(a2 === 1){
@@ -133,6 +150,11 @@ function TestRechte(){
             }
           }
           }
+        }else if(typeof rows3[a].role === 'string' && rows3[a].role != undefined){
+          sql = `DELETE FROM Moderation WHERE server = '`+message.guild.id+`' AND role = '`+rows3[a].role+`'`;
+                      
+          con.query(sql);
+          console.log(rows3[a].role)
         }
 
   
