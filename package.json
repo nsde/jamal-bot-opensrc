@@ -1,0 +1,48 @@
+{
+  "name": "jamalbot",
+  "version": "1.0.0",
+  "description": "JamalBot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Deniz#5879",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/voice": "^0.6.0",
+    "avconv": "^3.1.0",
+    "bluebird": "^3.7.2",
+    "chess.js": "^0.11.0",
+    "discord-voice": "^2.0.4",
+    "discord.js": "^12.5.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "ffmpeg": "^0.0.4",
+    "fs": "^0.0.1-security",
+    "generic-pool": "^3.7.8",
+    "http-status-codes": "^2.1.4",
+    "libsodium-wrappers": "^0.7.9",
+    "mysql": "^2.18.1",
+    "node": "^15.14.0",
+    "node.js": "^0.0.1-security",
+    "opusscript": "0.0.8",
+    "pool": "^0.4.1",
+    "promise": "^8.1.0",
+    "promise-mysql": "^5.0.3",
+    "puppeteer": "^9.0.0",
+    "sudo": "^1.0.3",
+    "wb": "^0.0.1",
+    "wbm": "^1.1.14",
+    "youtube-search": "^1.1.6",
+    "ytdl-core": "^4.9.1",
+    "ytsr": "^3.5.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Deniz-LP/jamal-bot-deni.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Deniz-LP/jamal-bot-deni/issues"
+  },
+  "homepage": "https://github.com/Deniz-LP/jamal-bot-deni#readme"
+}
